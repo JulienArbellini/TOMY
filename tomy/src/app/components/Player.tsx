@@ -97,11 +97,21 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
   };
 
   const handleRewindClick = () => {
-    setIsRewinding(!isRewinding);
+    if (!player) {
+      console.log("Player is not ready yet");
+      return;
+    }
+  
+    const currentTime = player.getCurrentTime(); // Obtenir le temps actuel
+    const newTime = currentTime - 10; // Reculer de 10 secondes
+    player.seekTo(Math.max(newTime, 0), true); // Empêcher de reculer avant 0 secondes
+  
+    setIsRewinding(!isRewinding); // Changer l'état visuel du bouton
     if (!isRewinding) {
       setIsForwarding(false); // Désactive le bouton Forward si Rewind est activé
     }
   };
+  
   const disableRewindClick = () => {
     setIsRewinding(false);
     if (!isRewinding) {
@@ -110,11 +120,21 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
   };
 
   const handleForwardClick = () => {
-    setIsForwarding(!isForwarding);
+    if (!player) {
+      console.log("Player is not ready yet");
+      return;
+    }
+  
+    const currentTime = player.getCurrentTime(); // Obtenir le temps actuel de la vidéo en secondes
+    const newTime = currentTime + 10; // Avancer de 10 secondes
+    player.seekTo(newTime, true); // Se déplacer à ce moment de la vidéo
+  
+    setIsForwarding(!isForwarding); // Changer l'état visuel du bouton
     if (!isForwarding) {
       setIsRewinding(false); // Désactive le bouton Rewind si Forward est activé
     }
   };
+  
 
   const disableForwardClick = () => {
     setIsForwarding(false);
