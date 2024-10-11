@@ -111,7 +111,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
       setIsForwarding(false); // Désactive le bouton Forward si Rewind est activé
     }
   };
-  
+
   const disableRewindClick = () => {
     setIsRewinding(false);
     if (!isRewinding) {
@@ -171,12 +171,12 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
 
   return (
     <div className="absolute h-screen w-full flex justify-center items-center">
-      <div className="relative h-[553px] w-[653px] flex justify-center items-center">
-        <img src="/vectors/ELEMENTS/Cadres/Cadre1.png" alt="" className="h-[550px]" />
-        <img src="/vectors/ELEMENTS/Cadres/EcranNoir.png" alt="" className={`absolute top-[50px] left-[33px] h-[440px] w-[590px] ${
+      <div className="relative h-[553px] w-[653px] flex justify-center items-center ">
+        <img src="/vectors/ELEMENTS/Cadres/Cadre1.png" alt="" className="h-[590px] w-[645px]" />
+        <img src="/vectors/ELEMENTS/Cadres/EcranNoir.png" alt="" className={`absolute top-[23px] left-[26px] h-[490px] w-[602px] ${
             isPlayingAndDelay ? 'z-20' : 'z-0'}`} />
         <img src="/vectors/ELEMENTS/Cadres/vitre.png" alt="" className="absolute z-10 top-[50px] left-[33px] h-[440px] w-[586px] opacity-5" />
-        <div className="absolute bg-red-200 top-[53px] left-[35px] h-[435px] w-[586px] overflow-hidden">
+        <div className="absolute top-[53px] left-[35px] h-[435px] w-[586px] overflow-hidden">
           <div className="absolute top-[-653px] left-[0px] h-[435px] w-[586px]">
             <iframe
               ref={playerRef}
@@ -193,11 +193,11 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
 
         
         {/* Bouton Exit */}
-        <div className="absolute top-[20px] left-[24px] h-[25px] w-[25px] bg-[url('/vectors/ELEMENTS/BoutonsPlayer/Exit.png')] hover:bg-[url('/vectors/ELEMENTS/BoutonsPlayer/ExitHover.png')] bg-cover hover:cursor-pointer"></div>
+        <div className="absolute top-[2px] left-[28px] h-[17px] w-[17px] bg-[url('/vectors/ELEMENTS/BoutonsPlayer/Exit.png')] hover:bg-[url('/vectors/ELEMENTS/BoutonsPlayer/ExitHover.png')] bg-cover hover:cursor-pointer"></div>
 
         {/* Bouton Play */}
         <div
-          className={`absolute bottom-[26px] left-[25px] h-[30px] w-[30px] bg-cover hover:cursor-pointer ${
+          className={`absolute bottom-[9px] left-[30px] h-[27px] w-[27px] bg-cover hover:cursor-pointer ${
             isPlaying
               ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseClic.png")]'
               : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Play.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayHover.png")]'
@@ -207,7 +207,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
 
         {/* Bouton Backwards */}
         <div
-          className={`absolute bottom-[26px] left-[56px] h-[30px] w-[30px] bg-cover hover:cursor-pointer ${
+          className={`absolute bottom-[9px] left-[63px] h-[27px] w-[27px] bg-cover hover:cursor-pointer ${
             isRewinding
               ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.png")]'
               : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Backwards.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.png")]'
@@ -219,7 +219,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
 
         {/* Bouton Forward */}
         <div
-          className={`absolute bottom-[26px] left-[87px] h-[30px] w-[30px] bg-cover hover:cursor-pointer ${
+          className={`absolute bottom-[9px] left-[96px] h-[27px] w-[27px] bg-cover hover:cursor-pointer ${
             isForwarding
               ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.png")]'
               : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Forward.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.png")]'
@@ -232,7 +232,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
 
         {/* Bouton Mute */}
         <div
-          className={`absolute bottom-[26px] right-[85px] h-[30px] w-[30px] bg-cover hover:cursor-pointer ${
+          className={`absolute bottom-[9px] right-[95px] h-[27px] w-[27px] bg-cover hover:cursor-pointer ${
             isMuted
               ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png")]'
               : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Mute.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteHover.png")]'
@@ -242,7 +242,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
 
         {/* Bouton VolumeDown */}
         <div
-          className={`absolute bottom-[26px] right-[54px] h-[30px] w-[30px] bg-cover hover:cursor-pointer ${
+          className={`absolute bottom-[9px] right-[62px] h-[27px] w-[27px] bg-cover hover:cursor-pointer ${
             isVolumeDown
               ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.png")]'
               : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDown.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.png")]'
@@ -252,7 +252,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
 
         {/* Bouton VolumeUp */}
         <div
-          className={`absolute bottom-[26px] right-[23px] h-[30px] w-[30px] bg-cover hover:cursor-pointer ${
+          className={`absolute bottom-[9px] right-[29px] h-[27px] w-[27px] bg-cover hover:cursor-pointer ${
             isVolumeUp
               ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.png")]'
               : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.png")]'
