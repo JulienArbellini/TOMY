@@ -205,7 +205,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
         <img src="/vectors/ELEMENTS/Cadres/EcranNoir.png" alt="" className={`absolute top-[23px] left-[26px] h-[490px] w-[602px] ${
             isPlayingAndDelay ? 'z-20' : 'z-0'}`} />
         <img src="/vectors/ELEMENTS/Cadres/vitre.png" alt="" className="absolute z-10 top-[50px] left-[33px] h-[440px] w-[586px] opacity-5" />
-        <div className="absolute top-[53px] left-[35px] h-[435px] w-[586px] overflow-hidden">
+        <div className="absolute top-[53px] left-[33px] h-[435px] w-[590px] overflow-hidden">
           <div className="absolute top-[-653px] left-[0px] h-[435px] w-[586px]">
             <iframe
               ref={playerRef}
