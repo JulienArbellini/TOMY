@@ -22,18 +22,19 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
   const [isVolumeUp, setVolumeUp] = useState(false); // Assume 100 as max volume
   const [isRewinding, setIsRewinding] = useState(false);
   const [isForwarding, setIsForwarding] = useState(false);
+  const [isPressed, setIsPressed] = useState(false); // État pour l'appui du bouton Play
+  const [isHovering, setIsHovering] = useState(false);
 
   const playerRef = useRef<HTMLIFrameElement | null>(null);
   const [player, setPlayer] = useState<any>(null); // Pour stocker l'instance du lecteur YouTube
 
 
-  // Gestion des événements de clic pour chaque bouton
   const handlePlayClick = () => {
     if (!player) {
       console.log("Player is not ready yet");
       return;
     }
-  
+
     setIsPlaying((prevState) => {
       if (prevState) {
         player.pauseVideo(); // Met en pause la vidéo
@@ -46,9 +47,16 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
 
   const handleStateChange = (event: any) => {
     if (event.data === window.YT.PlayerState.PLAYING) {
-      // La vidéo commence à jouer, on enlève l'écran noir
-      setIsPlayingAndDelay(false);
+      setIsPlayingAndDelay(false); // Retire l'écran noir quand la vidéo joue
     }
+  };
+
+  const handlePlayMouseDown = () => setIsPressed(true);
+  const handlePlayMouseUp = () => setIsPressed(false);
+  const handlePlayMouseEnter = () => setIsHovering(true);
+  const handlePlayMouseLeave = () => {
+    setIsHovering(false);
+    setIsPressed(false);
   };
   
 
@@ -167,6 +175,27 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
         });
       };
     }, []);
+
+    // Gestion des classes dynamiques pour le bouton Play
+    const playButtonClass = () => {
+      if (isPlaying) {
+        if (isPressed) {
+          return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseClic.png")]';
+        }
+        if (isHovering) {
+          return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseHover.png")]';
+        }
+        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Pause.png")]';
+      } else {
+        if (isPressed) {
+          return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayClic.png")]';
+        }
+        if (isHovering) {
+          return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayHover.png")]';
+        }
+        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Play.png")]';
+      }
+    };
     
 
   return (
@@ -197,12 +226,12 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
 
         {/* Bouton Play */}
         <div
-          className={`absolute bottom-[9px] left-[30px] h-[27px] w-[27px] bg-cover hover:cursor-pointer ${
-            isPlaying
-              ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseClic.png")]'
-              : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Play.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayHover.png")]'
-          }`}
+          className={`absolute bottom-[9px] left-[30px] h-[27px] w-[27px] bg-cover hover:cursor-pointer ${playButtonClass()}`}
           onClick={handlePlayClick}
+          onMouseDown={handlePlayMouseDown}
+          onMouseUp={handlePlayMouseUp}
+          onMouseEnter={handlePlayMouseEnter}
+          onMouseLeave={handlePlayMouseLeave}
         ></div>
 
         {/* Bouton Backwards */}
