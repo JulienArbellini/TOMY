@@ -6,6 +6,13 @@ interface PlayerProps {
   src: string;
 }
 
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: () => void;
+  }
+}
+
 const Player: React.FC<PlayerProps> = ({ src }) => {
   // États pour chaque bouton
   const [isPlaying, setIsPlaying] = useState(false);

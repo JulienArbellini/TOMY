@@ -7,7 +7,6 @@ import MovieModal from '../components/MovieModal';
 import TomyIslandModal from '../components/TomyIslandModal';
 import WebcamModal from '../components/WebcamModal';
 import MusicModal from '../components/MusicModal';
-import Button from '../components/Player';
 
 const items = [
   { name: 'AUTOPLAY', type: 'autoplay' },
@@ -34,9 +33,6 @@ const Home = () => {
 
   return (
     <div className="h-screen bg-cover bg-[url('/images/bg.jpeg')] p-5 flex justify-center items-center">
-      <Button>
-
-      </Button>
       <div className="grid grid-cols-4 gap-4">
         {items.map((item, index) => (
           <div
