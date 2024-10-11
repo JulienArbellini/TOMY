@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CustomVideoPlayer from './CustomVideoPlayer';
+import Player from './Player';
 
 const MovieModal = ({ onClose }: { onClose: () => void }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -23,11 +23,8 @@ const MovieModal = ({ onClose }: { onClose: () => void }) => {
         <button className="absolute top-4 right-4 text-black" onClick={onClose}>X</button>
         <div className="flex justify-center items-center w-full h-full">
           <div className="w-1/2 h-[80%] bg-red-500 relative overflow-hidden">
-            <CustomVideoPlayer
+            <Player
               src={movies[currentIndex].videoSrc}
-              width="100%"
-              height="150%"
-              onClose={onClose}
             />
           </div>
           <div className="w-1/2 p-4">

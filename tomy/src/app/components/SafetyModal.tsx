@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CustomVideoPlayer from './CustomVideoPlayer';
+import Player from './Player';
 
 const SafetyModal = ({ onClose }: { onClose: () => void }) => {
   const [index, setIndex] = useState(0);
@@ -18,12 +18,8 @@ const SafetyModal = ({ onClose }: { onClose: () => void }) => {
         <button className="absolute top-4 right-4 text-black" onClick={onClose}>X</button>
         <div className="flex justify-center items-center w-full h-full">
           {index === 0 ? (
-            <CustomVideoPlayer
+            <Player
               src={contents[index]}
-              containerWidth="100%"
-              containerHeight="100%"
-              width="100%"
-              height="150%"
             />
           ) : (
             <img src={contents[index]} alt={`content-${index}`} className="w-full h-full object-cover" />

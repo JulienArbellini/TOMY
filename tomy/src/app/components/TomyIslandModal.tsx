@@ -1,6 +1,5 @@
 import React from 'react';
-import CustomVideoPlayer from './CustomVideoPlayer';
-import Button from './Player';
+import Player from './Player';
 
 const TomyIslandModal = ({ onClose }: { onClose: () => void }) => {
   return (
@@ -8,16 +7,11 @@ const TomyIslandModal = ({ onClose }: { onClose: () => void }) => {
       <div className="bg-white p-8 relative w-3/4 h-3/4">
         <button className="absolute top-4 right-4 text-black" onClick={onClose}>X</button>
         <div className="relative flex justify-center items-center w-full h-full overflow-hidden">
-          <CustomVideoPlayer
+          <Player
             src=""
-            containerWidth="100%"
-            containerHeight="100%"
           />
         </div>
       </div>
-      <Button
-        text="test"
-        />
     </div>
   );
 };
