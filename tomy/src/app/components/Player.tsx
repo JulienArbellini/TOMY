@@ -53,15 +53,28 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
   
 
   const handleMuteClick = () => {
-    setIsMuted(!isMuted);
+    if (!player) {
+      console.log("Player is not ready yet");
+      return;
+    }
+  
+    setIsMuted((prevState) => {
+      if (prevState) {
+        player.unMute(); // Réactive le son
+      } else {
+        player.mute(); // Met en sourdine
+      }
+      return !prevState; // Inverse l'état du bouton
+    });
+  
     if (isVolumeDown) {
       setVolumeDown(false); 
     }
     if (isVolumeUp) {
       setVolumeUp(false); 
     }
-    
   };
+  
 
   const handleVolumeDownClick = () => {
     setVolumeDown(!isVolumeDown);
@@ -113,6 +126,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
     // Charger l'API YouTube et initialiser le lecteur
     useEffect(() => {
       // Charger l'API YouTube
+      console.log("test");
       const tag = document.createElement('script');
       tag.src = 'https://www.youtube.com/iframe_api';
       const firstScriptTag = document.getElementsByTagName('script')[0];
