@@ -1,0 +1,10 @@
+# Ignorer le dossier des dépendances Node.js
+node_modules/
+
+# Ignorer les fichiers vidéo
+*.mp4
+*.avi
+*.mov
+
+# Ignorer les fichiers logs
+*.log
