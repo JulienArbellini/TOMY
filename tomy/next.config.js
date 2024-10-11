@@ -9,12 +9,10 @@ const nextConfig = {
 
 // next.config.js
 module.exports = {
-  webpackDevMiddleware: (config) => {
-    config.watchOptions = {
-      poll: 1000, // Check for changes every second
-      aggregateTimeout: 300, // Delay before rebuilding
-    };
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // Modifie la config Webpack ici si nécessaire
     return config;
   },
 };
+
 
