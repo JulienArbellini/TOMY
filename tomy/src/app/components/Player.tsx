@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 
 interface PlayerProps {
   className?: string;
-  src: string;
+  src?: string;
 }
 
 declare global {
@@ -24,22 +24,17 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
   const [isForwarding, setIsForwarding] = useState(false);
   const [isPressed, setIsPressed] = useState(false); // État pour l'appui du bouton Play
   const [isHovering, setIsHovering] = useState(false);
-
   const playerRef = useRef<HTMLIFrameElement | null>(null);
-  const [player, setPlayer] = useState<any>(null); // Pour stocker l'instance du lecteur YouTube
-
+  const [player, setPlayer] = useState<any>(null); 
 
   const handlePlayClick = () => {
-    if (!player) {
-      console.log("Player is not ready yet");
-      return;
-    }
+    if (!player) return;
 
     setIsPlaying((prevState) => {
       if (prevState) {
-        player.pauseVideo(); // Met en pause la vidéo
+        player.pauseVideo();
       } else {
-        player.playVideo(); // Démarre la vidéo
+        player.playVideo();
       }
       return !prevState;
     });
@@ -61,47 +56,36 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
   
 
   const handleMuteClick = () => {
-    if (!player) {
-      console.log("Player is not ready yet");
-      return;
-    }
-  
+    if (!player) return;
+
     setIsMuted((prevState) => {
       if (prevState) {
-        player.unMute(); // Réactive le son
+        player.unMute();
       } else {
-        player.mute(); // Met en sourdine
+        player.mute();
       }
-      return !prevState; // Inverse l'état du bouton
+      return !prevState;
     });
-  
-    if (isVolumeDown) {
-      setVolumeDown(false); 
-    }
-    if (isVolumeUp) {
-      setVolumeUp(false); 
-    }
   };
-  
 
+  // Fonction pour baisser le volume
   const handleVolumeDownClick = () => {
-    setVolumeDown(!isVolumeDown);
-    if (isMuted) {
-      setIsMuted(false); 
-    }
-    if (isVolumeUp) {
-      setVolumeUp(false); 
-    }
+    if (!player) return;
+    const currentVolume = player.getVolume();
+    const newVolume = Math.max(currentVolume - 10, 0); // Réduit de 10%, min 0
+    player.setVolume(newVolume);
+    setVolumeDown(true);
+    setTimeout(() => setVolumeDown(false), 200);
   };
 
+  // Fonction pour augmenter le volume
   const handleVolumeUpClick = () => {
-    setVolumeUp(!isVolumeUp);
-    if (isMuted) {
-      setIsMuted(false); 
-    }
-    if (isVolumeDown) {
-      setVolumeDown(false); 
-    }
+    if (!player) return;
+    const currentVolume = player.getVolume();
+    const newVolume = Math.min(currentVolume + 10, 100); // Augmente de 10%, max 100
+    player.setVolume(newVolume);
+    setVolumeUp(true);
+    setTimeout(() => setVolumeUp(false), 200);
   };
 
   const handleRewindClick = () => {
@@ -151,52 +135,50 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
     }
   };
 
-    // Charger l'API YouTube et initialiser le lecteur
-    useEffect(() => {
-      // Charger l'API YouTube
-      console.log("test");
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      if (firstScriptTag && firstScriptTag.parentNode) {
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      }
-    
-      // Créer le lecteur après que l'API YouTube est chargée
-      (window as any).onYouTubeIframeAPIReady = () => {
-        const newPlayer = new (window as any).YT.Player(playerRef.current, {
-          events: {
-            onReady: (event: any) => {
-              console.log("Player is ready");
-              setPlayer(newPlayer); // Stocke l'instance du lecteur
-            },
-            onStateChange: handleStateChange, 
-          }
-        });
-      };
-    }, []);
+// Charger l'API YouTube et initialiser le lecteur
+useEffect(() => {
+  // Charger l'API YouTube
+  console.log("test");
+  const tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  const firstScriptTag = document.getElementsByTagName('script')[0];
+  if (firstScriptTag && firstScriptTag.parentNode) {
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }
 
-    // Gestion des classes dynamiques pour le bouton Play
-    const playButtonClass = () => {
-      if (isPlaying) {
-        if (isPressed) {
-          return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseClic.png")]';
-        }
-        if (isHovering) {
-          return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseHover.png")]';
-        }
-        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Pause.png")]';
-      } else {
-        if (isPressed) {
-          return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayClic.png")]';
-        }
-        if (isHovering) {
-          return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayHover.png")]';
-        }
-        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Play.png")]';
+  // Créer le lecteur après que l'API YouTube est chargée
+  (window as any).onYouTubeIframeAPIReady = () => {
+    const newPlayer = new (window as any).YT.Player(playerRef.current, {
+      events: {
+        onReady: (event: any) => {
+          console.log("Player is ready");
+          setPlayer(newPlayer); // Stocke l'instance du lecteur
+        },
+        onStateChange: handleStateChange, 
       }
-    };
-    
+    });
+  };
+}, []);
+
+  const playButtonClass = () => {
+    if (isPlaying) {
+      if (isPressed) {
+        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseClic.png")]';
+      }
+      if (isHovering) {
+        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseHover.png")]';
+      }
+      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Pause.png")]';
+    } else {
+      if (isPressed) {
+        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayClic.png")]';
+      }
+      if (isHovering) {
+        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayHover.png")]';
+      }
+      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Play.png")]';
+    }
+  };
 
   return (
     <div className="absolute h-screen w-full flex justify-center items-center">
@@ -211,7 +193,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
               ref={playerRef}
               width="100%"
               height="400%"
-              src= {src + "?enablejsapi=1"}
+              src={`${src}?enablejsapi=1`}
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
