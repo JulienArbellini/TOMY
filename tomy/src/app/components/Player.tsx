@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-const Player: React.FC<PlayerProps> = ({ src, scale = 1 }) => {
+const Player: React.FC<PlayerProps> = ({ src }) => {
   // États pour chaque bouton
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPlayingAndDelay, setIsPlayingAndDelay] = useState(true);
@@ -26,6 +26,8 @@ const Player: React.FC<PlayerProps> = ({ src, scale = 1 }) => {
   const [isHovering, setIsHovering] = useState(false);
   const playerRef = useRef<HTMLIFrameElement | null>(null);
   const [player, setPlayer] = useState<any>(null);
+  const [scale, setScale] = useState(1); // Coefficient de mise à l'échelle calculé
+
 
   const handlePlayClick = () => {
     if (!player) return;
@@ -132,6 +134,7 @@ const Player: React.FC<PlayerProps> = ({ src, scale = 1 }) => {
     if (firstScriptTag && firstScriptTag.parentNode) {
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     }
+    
 
     window.onYouTubeIframeAPIReady = () => {
       const newPlayer = new window.YT.Player(playerRef.current, {
@@ -142,6 +145,26 @@ const Player: React.FC<PlayerProps> = ({ src, scale = 1 }) => {
           onStateChange: handleStateChange,
         },
       });
+    };
+
+    const handleResize = () => {
+      const windowHeight = window.innerHeight; // Hauteur de la fenêtre
+      const originalHeight = 555; // Hauteur d'origine de Cadre1 en pixels
+      const desiredHeight = windowHeight * 0.8; // 80% de la hauteur de la fenêtre
+      const newScale = desiredHeight / originalHeight; // Calculer le scale
+      setScale(newScale);
+    };
+
+
+    // Initialiser l'échelle au chargement
+    handleResize();
+
+    // Mettre à jour l'échelle à chaque redimensionnement de la fenêtre
+    window.addEventListener('resize', handleResize);
+
+    // Nettoyer l'écouteur d'événement lors du démontage
+    return () => {
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
