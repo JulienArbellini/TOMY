@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect } from 'react';
 interface PlayerProps {
   className?: string;
   src?: string;
-  scale?: number; // Coefficient de mise à l'échelle
 }
 
 declare global {
@@ -26,8 +25,58 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
   const [isHovering, setIsHovering] = useState(false);
   const playerRef = useRef<HTMLIFrameElement | null>(null);
   const [player, setPlayer] = useState<any>(null);
-  const [scale, setScale] = useState(1); // Coefficient de mise à l'échelle calculé
+  const [scale, setScale] = useState(1);
+  const [imagesPreloaded, setImagesPreloaded] = useState(false); // Suivi du préchargement
 
+  // Fonction pour précharger les images
+  const preloadImages = (imageUrls: string[]) => {
+    const promises = imageUrls.map((url) => {
+      return new Promise<void>((resolve, reject) => {
+        const img = new Image();
+        img.src = url;
+        img.onload = () => resolve();
+        img.onerror = reject;
+      });
+    });
+
+    // Quand toutes les images sont préchargées
+    Promise.all(promises)
+      .then(() => {
+        setImagesPreloaded(true); // Les images sont prêtes
+      })
+      .catch((err) => {
+        console.error("Échec du préchargement des images", err);
+      });
+  };
+
+  // Précharger les images des boutons au montage du composant
+  useEffect(() => {
+    const imageUrls = [
+      '/vectors/ELEMENTS/BoutonsPlayer/Play.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/PlayHover.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/PlayClic.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/Pause.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/PauseHover.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/PauseClic.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/Mute.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/MuteHover.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/VolumeDown.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/Backwards.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/Forward.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.png',
+      '/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.png'
+    ];
+
+    preloadImages(imageUrls); // Précharger les images au montage
+  }, []);
 
   const handlePlayClick = () => {
     if (!player) return;
@@ -134,7 +183,6 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
     if (firstScriptTag && firstScriptTag.parentNode) {
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     }
-    
 
     window.onYouTubeIframeAPIReady = () => {
       const newPlayer = new window.YT.Player(playerRef.current, {
@@ -148,21 +196,16 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
     };
 
     const handleResize = () => {
-      const windowHeight = window.innerHeight; // Hauteur de la fenêtre
-      const originalHeight = 555; // Hauteur d'origine de Cadre1 en pixels
-      const desiredHeight = windowHeight * 0.8; // 80% de la hauteur de la fenêtre
-      const newScale = desiredHeight / originalHeight; // Calculer le scale
+      const windowHeight = window.innerHeight;
+      const originalHeight = 555;
+      const desiredHeight = windowHeight * 0.8;
+      const newScale = desiredHeight / originalHeight;
       setScale(newScale);
     };
 
-
-    // Initialiser l'échelle au chargement
     handleResize();
-
-    // Mettre à jour l'échelle à chaque redimensionnement de la fenêtre
     window.addEventListener('resize', handleResize);
 
-    // Nettoyer l'écouteur d'événement lors du démontage
     return () => {
       window.removeEventListener('resize', handleResize);
     };
@@ -188,191 +231,202 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
     }
   };
 
-  // Fonction pour appliquer l'échelle
   const scaledValue = (value: number) => value * scale;
 
   return (
     <div className="absolute h-screen w-full flex justify-center items-center">
-      <div
-        className="relative flex justify-center items-center"
-        style={{
-          height: `${scaledValue(555)}px`,
-          width: `${scaledValue(645)}px`,
-        }}
-      >
-        <img
-          src="/vectors/ELEMENTS/Cadres/Cadre1.png"
-          alt=""
+      {!imagesPreloaded ? (
+        <div>Loading...</div> // Affichage de chargement tant que les images ne sont pas prêtes
+      ) : (
+        <div
+          className="relative flex justify-center items-center"
           style={{
             height: `${scaledValue(555)}px`,
             width: `${scaledValue(645)}px`,
           }}
-        />
-        <img
-          src="/vectors/ELEMENTS/Cadres/EcranNoir.png"
-          alt=""
-          className={`absolute`}
-          style={{
-            top: `${scaledValue(60)}px`,
-            left: `${scaledValue(26)}px`,
-            height: `${scaledValue(430)}px`,
-            width: `${scaledValue(602)}px`,
-            zIndex: isPlayingAndDelay ? 20 : 0,
-          }}
-        />
-        <img 
-          src="/vectors/ELEMENTS/Cadres/vitre.png"
-          alt="" 
-          className="absolute z-10 top-[50px] left-[33px] h-[440px] w-[586px] opacity-20" 
-          style={{
-            top: `${scaledValue(66)}px`,
-            left: `${scaledValue(30)}px`,
-            height: `${scaledValue(418)}px`,
-            width: `${scaledValue(593)}px`,
-          }}
-        />
-        <div
-          className="absolute overflow-hidden"
-          style={{
-            top: `${scaledValue(67)}px`,
-            left: `${scaledValue(33)}px`,
-            height: `${scaledValue(415)}px`,
-            width: `${scaledValue(590)}px`,
-          }}
         >
           <div
-            className="absolute"
-            
-            style={{
-              top: `${scaledValue(-653)}px`,
-              left: 0,
-              height: `${scaledValue(435)}px`,
-              width: `${scaledValue(586)}px`,
-            }}
-          >
-            <iframe
-              ref={playerRef}
-              width="100%"
-              height="400%"
-              src={`${src}?enablejsapi=1`}
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
-
-        {/* Bouton Exit */}
-        <div className={`absolute bg-[url('/vectors/ELEMENTS/BoutonsPlayer/Exit.png')] hover:bg-[url('/vectors/ELEMENTS/BoutonsPlayer/ExitHover.png')] bg-cover hover:cursor-pointer`}
+      className="relative flex justify-center items-center"
+      style={{
+        height: `${scaledValue(555)}px`,
+        width: `${scaledValue(645)}px`,
+      }}
+    >
+      <img
+        src="/vectors/ELEMENTS/Cadres/Cadre1.png"
+        alt=""
         style={{
-          top: `${scaledValue(20)}px`,
-          left: `${scaledValue(24)}px`,
-          height: `${scaledValue(25)}px`,
-          width: `${scaledValue(25)}px`,
+          height: `${scaledValue(555)}px`,
+          width: `${scaledValue(645)}px`,
         }}
-        ></div>
-
-        {/* Bouton Play */}
+      />
+      <img
+        src="/vectors/ELEMENTS/Cadres/EcranNoir.png"
+        alt=""
+        className={`absolute`}
+        style={{
+          top: `${scaledValue(60)}px`,
+          left: `${scaledValue(26)}px`,
+          height: `${scaledValue(430)}px`,
+          width: `${scaledValue(602)}px`,
+          zIndex: isPlayingAndDelay ? 20 : 0,
+        }}
+      />
+      <img 
+        src="/vectors/ELEMENTS/Cadres/vitre.png"
+        alt="" 
+        className="absolute z-10 top-[50px] left-[33px] h-[440px] w-[586px] opacity-20" 
+        style={{
+          top: `${scaledValue(66)}px`,
+          left: `${scaledValue(30)}px`,
+          height: `${scaledValue(418)}px`,
+          width: `${scaledValue(593)}px`,
+        }}
+      />
+      <div
+        className="absolute overflow-hidden"
+        style={{
+          top: `${scaledValue(67)}px`,
+          left: `${scaledValue(33)}px`,
+          height: `${scaledValue(415)}px`,
+          width: `${scaledValue(590)}px`,
+        }}
+      >
         <div
-          className={`absolute bg-cover hover:cursor-pointer ${playButtonClass()}`}
+          className="absolute"
           style={{
-            bottom: `${scaledValue(30)}px`,
-            left: `${scaledValue(30)}px`,
-            height: `${scaledValue(27)}px`,
-            width: `${scaledValue(27)}px`,
+            top: `${scaledValue(-653)}px`,
+            left: 0,
+            height: `${scaledValue(435)}px`,
+            width: `${scaledValue(586)}px`,
           }}
-          onClick={handlePlayClick}
-          onMouseDown={handlePlayMouseDown}
-          onMouseUp={handlePlayMouseUp}
-          onMouseEnter={handlePlayMouseEnter}
-          onMouseLeave={handlePlayMouseLeave}
-        ></div>
-
-        {/* Bouton Mute */}
-        <div
-          className={`absolute bg-cover hover:cursor-pointer ${
-            isMuted
-              ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png")]'
-              : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Mute.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteHover.png")]'
-          }`}
-          style={{
-            bottom: `${scaledValue(30)}px`,
-            right: `${scaledValue(95)}px`,
-            height: `${scaledValue(27)}px`,
-            width: `${scaledValue(27)}px`,
-          }}
-          onClick={handleMuteClick}
-        ></div>
-
-        {/* Bouton VolumeDown */}
-        <div
-          className={`absolute bg-cover hover:cursor-pointer ${
-            isVolumeDown
-              ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.png")]'
-              : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDown.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.png")]'
-          }`}
-          style={{
-            bottom: `${scaledValue(30)}px`,
-            right: `${scaledValue(62)}px`,
-            height: `${scaledValue(27)}px`,
-            width: `${scaledValue(27)}px`,
-          }}
-          onClick={handleVolumeDownClick}
-        ></div>
-
-        {/* Bouton VolumeUp */}
-        <div
-          className={`absolute bg-cover hover:cursor-pointer ${
-            isVolumeUp
-              ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.png")]'
-              : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.png")]'
-          }`}
-          style={{
-            bottom: `${scaledValue(30)}px`,
-            right: `${scaledValue(29)}px`,
-            height: `${scaledValue(27)}px`,
-            width: `${scaledValue(27)}px`,
-          }}
-          onClick={handleVolumeUpClick}
-        ></div>
-
-        {/* Bouton Rewind */}
-        <div
-          className={`absolute bg-cover hover:cursor-pointer ${
-            isRewinding
-              ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.png")]'
-              : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Backwards.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.png")]'
-          }`}
-          style={{
-            bottom: `${scaledValue(30)}px`,
-            left: `${scaledValue(63)}px`,
-            height: `${scaledValue(27)}px`,
-            width: `${scaledValue(27)}px`,
-          }}
-          onMouseDown={handleRewindClick}
-          onMouseUp={disableRewindClick}
-          onMouseLeave={disableRewindClick}
-        ></div>
-
-        {/* Bouton Forward */}
-        <div
-          className={`absolute bg-cover hover:cursor-pointer ${
-            isForwarding
-              ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.png")]'
-              : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Forward.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.png")]'
-          }`}
-          style={{
-            bottom: `${scaledValue(30)}px`,
-            left: `${scaledValue(96)}px`,
-            height: `${scaledValue(27)}px`,
-            width: `${scaledValue(27)}px`,
-          }}
-          onMouseDown={handleForwardClick}
-          onMouseUp={disableForwardClick}
-          onMouseLeave={disableForwardClick}
-        ></div>
+        >
+          <iframe
+            ref={playerRef}
+            width="100%"
+            height="400%"
+            src={`${src}?enablejsapi=1`}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
       </div>
+
+      {/* Bouton Exit */}
+      <div className={`absolute bg-[url('/vectors/ELEMENTS/BoutonsPlayer/Exit.png')] hover:bg-[url('/vectors/ELEMENTS/BoutonsPlayer/ExitHover.png')] bg-cover hover:cursor-pointer`}
+      style={{
+        top: `${scaledValue(20)}px`,
+        left: `${scaledValue(24)}px`,
+        height: `${scaledValue(25)}px`,
+        width: `${scaledValue(25)}px`,
+      }}
+      ></div>
+
+      {/* Bouton Play */}
+      <div
+        className={`absolute bg-cover hover:cursor-pointer ${playButtonClass()}`}
+        style={{
+          bottom: `${scaledValue(30)}px`,
+          left: `${scaledValue(30)}px`,
+          height: `${scaledValue(27)}px`,
+          width: `${scaledValue(27)}px`,
+        }}
+        onClick={handlePlayClick}
+        onMouseDown={handlePlayMouseDown}
+        onMouseUp={handlePlayMouseUp}
+        onMouseEnter={handlePlayMouseEnter}
+        onMouseLeave={handlePlayMouseLeave}
+      ></div>
+
+      {/* Bouton Mute */}
+      <div
+        className={`absolute bg-cover hover:cursor-pointer ${
+          isMuted
+            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png")]'
+            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Mute.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteHover.png")]'
+        }`}
+        style={{
+          bottom: `${scaledValue(30)}px`,
+          right: `${scaledValue(95)}px`,
+          height: `${scaledValue(27)}px`,
+          width: `${scaledValue(27)}px`,
+        }}
+        onClick={handleMuteClick}
+      ></div>
+
+      {/* Bouton VolumeDown */}
+      <div
+        className={`absolute bg-cover hover:cursor-pointer ${
+          isVolumeDown
+            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.png")]'
+            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDown.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.png")]'
+        }`}
+        style={{
+          bottom: `${scaledValue(30)}px`,
+          right: `${scaledValue(62)}px`,
+          height: `${scaledValue(27)}px`,
+          width: `${scaledValue(27)}px`,
+        }}
+        onClick={handleVolumeDownClick}
+      ></div>
+
+      {/* Bouton VolumeUp */}
+      <div
+        className={`absolute bg-cover hover:cursor-pointer ${
+          isVolumeUp
+            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.png")]'
+            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.png")]'
+        }`}
+        style={{
+          bottom: `${scaledValue(30)}px`,
+          right: `${scaledValue(29)}px`,
+          height: `${scaledValue(27)}px`,
+          width: `${scaledValue(27)}px`,
+        }}
+        onClick={handleVolumeUpClick}
+      ></div>
+
+      {/* Bouton Rewind */}
+      <div
+        className={`absolute bg-cover hover:cursor-pointer ${
+          isRewinding
+            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.png")]'
+            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Backwards.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.png")]'
+        }`}
+        style={{
+          bottom: `${scaledValue(30)}px`,
+          left: `${scaledValue(63)}px`,
+          height: `${scaledValue(27)}px`,
+          width: `${scaledValue(27)}px`,
+        }}
+        onMouseDown={handleRewindClick}
+        onMouseUp={disableRewindClick}
+        onMouseLeave={disableRewindClick}
+      ></div>
+
+      {/* Bouton Forward */}
+      <div
+        className={`absolute bg-cover hover:cursor-pointer ${
+          isForwarding
+            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.png")]'
+            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Forward.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.png")]'
+        }`}
+        style={{
+          bottom: `${scaledValue(30)}px`,
+          left: `${scaledValue(96)}px`,
+          height: `${scaledValue(27)}px`,
+          width: `${scaledValue(27)}px`,
+        }}
+        onMouseDown={handleForwardClick}
+        onMouseUp={disableForwardClick}
+        onMouseLeave={disableForwardClick}
+      ></div>
+    </div>
+
+        </div>
+      )}
     </div>
   );
 };
