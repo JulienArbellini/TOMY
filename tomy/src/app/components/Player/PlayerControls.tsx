@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface PlayerControlsProps {
   handlePlayClick: () => void;
@@ -45,6 +45,22 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
 }) => {
   const scaledValue = (value: number) => value * scale;
 
+  // State for tracking mouse hover and click for each button
+  const [isMutePressed, setIsMutePressed] = useState(false);
+  const [isMuteHovering, setIsMuteHovering] = useState(false);
+
+  const [isVolumeDownPressed, setIsVolumeDownPressed] = useState(false);
+  const [isVolumeDownHovering, setIsVolumeDownHovering] = useState(false);
+
+  const [isVolumeUpPressed, setIsVolumeUpPressed] = useState(false);
+  const [isVolumeUpHovering, setIsVolumeUpHovering] = useState(false);
+
+  const [isRewindPressed, setIsRewindPressed] = useState(false);
+  const [isRewindHovering, setIsRewindHovering] = useState(false);
+
+  const [isForwardPressed, setIsForwardPressed] = useState(false);
+  const [isForwardHovering, setIsForwardHovering] = useState(false);
+
   const playButtonClass = () => {
     if (isPlaying) {
       if (isPressed) {
@@ -63,6 +79,57 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
       }
       return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Play.png")]';
     }
+  };
+
+  // Function for changing button images based on state (Mute example)
+  const muteButtonClass = () => {
+    if (isMutePressed) {
+      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png")]';
+    }
+    if (isMuteHovering) {
+      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteHover.png")]';
+    }
+    return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Mute.png")]';
+  };
+
+  const volumeDownButtonClass = () => {
+    if (isVolumeDownPressed) {
+      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.png")]';
+    }
+    if (isVolumeDownHovering) {
+      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.png")]';
+    }
+    return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDown.png")]';
+  };
+
+  const volumeUpButtonClass = () => {
+    if (isVolumeUpPressed) {
+      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.png")]';
+    }
+    if (isVolumeUpHovering) {
+      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.png")]';
+    }
+    return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.png")]';
+  };
+
+  const rewindButtonClass = () => {
+    if (isRewindPressed) {
+      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.png")]';
+    }
+    if (isRewindHovering) {
+      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.png")]';
+    }
+    return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Backwards.png")]';
+  };
+
+  const forwardButtonClass = () => {
+    if (isForwardPressed) {
+      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.png")]';
+    }
+    if (isForwardHovering) {
+      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.png")]';
+    }
+    return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Forward.png")]';
   };
 
   return (
@@ -96,8 +163,8 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
         onMouseLeave={handlePlayMouseLeave}
       ></div>
 
-            {/* Bouton Mute */}
-            <div
+      {/* Bouton Mute */}
+      <div
         className={`absolute bg-cover hover:cursor-pointer ${
           isMuted
             ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png")]'
@@ -112,13 +179,10 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
         onClick={handleMuteClick}
       ></div>
 
+
       {/* Volume Down */}
       <div
-        className={`absolute bg-cover hover:cursor-pointer ${
-          isVolumeDown
-            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.png")]'
-            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDown.png")]'
-        } hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.png")]`}
+        className={`absolute bg-cover hover:cursor-pointer ${volumeDownButtonClass()}`}
         style={{
           bottom: `${scaledValue(30)}px`,
           right: `${scaledValue(62)}px`,
@@ -126,15 +190,18 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
           width: `${scaledValue(23)}px`,
         }}
         onClick={handleVolumeDownClick}
-      />
+        onMouseDown={() => setIsVolumeDownPressed(true)}
+        onMouseUp={() => setIsVolumeDownPressed(false)}
+        onMouseEnter={() => setIsVolumeDownHovering(true)}
+        onMouseLeave={() => {
+          setIsVolumeDownHovering(false);
+          setIsVolumeDownPressed(false);
+        }}
+      ></div>
 
       {/* Volume Up */}
       <div
-        className={`absolute bg-cover hover:cursor-pointer ${
-          isVolumeUp
-            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.png")]'
-            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.png")]'
-        } hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.png")]`}
+        className={`absolute bg-cover hover:cursor-pointer ${volumeUpButtonClass()}`}
         style={{
           bottom: `${scaledValue(30)}px`,
           right: `${scaledValue(29)}px`,
@@ -142,15 +209,18 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
           width: `${scaledValue(23)}px`,
         }}
         onClick={handleVolumeUpClick}
-      />
+        onMouseDown={() => setIsVolumeUpPressed(true)}
+        onMouseUp={() => setIsVolumeUpPressed(false)}
+        onMouseEnter={() => setIsVolumeUpHovering(true)}
+        onMouseLeave={() => {
+          setIsVolumeUpHovering(false);
+          setIsVolumeUpPressed(false);
+        }}
+      ></div>
 
       {/* Rewind */}
       <div
-        className={`absolute bg-cover hover:cursor-pointer ${
-          isRewinding
-            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.png")]'
-            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Backwards.png")]'
-        } hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.png")]`}
+        className={`absolute bg-cover hover:cursor-pointer ${rewindButtonClass()}`}
         style={{
           bottom: `${scaledValue(30)}px`,
           left: `${scaledValue(63)}px`,
@@ -158,15 +228,18 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
           width: `${scaledValue(23)}px`,
         }}
         onClick={handleRewindClick}
-      />
+        onMouseDown={() => setIsRewindPressed(true)}
+        onMouseUp={() => setIsRewindPressed(false)}
+        onMouseEnter={() => setIsRewindHovering(true)}
+        onMouseLeave={() => {
+          setIsRewindHovering(false);
+          setIsRewindPressed(false);
+        }}
+      ></div>
 
       {/* Forward */}
       <div
-        className={`absolute bg-cover hover:cursor-pointer ${
-          isForwarding
-            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.png")]'
-            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Forward.png")]'
-        } hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.png")]`}
+        className={`absolute bg-cover hover:cursor-pointer ${forwardButtonClass()}`}
         style={{
           bottom: `${scaledValue(30)}px`,
           left: `${scaledValue(96)}px`,
@@ -174,7 +247,14 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
           width: `${scaledValue(23)}px`,
         }}
         onClick={handleForwardClick}
-      />
+        onMouseDown={() => setIsForwardPressed(true)}
+        onMouseUp={() => setIsForwardPressed(false)}
+        onMouseEnter={() => setIsForwardHovering(true)}
+        onMouseLeave={() => {
+          setIsForwardHovering(false);
+          setIsForwardPressed(false);
+        }}
+      ></div>
     </div>
   );
 };
