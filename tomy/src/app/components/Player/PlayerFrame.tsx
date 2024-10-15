@@ -15,7 +15,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({ playerRef, isPlayingAndDelay,
     <div
       className="relative flex justify-center items-center"
       style={{
-        height: `${scaledValue(520)}px`,
+        height: `${scaledValue(550)}px`,
         width: `${scaledValue(640)}px`,
       }}
     >
@@ -23,7 +23,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({ playerRef, isPlayingAndDelay,
     src="/vectors/ELEMENTS/Cadres/Cadre1.png"
     alt=""
     style={{
-        height: `${scaledValue(520)}px`,
+        height: `${scaledValue(560)}px`,
         width: `${scaledValue(635)}px`,
     }}
     />
@@ -32,9 +32,9 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({ playerRef, isPlayingAndDelay,
     alt=""
     className={`absolute`}
     style={{
-        top: `${scaledValue(50)}px`,
+        top: `${scaledValue(45)}px`,
         left: `${scaledValue(26)}px`,
-        height: `${scaledValue(409)}px`,
+        height: `${scaledValue(446)}px`,
         width: `${scaledValue(592)}px`,
         zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0, // Affiche l'écran noir à la fin de la vidéo
     }}
@@ -54,9 +54,9 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({ playerRef, isPlayingAndDelay,
       <div
         className="absolute overflow-hidden"
         style={{
-          top: `${scaledValue(53)}px`,
+          top: `${scaledValue(50)}px`,
           left: `${scaledValue(28)}px`,
-          height: `${scaledValue(400)}px`,
+          height: `${scaledValue(437)}px`,
           width: `${scaledValue(590)}px`,
         }}
       >
