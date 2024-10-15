@@ -245,53 +245,53 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
             width: `${scaledValue(645)}px`,
           }}
         >
-          <div
-      className="relative flex justify-center items-center"
-      style={{
-        height: `${scaledValue(555)}px`,
-        width: `${scaledValue(645)}px`,
-      }}
-    >
-      <img
-        src="/vectors/ELEMENTS/Cadres/Cadre1.png"
-        alt=""
-        style={{
-          height: `${scaledValue(555)}px`,
-          width: `${scaledValue(645)}px`,
-        }}
-      />
-      <img
-        src="/vectors/ELEMENTS/Cadres/EcranNoir.png"
-        alt=""
-        className={`absolute`}
-        style={{
-          top: `${scaledValue(60)}px`,
-          left: `${scaledValue(26)}px`,
-          height: `${scaledValue(430)}px`,
-          width: `${scaledValue(602)}px`,
-          zIndex: isPlayingAndDelay ? 20 : 0,
-        }}
-      />
-      <img 
-        src="/vectors/ELEMENTS/Cadres/vitre.png"
-        alt="" 
-        className="absolute z-10 top-[50px] left-[33px] h-[440px] w-[586px] opacity-20" 
-        style={{
-          top: `${scaledValue(66)}px`,
-          left: `${scaledValue(30)}px`,
-          height: `${scaledValue(418)}px`,
-          width: `${scaledValue(593)}px`,
-        }}
-      />
-      <div
-        className="absolute overflow-hidden"
-        style={{
-          top: `${scaledValue(67)}px`,
-          left: `${scaledValue(33)}px`,
-          height: `${scaledValue(415)}px`,
-          width: `${scaledValue(590)}px`,
-        }}
-      >
+        <div
+          className="relative flex justify-center items-center"
+          style={{
+            height: `${scaledValue(555)}px`,
+            width: `${scaledValue(645)}px`,
+          }}
+        >
+        <img
+          src="/vectors/ELEMENTS/Cadres/Cadre1.png"
+          alt=""
+          style={{
+            height: `${scaledValue(555)}px`,
+            width: `${scaledValue(645)}px`,
+          }}
+        />
+        <img
+          src="/vectors/ELEMENTS/Cadres/EcranNoir.png"
+          alt=""
+          className={`absolute`}
+          style={{
+            top: `${scaledValue(60)}px`,
+            left: `${scaledValue(26)}px`,
+            height: `${scaledValue(430)}px`,
+            width: `${scaledValue(602)}px`,
+            zIndex: isPlayingAndDelay ? 20 : 0,
+          }}
+        />
+        <img 
+          src="/vectors/ELEMENTS/Cadres/vitre.png"
+          alt="" 
+          className="absolute z-10 top-[50px] left-[33px] h-[440px] w-[586px] opacity-20" 
+          style={{
+            top: `${scaledValue(66)}px`,
+            left: `${scaledValue(30)}px`,
+            height: `${scaledValue(418)}px`,
+            width: `${scaledValue(593)}px`,
+          }}
+        />
+        <div
+          className="absolute overflow-hidden"
+          style={{
+            top: `${scaledValue(67)}px`,
+            left: `${scaledValue(33)}px`,
+            height: `${scaledValue(415)}px`,
+            width: `${scaledValue(590)}px`,
+          }}
+        >
         <div
           className="absolute"
           style={{
@@ -301,16 +301,16 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
             width: `${scaledValue(586)}px`,
           }}
         >
-          <iframe
-            ref={playerRef}
-            width="100%"
-            height="400%"
-            src={`${src}?enablejsapi=1`}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+        <iframe
+          ref={playerRef}
+          width="100%"
+          height="400%"
+          src={`${src}?enablejsapi=1`}
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
         </div>
       </div>
 

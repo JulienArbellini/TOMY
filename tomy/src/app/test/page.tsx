@@ -7,7 +7,7 @@ import MovieModal from '../components/MovieModal';
 import TomyIslandModal from '../components/TomyIslandModal';
 import WebcamModal from '../components/WebcamModal';
 import MusicModal from '../components/MusicModal';
-import Player from '../components/Player';
+import Player from '../components/Player/Player';
 
 
 
