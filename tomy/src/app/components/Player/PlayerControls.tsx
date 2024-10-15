@@ -86,8 +86,8 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
         style={{
           bottom: `${scaledValue(30)}px`,
           left: `${scaledValue(30)}px`,
-          height: `${scaledValue(24)}px`,
-          width: `${scaledValue(24)}px`,
+          height: `${scaledValue(23)}px`,
+          width: `${scaledValue(23)}px`,
         }}
         onClick={handlePlayClick}
         onMouseDown={handlePlayMouseDown}
@@ -106,8 +106,8 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
         style={{
           bottom: `${scaledValue(30)}px`,
           right: `${scaledValue(95)}px`,
-          height: `${scaledValue(24)}px`,
-          width: `${scaledValue(24)}px`,
+          height: `${scaledValue(23)}px`,
+          width: `${scaledValue(23)}px`,
         }}
         onClick={handleMuteClick}
       ></div>
@@ -122,8 +122,8 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
         style={{
           bottom: `${scaledValue(30)}px`,
           right: `${scaledValue(62)}px`,
-          height: `${scaledValue(24)}px`,
-          width: `${scaledValue(24)}px`,
+          height: `${scaledValue(23)}px`,
+          width: `${scaledValue(23)}px`,
         }}
         onClick={handleVolumeDownClick}
       />
@@ -138,8 +138,8 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
         style={{
           bottom: `${scaledValue(30)}px`,
           right: `${scaledValue(29)}px`,
-          height: `${scaledValue(24)}px`,
-          width: `${scaledValue(24)}px`,
+          height: `${scaledValue(23)}px`,
+          width: `${scaledValue(23)}px`,
         }}
         onClick={handleVolumeUpClick}
       />
@@ -154,8 +154,8 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
         style={{
           bottom: `${scaledValue(30)}px`,
           left: `${scaledValue(63)}px`,
-          height: `${scaledValue(24)}px`,
-          width: `${scaledValue(24)}px`,
+          height: `${scaledValue(23)}px`,
+          width: `${scaledValue(23)}px`,
         }}
         onClick={handleRewindClick}
       />
@@ -170,8 +170,8 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
         style={{
           bottom: `${scaledValue(30)}px`,
           left: `${scaledValue(96)}px`,
-          height: `${scaledValue(24)}px`,
-          width: `${scaledValue(24)}px`,
+          height: `${scaledValue(23)}px`,
+          width: `${scaledValue(23)}px`,
         }}
         onClick={handleForwardClick}
       />
