@@ -27,12 +27,18 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
   const playerRef = useRef<HTMLIFrameElement | null>(null);
   const [player, setPlayer] = useState<any>(null);
   const [scale, setScale] = useState(1);
+  const [isVideoEnded, setIsVideoEnded] = useState(false);
+
 
   const handleStateChange = (event: any) => {
     if (event.data === window.YT.PlayerState.PLAYING) {
       setIsPlayingAndDelay(false);
+      setIsVideoEnded(false); // Réinitialise l'état si la vidéo recommence à jouer
+    } else if (event.data === window.YT.PlayerState.ENDED) {
+      setIsVideoEnded(true); // La vidéo est terminée, affichage de l'écran noir
     }
   };
+  
   
 
   useEffect(() => {
@@ -133,7 +139,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
   return (
     <div className="absolute h-screen w-full flex justify-center items-center">
       <div className='relative'>
-        <PlayerFrame playerRef={playerRef} isPlayingAndDelay={isPlayingAndDelay} scale={scale} src={src} />
+        <PlayerFrame playerRef={playerRef} isPlayingAndDelay={isPlayingAndDelay} isVideoEnded={isVideoEnded} scale={scale} src={src} />
         <PlayerControls
             handlePlayClick={handlePlayClick}
             handleMuteClick={handleMuteClick}

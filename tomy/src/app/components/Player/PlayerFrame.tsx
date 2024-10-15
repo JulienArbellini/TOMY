@@ -3,11 +3,12 @@ import React from 'react';
 interface PlayerFrameProps {
   playerRef: React.RefObject<HTMLIFrameElement>;
   isPlayingAndDelay: boolean;
+  isVideoEnded: boolean;
   scale: number;
   src?: string;
 }
 
-const PlayerFrame: React.FC<PlayerFrameProps> = ({ playerRef, isPlayingAndDelay, scale, src }) => {
+const PlayerFrame: React.FC<PlayerFrameProps> = ({ playerRef, isPlayingAndDelay, isVideoEnded, scale, src }) => {
   const scaledValue = (value: number) => value * scale;
 
   return (
@@ -18,26 +19,27 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({ playerRef, isPlayingAndDelay,
         width: `${scaledValue(640)}px`,
       }}
     >
-      <img
-        src="/vectors/ELEMENTS/Cadres/Cadre1.png"
-        alt=""
-        style={{
-          height: `${scaledValue(555)}px`,
-          width: `${scaledValue(635)}px`,
-        }}
-      />
-      <img
-        src="/vectors/ELEMENTS/Cadres/EcranNoir.png"
-        alt=""
-        className={`absolute`}
-        style={{
-          top: `${scaledValue(60)}px`,
-          left: `${scaledValue(26)}px`,
-          height: `${scaledValue(430)}px`,
-          width: `${scaledValue(592)}px`,
-          zIndex: isPlayingAndDelay ? 20 : 0,
-        }}
-      />
+    <img
+    src="/vectors/ELEMENTS/Cadres/Cadre1.png"
+    alt=""
+    style={{
+        height: `${scaledValue(555)}px`,
+        width: `${scaledValue(635)}px`,
+    }}
+    />
+    <img
+    src="/vectors/ELEMENTS/Cadres/EcranNoir.png"
+    alt=""
+    className={`absolute`}
+    style={{
+        top: `${scaledValue(60)}px`,
+        left: `${scaledValue(26)}px`,
+        height: `${scaledValue(430)}px`,
+        width: `${scaledValue(592)}px`,
+        zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0, // Affiche l'écran noir à la fin de la vidéo
+    }}
+    />
+
       <img 
         src="/vectors/ELEMENTS/Cadres/vitre.png"
         alt="" 
