@@ -23,18 +23,29 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({ playerRef, isPlayingAndDelay,
     src="/vectors/ELEMENTS/Cadres/Cadre1.png"
     alt=""
     style={{
-        height: `${scaledValue(560)}px`,
-        width: `${scaledValue(635)}px`,
+        height: `${scaledValue(538)}px`,
+        width: `${scaledValue(638)}px`,
     }}
     />
+    {/* <img
+    src="/vectors/ELEMENTS/Cadres/MODEL.png"
+    alt=""
+    className={`absolute opacity-65`}
+    style={{
+        // height: `${scaledValue(560)}px`,
+        // width: `${scaledValue(635)}px`,
+        zIndex: 40,
+    }}
+    /> */}
+    
     <img
     src="/vectors/ELEMENTS/Cadres/EcranNoir.png"
     alt=""
     className={`absolute`}
     style={{
-        top: `${scaledValue(45)}px`,
+        top: `${scaledValue(43)}px`,
         left: `${scaledValue(26)}px`,
-        height: `${scaledValue(446)}px`,
+        height: `${scaledValue(444)}px`,
         width: `${scaledValue(592)}px`,
         zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0, // Affiche l'écran noir à la fin de la vidéo
     }}
@@ -43,19 +54,19 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({ playerRef, isPlayingAndDelay,
       <img 
         src="/vectors/ELEMENTS/Cadres/vitre.png"
         alt="" 
-        className="absolute z-10 opacity-5"
+        className="absolute z-10 opacity-0"
         style={{
           top: `${scaledValue(55)}px`,
           left: `${scaledValue(30)}px`,
-          height: `${scaledValue(400)}px`,
+          height: `${scaledValue(440)}px`,
           width: `${scaledValue(593)}px`,
         }}
       />
       <div
         className="absolute overflow-hidden"
         style={{
-          top: `${scaledValue(50)}px`,
-          left: `${scaledValue(28)}px`,
+          top: `${scaledValue(47)}px`,
+          left: `${scaledValue(29)}px`,
           height: `${scaledValue(437)}px`,
           width: `${scaledValue(590)}px`,
         }}

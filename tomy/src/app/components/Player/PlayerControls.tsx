@@ -138,94 +138,40 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
       <div
         className={`absolute bg-[url('/vectors/ELEMENTS/BoutonsPlayer/Exit.png')] hover:bg-[url('/vectors/ELEMENTS/BoutonsPlayer/ExitHover.png')] bg-cover hover:cursor-pointer`}
         style={{
-          top: `${scaledValue(20)}px`,
-          left: `${scaledValue(27)}px`,
-          height: `${scaledValue(20)}px`,
-          width: `${scaledValue(20)}px`,
+          top: `${scaledValue(24)}px`,
+          left: `${scaledValue(24)}px`,
+          height: `${scaledValue(16)}px`,
+          width: `${scaledValue(16)}px`,
           zIndex: 50, // Pour s'assurer que le bouton est visible
         }}
         onClick={() => console.log('Exit button clicked')}
       />
 
-      {/* Bouton Play */}
-      <div
+          {/* Bouton Play */}
+    <div
         className={`absolute bg-cover hover:cursor-pointer ${playButtonClass()}`}
         style={{
-          bottom: `${scaledValue(30)}px`,
-          left: `${scaledValue(30)}px`,
-          height: `${scaledValue(23)}px`,
-          width: `${scaledValue(23)}px`,
+            bottom: `${scaledValue(32)}px`,
+            left: `${scaledValue(26)}px`,
+            height: `${scaledValue(25)}px`,
+            width: `${scaledValue(25)}px`,
         }}
         onClick={handlePlayClick}
         onMouseDown={handlePlayMouseDown}
         onMouseUp={handlePlayMouseUp}
         onMouseEnter={handlePlayMouseEnter}
         onMouseLeave={handlePlayMouseLeave}
-      ></div>
+    ></div>
 
-      {/* Bouton Mute */}
-      <div
-        className={`absolute bg-cover hover:cursor-pointer ${
-          isMuted
-            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png")]'
-            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Mute.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteHover.png")]'
-        }`}
-        style={{
-          bottom: `${scaledValue(30)}px`,
-          right: `${scaledValue(95)}px`,
-          height: `${scaledValue(23)}px`,
-          width: `${scaledValue(23)}px`,
-        }}
-        onClick={handleMuteClick}
-      ></div>
-
-
-      {/* Volume Down */}
-      <div
-        className={`absolute bg-cover hover:cursor-pointer ${volumeDownButtonClass()}`}
-        style={{
-          bottom: `${scaledValue(30)}px`,
-          right: `${scaledValue(62)}px`,
-          height: `${scaledValue(23)}px`,
-          width: `${scaledValue(23)}px`,
-        }}
-        onClick={handleVolumeDownClick}
-        onMouseDown={() => setIsVolumeDownPressed(true)}
-        onMouseUp={() => setIsVolumeDownPressed(false)}
-        onMouseEnter={() => setIsVolumeDownHovering(true)}
-        onMouseLeave={() => {
-          setIsVolumeDownHovering(false);
-          setIsVolumeDownPressed(false);
-        }}
-      ></div>
-
-      {/* Volume Up */}
-      <div
-        className={`absolute bg-cover hover:cursor-pointer ${volumeUpButtonClass()}`}
-        style={{
-          bottom: `${scaledValue(30)}px`,
-          right: `${scaledValue(29)}px`,
-          height: `${scaledValue(23)}px`,
-          width: `${scaledValue(23)}px`,
-        }}
-        onClick={handleVolumeUpClick}
-        onMouseDown={() => setIsVolumeUpPressed(true)}
-        onMouseUp={() => setIsVolumeUpPressed(false)}
-        onMouseEnter={() => setIsVolumeUpHovering(true)}
-        onMouseLeave={() => {
-          setIsVolumeUpHovering(false);
-          setIsVolumeUpPressed(false);
-        }}
-      ></div>
 
       {/* Rewind */}
       <div
         className={`absolute bg-cover hover:cursor-pointer ${rewindButtonClass()}`}
         style={{
-          bottom: `${scaledValue(30)}px`,
-          left: `${scaledValue(63)}px`,
-          height: `${scaledValue(23)}px`,
-          width: `${scaledValue(23)}px`,
+          bottom: `${scaledValue(32)}px`,
+          left: `${scaledValue(26+25+7)}px`,
+          height: `${scaledValue(25)}px`,
+          width: `${scaledValue(25)}px`,
         }}
         onClick={handleRewindClick}
         onMouseDown={() => setIsRewindPressed(true)}
@@ -241,10 +187,10 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
       <div
         className={`absolute bg-cover hover:cursor-pointer ${forwardButtonClass()}`}
         style={{
-          bottom: `${scaledValue(30)}px`,
-          left: `${scaledValue(96)}px`,
-          height: `${scaledValue(23)}px`,
-          width: `${scaledValue(23)}px`,
+          bottom: `${scaledValue(32)}px`,
+          left: `${scaledValue(26+(25*2)+(7*2))}px`,
+          height: `${scaledValue(25)}px`,
+          width: `${scaledValue(25)}px`,
         }}
         onClick={handleForwardClick}
         onMouseDown={() => setIsForwardPressed(true)}
@@ -255,6 +201,64 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
           setIsForwardPressed(false);
         }}
       ></div>
+
+
+      {/* Bouton Mute */}
+      <div
+        className={`absolute bg-cover hover:cursor-pointer ${
+          isMuted
+            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png")]'
+            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Mute.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteHover.png")]'
+        }`}
+        style={{
+          bottom: `${scaledValue(32)}px`,
+          right: `${scaledValue(20+(25*2)+7+8)}px`,
+          height: `${scaledValue(25)}px`,
+          width: `${scaledValue(25)}px`,
+        }}
+        onClick={handleMuteClick}
+      ></div>
+
+
+      {/* Volume Down */}
+      <div
+        className={`absolute bg-cover hover:cursor-pointer ${volumeDownButtonClass()}`}
+        style={{
+          bottom: `${scaledValue(32)}px`,
+          right: `${scaledValue(20+25+7)}px`,
+          height: `${scaledValue(25)}px`,
+          width: `${scaledValue(25)}px`,
+        }}
+        onClick={handleVolumeDownClick}
+        onMouseDown={() => setIsVolumeDownPressed(true)}
+        onMouseUp={() => setIsVolumeDownPressed(false)}
+        onMouseEnter={() => setIsVolumeDownHovering(true)}
+        onMouseLeave={() => {
+          setIsVolumeDownHovering(false);
+          setIsVolumeDownPressed(false);
+        }}
+      ></div>
+
+      {/* Volume Up */}
+      <div
+        className={`absolute bg-cover hover:cursor-pointer ${volumeUpButtonClass()}`}
+        style={{
+          bottom: `${scaledValue(32)}px`,
+          right: `${scaledValue(20)}px`,
+          height: `${scaledValue(25)}px`,
+          width: `${scaledValue(25)}px`,
+        }}
+        onClick={handleVolumeUpClick}
+        onMouseDown={() => setIsVolumeUpPressed(true)}
+        onMouseUp={() => setIsVolumeUpPressed(false)}
+        onMouseEnter={() => setIsVolumeUpHovering(true)}
+        onMouseLeave={() => {
+          setIsVolumeUpHovering(false);
+          setIsVolumeUpPressed(false);
+        }}
+      ></div>
+
+
     </div>
   );
 };
