@@ -151,6 +151,8 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
             isMuted={isMuted}
             isRewinding={isRewinding}
             isForwarding={isForwarding}
+            isVolumeDown={isVolumeDown}
+            isVolumeUp={isVolumeUp}
             scale={scale}
             isPressed={isPressed}
             isHovering={isHovering}
