@@ -9,6 +9,7 @@ const nextConfig = {
 
 // next.config.js
 module.exports = {
+  reactStrictMode: false,
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // Modifie la config Webpack ici si nécessaire
     return config;

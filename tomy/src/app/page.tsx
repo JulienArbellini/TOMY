@@ -1,42 +1,44 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
-import ReactPlayer from 'react-player';
+import { AnimatePresence } from 'framer-motion';
+import ThreeDButton from './components/Start/ThreeDButton';
+import Announcement from "./components/Start/Announcement";
+import VideoPlayer from './components/Start/VideoPlayer';
 
 export default function Home() {
+  // États pour gérer l'affichage des composants
   const [showButton, setShowButton] = useState(false);
   const [showAnnouncement, setShowAnnouncement] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const [fadeOutAnnouncement, setFadeOutAnnouncement] = useState(false);
 
   useEffect(() => {
-    // Step 1: Fade in the button (0-1 seconds)
+    // Étape 1 : Afficher le bouton après 100ms
     const fadeInTimer = setTimeout(() => {
       setShowButton(true);
-    }, 100); // Short delay to ensure CSS transition applies
+    }, 100);
 
-    // Step 2: Keep the button visible (1-4 seconds)
+    // Étape 2 : Garder le bouton visible pendant 4 secondes
     const fadeOutTimer = setTimeout(() => {
       setShowButton(false);
-    }, 4000); // Wait 4 seconds before starting to fade out
+    }, 4000);
 
-    // Step 3: Show the announcement (6-7 seconds)
+    // Étape 3 : Afficher l'annonce après 6 secondes
     const showAnnouncementTimer = setTimeout(() => {
       setShowAnnouncement(true);
-    }, 6000); // Wait 6 seconds (5 seconds for button + 1 second idle)
+    }, 6000);
 
-    // Step 4: Fade out the announcement (after 4 seconds of being shown)
+    // Étape 4 : Faire disparaître l'annonce après 4 secondes
     const fadeOutAnnouncementTimer = setTimeout(() => {
       setFadeOutAnnouncement(true);
-    }, 10000); // Wait 10 seconds (6 seconds previous delays + 4 seconds visible)
+    }, 10000);
 
-    // Step 5: Show the video (after announcement fades out)
+    // Étape 5 : Afficher la vidéo après la disparition de l'annonce
     const showVideoTimer = setTimeout(() => {
       setShowAnnouncement(false);
       setShowVideo(true);
-    }, 11000); // Wait 11 seconds (10 seconds previous delays + 1 second fade out)
+    }, 11000);
 
     return () => {
       clearTimeout(fadeInTimer);
@@ -50,66 +52,24 @@ export default function Home() {
   return (
     <div className="relative w-screen h-screen bg-cover bg-[url('/images/bg.jpeg')]">
       <div className="flex flex-col justify-center items-center h-full w-full">
+        {/* Bouton 3D */}
         <AnimatePresence>
-          {showButton && (
-            <motion.a
-              href="/home"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
-              key="button"
-            >
-              <Image
-                src="/images/button.png"
-                alt="Button Image"
-                width={610}
-                height={150}
-              />
-            </motion.a>
-          )}
+          {showButton && <ThreeDButton href="/home" key="button" />}
         </AnimatePresence>
 
+        {/* Section pour l'annonce */}
         <AnimatePresence>
           {showAnnouncement && (
-            <motion.div
-              className={`w-[588px] h-[88px] flex justify-center items-center bg-slate-300 ${fadeOutAnnouncement ? 'opacity-0' : 'opacity-100'}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
-              key="announcement"
-            >
-              <div className="bg-black text-white p-2 rounded-lg h-full w-full text-6xl flex justify-center items-center">
-                <p>ANNONCEMENT</p>
-              </div>
-            </motion.div>
+            <Announcement fadeOut={fadeOutAnnouncement} key="announcement" />
           )}
         </AnimatePresence>
 
+        {/* Section pour la vidéo */}
         <AnimatePresence>
-          {showVideo && (
-            <motion.div
-              className="absolute top-0 left-0 w-full h-full"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
-              key="video"
-            >
-              <ReactPlayer
-                url="video/Bourdon.mp4"
-                playing
-                loop
-                muted
-                width="100%"
-                height="100%"
-                className="object-cover"
-              />
-            </motion.div>
-          )}
+          {showVideo && <VideoPlayer key="video" />}
         </AnimatePresence>
 
+        {/* Bouton "Skip Intro" */}
         <a
           href="/home"
           className="absolute bottom-10 right-10 bg-black text-white p-2 rounded"
