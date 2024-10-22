@@ -8,7 +8,13 @@ interface PlayerFrameProps {
   src?: string;
 }
 
-const PlayerFrame: React.FC<PlayerFrameProps> = ({ playerRef, isPlayingAndDelay, isVideoEnded, scale, src }) => {
+const PlayerFrame: React.FC<PlayerFrameProps> = ({
+  playerRef,
+  isPlayingAndDelay,
+  isVideoEnded,
+  scale,
+  src,
+}) => {
   const scaledValue = (value: number) => value * scale;
 
   return (
@@ -19,39 +25,44 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({ playerRef, isPlayingAndDelay,
         width: `${scaledValue(640)}px`,
       }}
     >
-    <img
-    src="/vectors/ELEMENTS/Cadres/Cadre1.png"
-    alt=""
-    style={{
-        height: `${scaledValue(538)}px`,
-        width: `${scaledValue(638)}px`,
-    }}
-    />
-    {/* <img
-    src="/vectors/ELEMENTS/Cadres/MODEL.png"
-    alt=""
-    className={`absolute opacity-65`}
-    style={{
-        // height: `${scaledValue(560)}px`,
-        // width: `${scaledValue(635)}px`,
-        zIndex: 40,
-    }}
-    /> */}
-    
-    <img
-    src="/vectors/ELEMENTS/Cadres/EcranNoir.png"
-    alt=""
-    className={`absolute`}
-    style={{
-        top: `${scaledValue(43)}px`,
-        left: `${scaledValue(26)}px`,
-        height: `${scaledValue(444)}px`,
-        width: `${scaledValue(592)}px`,
-        zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0, // Affiche l'écran noir à la fin de la vidéo
-    }}
-    />
+      {/* Cadre Principal */}
+      <img
+        src="/vectors/ELEMENTS/Cadres/Cadre1.png"
+        alt="Cadre décoratif autour de la vidéo"
+        style={{
+          height: `${scaledValue(538)}px`,
+          width: `${scaledValue(638)}px`,
+        }}
+      />
 
-      <img 
+      {/* Écran Noir pour la Pause ou la Fin */}
+      {(isPlayingAndDelay || isVideoEnded) && (
+        <img
+          src="/vectors/ELEMENTS/Cadres/EcranNoir.png"
+          alt="Écran noir lorsque la vidéo est en pause ou terminée"
+          className="absolute"
+          style={{
+            top: `${scaledValue(43)}px`,
+            left: `${scaledValue(26)}px`,
+            height: `${scaledValue(444)}px`,
+            width: `${scaledValue(592)}px`,
+            zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0, // Affiche l'écran noir à la fin de la vidéo
+          }}
+        />
+      )}
+
+      {/* Conteneur de la Vidéo */}
+      <div
+        className="absolute overflow-hidden"
+        style={{
+          top: `${scaledValue(47)}px`,
+          left: `${scaledValue(29)}px`,
+          height: `${scaledValue(437)}px`,
+          width: `${scaledValue(590)}px`,
+        }}
+      >
+
+<img 
         src="/vectors/ELEMENTS/Cadres/vitre.png"
         alt="" 
         className="absolute z-10 opacity-0"
@@ -62,15 +73,6 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({ playerRef, isPlayingAndDelay,
           width: `${scaledValue(593)}px`,
         }}
       />
-      <div
-        className="absolute overflow-hidden"
-        style={{
-          top: `${scaledValue(47)}px`,
-          left: `${scaledValue(29)}px`,
-          height: `${scaledValue(437)}px`,
-          width: `${scaledValue(590)}px`,
-        }}
-      >
         <div
           className="absolute"
           style={{
@@ -78,18 +80,21 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({ playerRef, isPlayingAndDelay,
             left: 0,
             height: `${scaledValue(435)}px`,
             width: `${scaledValue(586)}px`,
-          }}
-        >
-          <iframe
-            ref={playerRef}
-            width="100%"
+        }}
+      >
+        <iframe
+          ref={playerRef}
+          width="100%"
             height="400%"
-            src={`${src}?enablejsapi=1`}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+          src={`${src}?enablejsapi=1`}
+          title="Lecteur vidéo YouTube"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          style={{
+            objectFit: 'cover',
+          }}
+        ></iframe>
         </div>
       </div>
     </div>

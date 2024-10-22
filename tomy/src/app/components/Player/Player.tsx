@@ -16,30 +16,23 @@ declare global {
 
 const Player: React.FC<PlayerProps> = ({ src }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isPlayingAndDelay, setIsPlayingAndDelay] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
-  const [isVolumeDown, setVolumeDown] = useState(false);
-  const [isVolumeUp, setVolumeUp] = useState(false);
-  const [isRewinding, setIsRewinding] = useState(false);
-  const [isForwarding, setIsForwarding] = useState(false);
-  const [isPressed, setIsPressed] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
-  const playerRef = useRef<HTMLIFrameElement | null>(null);
   const [player, setPlayer] = useState<any>(null);
   const [scale, setScale] = useState(1);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
-
+  const playerRef = useRef<HTMLIFrameElement | null>(null);
 
   const handleStateChange = (event: any) => {
     if (event.data === window.YT.PlayerState.PLAYING) {
-      setIsPlayingAndDelay(false);
-      setIsVideoEnded(false); // Réinitialise l'état si la vidéo recommence à jouer
+      setIsPlaying(true);
+      setIsVideoEnded(false);
+    } else if (event.data === window.YT.PlayerState.PAUSED) {
+      setIsPlaying(false);
     } else if (event.data === window.YT.PlayerState.ENDED) {
-      setIsVideoEnded(true); // La vidéo est terminée, affichage de l'écran noir
+      setIsPlaying(false);
+      setIsVideoEnded(true);
     }
   };
-  
-  
 
   useEffect(() => {
     const tag = document.createElement('script');
@@ -52,7 +45,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
     window.onYouTubeIframeAPIReady = () => {
       const newPlayer = new window.YT.Player(playerRef.current, {
         events: {
-          onReady: (event: any) => {
+          onReady: () => {
             setPlayer(newPlayer);
           },
           onStateChange: handleStateChange,
@@ -71,95 +64,64 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
     handleResize();
     window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const handlePlayClick = () => {
     if (!player) return;
-    setIsPlaying(!isPlaying);
     isPlaying ? player.pauseVideo() : player.playVideo();
   };
 
   const handleMuteClick = () => {
     if (!player) return;
-  
-    setIsMuted((prevState) => {
-      if (prevState) {
-        player.unMute(); // Unmute le lecteur
-      } else {
-        player.mute(); // Mute le lecteur
-      }
-      return !prevState;
-    });
+    isMuted ? player.unMute() : player.mute();
+    setIsMuted(!isMuted);
   };
-  
+
   const handleVolumeDownClick = () => {
     if (!player) return;
-    const currentVolume = player.getVolume();
-    const newVolume = Math.max(currentVolume - 10, 0);
+    const newVolume = Math.max(player.getVolume() - 10, 0);
     player.setVolume(newVolume);
-    setVolumeDown(true);
-    setTimeout(() => setVolumeDown(false), 200);
   };
-  
+
   const handleVolumeUpClick = () => {
     if (!player) return;
-    const currentVolume = player.getVolume();
-    const newVolume = Math.min(currentVolume + 10, 100);
+    const newVolume = Math.min(player.getVolume() + 10, 100);
     player.setVolume(newVolume);
-    setVolumeUp(true);
-    setTimeout(() => setVolumeUp(false), 200);
   };
-  
+
   const handleRewindClick = () => {
     if (!player) return;
-    const currentTime = player.getCurrentTime();
-    const newTime = currentTime - 10; // Rewind de 10 secondes
-    player.seekTo(Math.max(newTime, 0), true);
-    setIsRewinding(!isRewinding);
-    if (!isRewinding) {
-      setIsForwarding(false); // Désactive Forward si Rewind est activé
-    }
+    const newTime = Math.max(player.getCurrentTime() - 10, 0);
+    player.seekTo(newTime, true);
   };
-  
+
   const handleForwardClick = () => {
     if (!player) return;
-    const currentTime = player.getCurrentTime();
-    const newTime = currentTime + 10; // Forward de 10 secondes
+    const newTime = Math.min(player.getCurrentTime() + 10, player.getDuration());
     player.seekTo(newTime, true);
-    setIsForwarding(!isForwarding);
-    if (!isForwarding) {
-      setIsRewinding(false); // Désactive Rewind si Forward est activé
-    }
   };
-  
 
   return (
     <div className="absolute h-screen w-full flex justify-center items-center">
-      <div className='relative'>
-        <PlayerFrame playerRef={playerRef} isPlayingAndDelay={isPlayingAndDelay} isVideoEnded={isVideoEnded} scale={scale} src={src} />
+      <div className="relative">
+        <PlayerFrame
+          playerRef={playerRef}
+          isPlayingAndDelay={!isPlaying}
+          isVideoEnded={isVideoEnded}
+          scale={scale}
+          src={src}
+        />
         <PlayerControls
-            handlePlayClick={handlePlayClick}
-            handleMuteClick={handleMuteClick}
-            handleVolumeDownClick={handleVolumeDownClick}
-            handleVolumeUpClick={handleVolumeUpClick}
-            handleRewindClick={handleRewindClick}
-            handleForwardClick={handleForwardClick}
-            isPlaying={isPlaying}
-            isMuted={isMuted}
-            isRewinding={isRewinding}
-            isForwarding={isForwarding}
-            isVolumeDown={isVolumeDown}
-            isVolumeUp={isVolumeUp}
-            scale={scale}
-            isPressed={isPressed}
-            isHovering={isHovering}
-            handlePlayMouseDown={() => setIsPressed(true)}
-            handlePlayMouseUp={() => setIsPressed(false)}
-            handlePlayMouseEnter={() => setIsHovering(true)}
-            handlePlayMouseLeave={() => setIsHovering(false)}
+          handlePlayClick={handlePlayClick}
+          handleMuteClick={handleMuteClick}
+          handleVolumeDownClick={handleVolumeDownClick}
+          handleVolumeUpClick={handleVolumeUpClick}
+          handleRewindClick={handleRewindClick}
+          handleForwardClick={handleForwardClick}
+          isPlaying={isPlaying}
+          isMuted={isMuted}
+          scale={scale}
         />
       </div>
     </div>

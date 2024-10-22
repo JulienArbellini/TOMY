@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import ControlButton from './ControlButton';
 
 interface PlayerControlsProps {
   handlePlayClick: () => void;
@@ -9,17 +10,7 @@ interface PlayerControlsProps {
   handleForwardClick: () => void;
   isPlaying: boolean;
   isMuted: boolean;
-  isRewinding: boolean;
-  isForwarding: boolean;
   scale: number;
-  isPressed: boolean;
-  isVolumeDown: boolean;
-  isVolumeUp: boolean;
-  isHovering: boolean;
-  handlePlayMouseDown: () => void;
-  handlePlayMouseUp: () => void;
-  handlePlayMouseEnter: () => void;
-  handlePlayMouseLeave: () => void;
 }
 
 const PlayerControls: React.FC<PlayerControlsProps> = ({
@@ -31,234 +22,130 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
   handleForwardClick,
   isPlaying,
   isMuted,
-  isRewinding,
-  isForwarding,
   scale,
-  isPressed,
-  isHovering,
-  isVolumeDown,
-  isVolumeUp,
-  handlePlayMouseDown,
-  handlePlayMouseUp,
-  handlePlayMouseEnter,
-  handlePlayMouseLeave,
 }) => {
   const scaledValue = (value: number) => value * scale;
-
-  // State for tracking mouse hover and click for each button
-  const [isMutePressed, setIsMutePressed] = useState(false);
-  const [isMuteHovering, setIsMuteHovering] = useState(false);
-
-  const [isVolumeDownPressed, setIsVolumeDownPressed] = useState(false);
-  const [isVolumeDownHovering, setIsVolumeDownHovering] = useState(false);
-
-  const [isVolumeUpPressed, setIsVolumeUpPressed] = useState(false);
-  const [isVolumeUpHovering, setIsVolumeUpHovering] = useState(false);
-
-  const [isRewindPressed, setIsRewindPressed] = useState(false);
-  const [isRewindHovering, setIsRewindHovering] = useState(false);
-
-  const [isForwardPressed, setIsForwardPressed] = useState(false);
-  const [isForwardHovering, setIsForwardHovering] = useState(false);
-
-  const playButtonClass = () => {
-    if (isPlaying) {
-      if (isPressed) {
-        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseClic.png")]';
-      }
-      if (isHovering) {
-        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseHover.png")]';
-      }
-      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Pause.png")]';
-    } else {
-      if (isPressed) {
-        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayClic.png")]';
-      }
-      if (isHovering) {
-        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayHover.png")]';
-      }
-      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Play.png")]';
-    }
-  };
-
-  // Function for changing button images based on state (Mute example)
-  const muteButtonClass = () => {
-    if (isMutePressed) {
-      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png")]';
-    }
-    if (isMuteHovering) {
-      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteHover.png")]';
-    }
-    return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Mute.png")]';
-  };
-
-  const volumeDownButtonClass = () => {
-    if (isVolumeDownPressed) {
-      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.png")]';
-    }
-    if (isVolumeDownHovering) {
-      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.png")]';
-    }
-    return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDown.png")]';
-  };
-
-  const volumeUpButtonClass = () => {
-    if (isVolumeUpPressed) {
-      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.png")]';
-    }
-    if (isVolumeUpHovering) {
-      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.png")]';
-    }
-    return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.png")]';
-  };
-
-  const rewindButtonClass = () => {
-    if (isRewindPressed) {
-      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.png")]';
-    }
-    if (isRewindHovering) {
-      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.png")]';
-    }
-    return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Backwards.png")]';
-  };
-
-  const forwardButtonClass = () => {
-    if (isForwardPressed) {
-      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.png")]';
-    }
-    if (isForwardHovering) {
-      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.png")]';
-    }
-    return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Forward.png")]';
-  };
 
   return (
     <div>
       {/* Bouton Exit */}
-      <div
-        className={`absolute bg-[url('/vectors/ELEMENTS/BoutonsPlayer/Exit.png')] hover:bg-[url('/vectors/ELEMENTS/BoutonsPlayer/ExitHover.png')] bg-cover hover:cursor-pointer`}
+      <ControlButton
+        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.png"
+        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.png"
+        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.png"
+        onClick={() => console.log('Exit button clicked')}
         style={{
           top: `${scaledValue(24)}px`,
           left: `${scaledValue(24)}px`,
           height: `${scaledValue(16)}px`,
           width: `${scaledValue(16)}px`,
-          zIndex: 50, // Pour s'assurer que le bouton est visible
+          zIndex: 50,
         }}
-        onClick={() => console.log('Exit button clicked')}
       />
 
-          {/* Bouton Play */}
-    <div
-        className={`absolute bg-cover hover:cursor-pointer ${playButtonClass()}`}
-        style={{
-            bottom: `${scaledValue(32)}px`,
-            left: `${scaledValue(26)}px`,
-            height: `${scaledValue(25)}px`,
-            width: `${scaledValue(25)}px`,
-        }}
+      {/* Bouton Play/Pause */}
+      <ControlButton
+        defaultIcon={
+          isPlaying
+            ? '/vectors/ELEMENTS/BoutonsPlayer/Pause.png'
+            : '/vectors/ELEMENTS/BoutonsPlayer/Play.png'
+        }
+        hoverIcon={
+          isPlaying
+            ? '/vectors/ELEMENTS/BoutonsPlayer/PauseHover.png'
+            : '/vectors/ELEMENTS/BoutonsPlayer/PlayHover.png'
+        }
+        clickedIcon={
+          isPlaying
+            ? '/vectors/ELEMENTS/BoutonsPlayer/PauseClic.png'
+            : '/vectors/ELEMENTS/BoutonsPlayer/PlayClic.png'
+        }
         onClick={handlePlayClick}
-        onMouseDown={handlePlayMouseDown}
-        onMouseUp={handlePlayMouseUp}
-        onMouseEnter={handlePlayMouseEnter}
-        onMouseLeave={handlePlayMouseLeave}
-    ></div>
-
-
-      {/* Rewind */}
-      <div
-        className={`absolute bg-cover hover:cursor-pointer ${rewindButtonClass()}`}
         style={{
           bottom: `${scaledValue(32)}px`,
-          left: `${scaledValue(26+25+7)}px`,
+          left: `${scaledValue(26)}px`,
           height: `${scaledValue(25)}px`,
           width: `${scaledValue(25)}px`,
         }}
+      />
+
+      {/* Bouton Rewind */}
+      <ControlButton
+        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Backwards.png"
+        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.png"
+        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.png"
         onClick={handleRewindClick}
-        onMouseDown={() => setIsRewindPressed(true)}
-        onMouseUp={() => setIsRewindPressed(false)}
-        onMouseEnter={() => setIsRewindHovering(true)}
-        onMouseLeave={() => {
-          setIsRewindHovering(false);
-          setIsRewindPressed(false);
-        }}
-      ></div>
-
-      {/* Forward */}
-      <div
-        className={`absolute bg-cover hover:cursor-pointer ${forwardButtonClass()}`}
         style={{
           bottom: `${scaledValue(32)}px`,
-          left: `${scaledValue(26+(25*2)+(7*2))}px`,
+          left: `${scaledValue(26 + 25 + 7)}px`,
           height: `${scaledValue(25)}px`,
           width: `${scaledValue(25)}px`,
         }}
-        onClick={handleForwardClick}
-        onMouseDown={() => setIsForwardPressed(true)}
-        onMouseUp={() => setIsForwardPressed(false)}
-        onMouseEnter={() => setIsForwardHovering(true)}
-        onMouseLeave={() => {
-          setIsForwardHovering(false);
-          setIsForwardPressed(false);
-        }}
-      ></div>
+      />
 
+      {/* Bouton Forward */}
+      <ControlButton
+        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Forward.png"
+        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.png"
+        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.png"
+        onClick={handleForwardClick}
+        style={{
+          bottom: `${scaledValue(32)}px`,
+          left: `${scaledValue(26 + (25 * 2) + (7 * 2))}px`,
+          height: `${scaledValue(25)}px`,
+          width: `${scaledValue(25)}px`,
+        }}
+      />
 
       {/* Bouton Mute */}
-      <div
-        className={`absolute bg-cover hover:cursor-pointer ${
+      <ControlButton
+        defaultIcon={
           isMuted
-            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png")]'
-            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Mute.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteHover.png")]'
-        }`}
-        style={{
-          bottom: `${scaledValue(32)}px`,
-          right: `${scaledValue(20+(25*2)+7+8)}px`,
-          height: `${scaledValue(25)}px`,
-          width: `${scaledValue(25)}px`,
-        }}
+            ? '/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png'
+            : '/vectors/ELEMENTS/BoutonsPlayer/Mute.png'
+        }
+        hoverIcon={
+          isMuted
+            ? '/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png'
+            : '/vectors/ELEMENTS/BoutonsPlayer/MuteHover.png'
+        }
+        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png"
         onClick={handleMuteClick}
-      ></div>
-
-
-      {/* Volume Down */}
-      <div
-        className={`absolute bg-cover hover:cursor-pointer ${volumeDownButtonClass()}`}
         style={{
           bottom: `${scaledValue(32)}px`,
-          right: `${scaledValue(20+25+7)}px`,
+          right: `${scaledValue(20 + (25 * 2) + 7 + 8)}px`,
           height: `${scaledValue(25)}px`,
           width: `${scaledValue(25)}px`,
         }}
-        onClick={handleVolumeDownClick}
-        onMouseDown={() => setIsVolumeDownPressed(true)}
-        onMouseUp={() => setIsVolumeDownPressed(false)}
-        onMouseEnter={() => setIsVolumeDownHovering(true)}
-        onMouseLeave={() => {
-          setIsVolumeDownHovering(false);
-          setIsVolumeDownPressed(false);
-        }}
-      ></div>
+      />
 
-      {/* Volume Up */}
-      <div
-        className={`absolute bg-cover hover:cursor-pointer ${volumeUpButtonClass()}`}
+      {/* Bouton Volume Down */}
+      <ControlButton
+        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeDown.png"
+        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.png"
+        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.png"
+        onClick={handleVolumeDownClick}
+        style={{
+          bottom: `${scaledValue(32)}px`,
+          right: `${scaledValue(20 + 25 + 7)}px`,
+          height: `${scaledValue(25)}px`,
+          width: `${scaledValue(25)}px`,
+        }}
+      />
+
+      {/* Bouton Volume Up */}
+      <ControlButton
+        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.png"
+        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.png"
+        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.png"
+        onClick={handleVolumeUpClick}
         style={{
           bottom: `${scaledValue(32)}px`,
           right: `${scaledValue(20)}px`,
           height: `${scaledValue(25)}px`,
           width: `${scaledValue(25)}px`,
         }}
-        onClick={handleVolumeUpClick}
-        onMouseDown={() => setIsVolumeUpPressed(true)}
-        onMouseUp={() => setIsVolumeUpPressed(false)}
-        onMouseEnter={() => setIsVolumeUpHovering(true)}
-        onMouseLeave={() => {
-          setIsVolumeUpHovering(false);
-          setIsVolumeUpPressed(false);
-        }}
-      ></div>
-
-
+      />
     </div>
   );
 };
