@@ -4,7 +4,7 @@ interface ControlButtonProps {
   defaultIcon: string;
   hoverIcon: string;
   clickedIcon: string;
-  onClick: () => void;
+  onClick?: () => void;
   style: {
     bottom?: string;
     left?: string;

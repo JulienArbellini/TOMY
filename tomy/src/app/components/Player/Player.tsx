@@ -1,130 +1,112 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PlayerFrame from './PlayerFrame';
 import PlayerControls from './PlayerControls';
+import MediaRenderer from './MediaRenderer';
+import { MediaRendererProps } from './MediaRenderProps';
+
 
 interface PlayerProps {
   className?: string;
   src?: string;
+  mediaType: 'video' | 'image' | 'text' | 'music';
 }
 
-declare global {
-  interface Window {
-    YT: any;
-    onYouTubeIframeAPIReady: () => void;
-  }
-}
-
-const Player: React.FC<PlayerProps> = ({ src }) => {
+const Player: React.FC<PlayerProps> = ({ src, mediaType }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [player, setPlayer] = useState<any>(null);
   const [scale, setScale] = useState(1);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
-  const playerRef = useRef<HTMLIFrameElement | null>(null);
+  const playerRef = useRef<HTMLIFrameElement>(null); // Pour la vidéo
+  const audioRef = useRef<HTMLAudioElement>(null); // Pour la musique
+    // Préparez les props pour MediaRenderer
 
-  const handleStateChange = (event: any) => {
-    if (event.data === window.YT.PlayerState.PLAYING) {
-      setIsPlaying(true);
-      setIsVideoEnded(false);
-    } else if (event.data === window.YT.PlayerState.PAUSED) {
-      setIsPlaying(false);
-    } else if (event.data === window.YT.PlayerState.ENDED) {
-      setIsPlaying(false);
-      setIsVideoEnded(true);
-    }
-  };
-
+  // Gestion spécifique au média vidéo
+  // Initialisation du lecteur vidéo ou audio en fonction du mediaType
   useEffect(() => {
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    if (firstScriptTag && firstScriptTag.parentNode) {
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    if (mediaType === 'video') {
+      // Initialisation du lecteur YouTube
+    } else if (mediaType === 'music') {
+      // Initialisation du lecteur audio
     }
+  }, [mediaType]);
 
-    window.onYouTubeIframeAPIReady = () => {
-      const newPlayer = new window.YT.Player(playerRef.current, {
-        events: {
-          onReady: () => {
-            setPlayer(newPlayer);
-          },
-          onStateChange: handleStateChange,
-        },
-      });
-    };
-
-    const handleResize = () => {
-      const windowHeight = window.innerHeight;
-      const originalHeight = 555;
-      const desiredHeight = windowHeight * 0.8;
-      const newScale = desiredHeight / originalHeight;
-      setScale(newScale);
-    };
-
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
+  let mediaRendererProps: MediaRendererProps;
+  switch (mediaType) {
+    case 'video':
+      mediaRendererProps = {
+        mediaType: 'video',
+        src,
+        scale,
+        playerRef: playerRef,
+      };
+      break;
+    case 'music':
+      mediaRendererProps = {
+        mediaType: 'music',
+        src,
+        scale,
+        playerRef: audioRef,
+      };
+      break;
+    case 'image':
+      mediaRendererProps = {
+        mediaType: 'image',
+        src,
+        scale,
+      };
+      break;
+    case 'text':
+      mediaRendererProps = {
+        mediaType: 'text',
+        src,
+        scale,
+      };
+      break;
+    default:
+      throw new Error(`Type de média non supporté : ${mediaType}`);
+  }
+  // Fonctions de contrôle spécifiques
   const handlePlayClick = () => {
-    if (!player) return;
-    isPlaying ? player.pauseVideo() : player.playVideo();
+    if (mediaType === 'video' && playerRef.current) {
+      // Contrôler la lecture vidéo
+    } else if (mediaType === 'music' && audioRef.current) {
+      // Contrôler la lecture audio
+    }
   };
 
-  const handleMuteClick = () => {
-    if (!player) return;
-    isMuted ? player.unMute() : player.mute();
-    setIsMuted(!isMuted);
-  };
+  // Autres fonctions de contrôle...
 
-  const handleVolumeDownClick = () => {
-    if (!player) return;
-    const newVolume = Math.max(player.getVolume() - 10, 0);
-    player.setVolume(newVolume);
-  };
-
-  const handleVolumeUpClick = () => {
-    if (!player) return;
-    const newVolume = Math.min(player.getVolume() + 10, 100);
-    player.setVolume(newVolume);
-  };
-
-  const handleRewindClick = () => {
-    if (!player) return;
-    const newTime = Math.max(player.getCurrentTime() - 10, 0);
-    player.seekTo(newTime, true);
-  };
-
-  const handleForwardClick = () => {
-    if (!player) return;
-    const newTime = Math.min(player.getCurrentTime() + 10, player.getDuration());
-    player.seekTo(newTime, true);
+  // Déterminer les contrôles à afficher en fonction du type de média
+  const controlsToShow = () => {
+    switch (mediaType) {
+      case 'video':
+        return ['play', 'mute', 'volume', 'rewind', 'forward', 'exit'];
+      case 'music':
+        return ['play', 'mute', 'volume', 'exit'];
+      case 'image':
+      case 'text':
+        return ['exit'];
+      default:
+        return [];
+    }
   };
 
   return (
     <div className="absolute h-screen w-full flex justify-center items-center">
-      <div className="relative">
-        <PlayerFrame
-          playerRef={playerRef}
-          isPlayingAndDelay={!isPlaying}
-          isVideoEnded={isVideoEnded}
-          scale={scale}
-          src={src}
-        />
-        <PlayerControls
-          handlePlayClick={handlePlayClick}
-          handleMuteClick={handleMuteClick}
-          handleVolumeDownClick={handleVolumeDownClick}
-          handleVolumeUpClick={handleVolumeUpClick}
-          handleRewindClick={handleRewindClick}
-          handleForwardClick={handleForwardClick}
-          isPlaying={isPlaying}
-          isMuted={isMuted}
-          scale={scale}
-        />
-      </div>
+    <div className="relative">
+      <PlayerFrame scale={scale}>
+        <MediaRenderer {...mediaRendererProps} />
+      </PlayerFrame>
+      <PlayerControls
+        handlePlayClick={handlePlayClick}
+        // Passez les autres gestionnaires de contrôle nécessaires
+        isPlaying={isPlaying}
+        isMuted={isMuted}
+        scale={scale}
+        controlsToShow={controlsToShow()}
+      />
     </div>
+  </div>
   );
 };
 
