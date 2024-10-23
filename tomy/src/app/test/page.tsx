@@ -25,19 +25,19 @@ const Test = () => {
 
   return (
     <div className="h-screen bg-cover bg-[url('/images/bg.jpeg')] p-5 flex justify-center items-center">
-{/* <Player
+<Player
   mediaType="video"
   src="https://www.youtube.com/embed/RS2jNCqCjPs"
-/> */}
+/>
 {/* <Player
   mediaType="image"
   src="/images/album/arbre.jpg"
 /> */}
 
-<Player
+{/* <Player
   mediaType="text"
   src="Voici un texte à afficher dans le player."
-/>
+/> */}
     </div>
 
   );

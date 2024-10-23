@@ -26,8 +26,10 @@ export interface MusicMediaProps {
   playerRef: React.RefObject<HTMLAudioElement>;
 }
 
-export type MediaRendererProps =
-  | VideoMediaProps
-  | ImageMediaProps
-  | TextMediaProps
-  | MusicMediaProps;
+export interface MediaRendererProps {
+  mediaType: 'image' | 'text' | 'music';
+  src?: string;
+  scale: number;
+  playerRef?: React.RefObject<HTMLAudioElement>;
+}
+
