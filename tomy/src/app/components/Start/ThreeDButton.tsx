@@ -16,8 +16,9 @@ export default function ThreeDButton({ href }: ThreeDButtonProps) {
   const mouseY = useMotionValue(0);
 
   // Rotations pour l'effet 3D
-  const rotateX = useTransform(mouseY, [-75, 75], [15, -15]);
-  const rotateY = useTransform(mouseX, [-250, 250], [-15, 15]);
+  let mouv = 3;
+  const rotateX = useTransform(mouseY, [-75, 75], [mouv, -mouv]);
+  const rotateY = useTransform(mouseX, [-250, 250], [-mouv, mouv]);
 
   // Positions pour l'effet de reflet
   const reflectionX = useMotionValue(0);
@@ -65,7 +66,7 @@ export default function ThreeDButton({ href }: ThreeDButtonProps) {
         }
       }}
       style={{
-        perspective: 1000,
+        perspective: 2000,
       }}
       className="w-[500px]"
     >
