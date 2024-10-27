@@ -29,12 +29,12 @@ export default function Home() {
   //     setShowAnnouncement(true);
   //   }, 6000);
 
-  //   // Étape 4 : Faire disparaître l'annonce après 4 secondes
+  //   // Étape 4 : Faire disparaître l'annonce après 10 secondes
   //   const fadeOutAnnouncementTimer = setTimeout(() => {
   //     setFadeOutAnnouncement(true);
   //   }, 10000);
 
-  //   // Étape 5 : Afficher la vidéo après la disparition de l'annonce
+  //   // Étape 5 : Afficher la vidéo après 11 secondes
   //   const showVideoTimer = setTimeout(() => {
   //     setShowAnnouncement(false);
   //     setShowVideo(true);
@@ -50,35 +50,44 @@ export default function Home() {
   // }, []);
 
   return (
-    <div className="relative w-screen h-screen bg-cover bg-[url('/vectors/ELEMENTS/FondDEcran.jpg')]">
-      <div className="flex flex-col justify-center items-center h-full w-full">
+    <div className="relative w-screen h-screen overflow-hidden">
+      {/* Vidéo de fond */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+      >
+        <source src="https://res.cloudinary.com/dqh4fcdtl/video/upload/v1729876094/map_f0zzfx.mp4" type="video/mp4" />
+        Votre navigateur ne supporte pas la balise vidéo.
+      </video>
+
+      <div className="relative flex flex-col justify-center items-center h-full w-full z-10">
         {/* Bouton 3D */}
-        {/* <AnimatePresence>
-          {showButton && <ThreeDButton href="/home" key="button" />}
-        </AnimatePresence> */}
-
-        <ThreeDButton href="/home" key="button" />
-
+        {/* <AnimatePresence> */}
+          <ThreeDButton href="/home" key="button" />
+        {/* </AnimatePresence> */}
 
         {/* Section pour l'annonce */}
-        <AnimatePresence>
+        {/* <AnimatePresence>
           {showAnnouncement && (
             <Announcement fadeOut={fadeOutAnnouncement} key="announcement" />
           )}
-        </AnimatePresence>
+        </AnimatePresence> */}
 
         {/* Section pour la vidéo */}
-        <AnimatePresence>
+        {/* <AnimatePresence>
           {showVideo && <VideoPlayer key="video" />}
-        </AnimatePresence>
+        </AnimatePresence> */}
 
         {/* Bouton "Skip Intro" */}
-        {/* <a
+        <a
           href="/home"
-          className="absolute bottom-10 right-10 bg-black text-white p-2 rounded"
+          className="absolute bottom-10 right-10 bg-black text-white p-2 rounded z-20"
         >
           Skip Intro
-        </a> */}
+        </a>
       </div>
     </div>
   );

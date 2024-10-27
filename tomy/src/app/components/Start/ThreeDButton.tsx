@@ -1,22 +1,29 @@
 "use client";
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
-import { motion, useMotionValue, useTransform, useMotionTemplate } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useTransform, useMotionTemplate } from 'framer-motion';
+import useSound from '@/app/hooks/useSound';
 
 interface ThreeDButtonProps {
   href: string;
 }
 
-export default function ThreeDButton({ href }: ThreeDButtonProps) {
+export default function ThreeDButton({  }: ThreeDButtonProps) {
   const cardRef = useRef<HTMLAnchorElement | null>(null);
+
+  // État pour suivre si le bouton est pressé
+  const [isPressed, setIsPressed] = useState(false);
+
+  // Charger le son de clic
+  const playClickSound = useSound('/sounds/click-sound.wav');
 
   // Valeurs de mouvement pour l'effet 3D
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
   // Rotations pour l'effet 3D
-  let mouv = 3;
+  const mouv = 4;
   const rotateX = useTransform(mouseY, [-75, 75], [mouv, -mouv]);
   const rotateY = useTransform(mouseX, [-250, 250], [-mouv, mouv]);
 
@@ -28,14 +35,23 @@ export default function ThreeDButton({ href }: ThreeDButtonProps) {
   const background = useMotionTemplate`
     radial-gradient(
       circle at ${reflectionX}px ${reflectionY}px,
-      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0.4),
       rgba(255, 255, 255, 0)
     )
   `;
 
+  // Gestionnaire de clic pour jouer le son
+  const handlePressStart = () => {
+    setIsPressed(true);
+    playClickSound();
+  };
+
+  const handlePressEnd = () => {
+    setIsPressed(false);
+  };
+
   return (
     <motion.a
-      href={href}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -59,12 +75,30 @@ export default function ThreeDButton({ href }: ThreeDButtonProps) {
       onMouseLeave={() => {
         mouseX.set(0);
         mouseY.set(0);
+        setIsPressed(false); // Réinitialiser l'état au quitter
         if (cardRef.current) {
           const rect = cardRef.current.getBoundingClientRect();
           reflectionX.set(rect.width / 2);
           reflectionY.set(rect.height / 2);
         }
       }}
+      onMouseDown={handlePressStart}
+      onMouseUp={handlePressEnd}
+      onTouchStart={handlePressStart}
+      onTouchEnd={handlePressEnd}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          handlePressStart();
+        }
+      }}
+      onKeyUp={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          handlePressEnd();
+        }
+      }}
+      role="button"
+      aria-pressed={isPressed}
+      tabIndex={0}
       style={{
         perspective: 2000,
       }}
@@ -82,13 +116,15 @@ export default function ThreeDButton({ href }: ThreeDButtonProps) {
       >
         {/* Conteneur de l'image avec position relative */}
         <div className="relative w-full h-full">
-          <Image
-            src="/images/button.png"
-            alt="Button Image"
-            width={610}
-            height={150}
-            className="w-full"
-          />
+
+              <Image
+                src={isPressed ? "/images/button-pressed.png" : "/images/button.png"}
+                alt="Button Image"
+                width={610}
+                height={150}
+                className="w-full"
+              />
+
           {/* Overlay pour l'effet de reflet */}
           <motion.div
             className="absolute top-0 left-0 w-full h-full pointer-events-none"
