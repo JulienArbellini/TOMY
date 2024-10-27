@@ -131,6 +131,9 @@ export default function ThreeDButton({  }: ThreeDButtonProps) {
                 width={610}
                 height={150}
                 className="w-full"
+                style={{
+                  cursor: 'url("/images/cursor-button2.png"), auto', // Ajouter le curseur personnalisé ici
+                }}
               />
 
           {/* Overlay pour l'effet de reflet */}

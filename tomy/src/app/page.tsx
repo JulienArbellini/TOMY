@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ThreeDButton from './components/Start/ThreeDButton';
+import './globals.css';
 import Announcement from "./components/Start/Announcement";
 import VideoPlayer from './components/Start/VideoPlayer';
 
@@ -50,7 +51,11 @@ export default function Home() {
   // }, []);
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden">
+    <div className="relative w-screen h-screen overflow-hidden"
+    style={{
+      cursor: 'url("/images/cursor-button2.png"), auto', // Ajouter le curseur personnalisé ici
+    }}
+    >
       {/* Vidéo de fond */}
       <video
         autoPlay
