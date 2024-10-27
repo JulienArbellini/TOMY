@@ -14,6 +14,7 @@ export default function ThreeDButton({  }: ThreeDButtonProps) {
 
   // État pour suivre si le bouton est pressé
   const [isPressed, setIsPressed] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   // Charger le son de clic
   // const playClickSound = useSound('/sounds/click-sound.wav');
@@ -73,6 +74,7 @@ export default function ThreeDButton({  }: ThreeDButtonProps) {
           reflectionX.set(x);
           reflectionY.set(y);
         }
+
       }}
       onMouseLeave={() => {
         mouseX.set(0);
@@ -83,6 +85,7 @@ export default function ThreeDButton({  }: ThreeDButtonProps) {
           reflectionX.set(rect.width / 2);
           reflectionY.set(rect.height / 2);
         }
+        setIsHovered(false);
       }}
       onMouseDown={handlePressStart}
       onMouseUp={handlePressEnd}
@@ -98,6 +101,8 @@ export default function ThreeDButton({  }: ThreeDButtonProps) {
           handlePressEnd();
         }
       }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
       role="button"
       aria-pressed={isPressed}
       tabIndex={0}
@@ -112,6 +117,7 @@ export default function ThreeDButton({  }: ThreeDButtonProps) {
           rotateY,
           transformStyle: 'preserve-3d',
           boxShadow: '0 10px 20px rgba(0, 0, 0, 0.25)',
+          scale: isPressed ? 0.99 : isHovered ? 1.01 : 1,
         }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
         className="rounded-[1.1em] overflow-hidden"
