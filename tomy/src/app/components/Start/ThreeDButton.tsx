@@ -16,8 +16,9 @@ export default function ThreeDButton({  }: ThreeDButtonProps) {
   const [isPressed, setIsPressed] = useState(false);
 
   // Charger le son de clic
-  const playClickSound = useSound('/sounds/click-sound.wav');
-
+  // const playClickSound = useSound('/sounds/click-sound.wav');
+  const playClickSoundA = useSound('/sounds/LogoSonoreA.wav');
+  const playClickSoundB = useSound('/sounds/LogoSonoreB.wav');
   // Valeurs de mouvement pour l'effet 3D
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -43,10 +44,11 @@ export default function ThreeDButton({  }: ThreeDButtonProps) {
   // Gestionnaire de clic pour jouer le son
   const handlePressStart = () => {
     setIsPressed(true);
-    playClickSound();
+    playClickSoundA();
   };
 
   const handlePressEnd = () => {
+    playClickSoundB();
     setIsPressed(false);
   };
 
