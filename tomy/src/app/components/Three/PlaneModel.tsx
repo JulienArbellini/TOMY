@@ -20,7 +20,7 @@ const PlaneModel: React.FC<AirplaneProps> = ({ castShadow, receiveShadow }) => {
 
   return (
     <mesh material={material}>
-        <primitive object={scene} scale={20} />;
+        <primitive object={scene} scale={5} />;
   </mesh>
   )
 };

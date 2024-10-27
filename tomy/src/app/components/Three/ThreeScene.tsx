@@ -16,7 +16,7 @@ const Scene = () => {
   }, []);
 
   return (
-    <Canvas shadows camera={{ position: [10, 1, 5], fov: 75 }}>
+    <Canvas shadows camera={{ position: [0,0, 30], fov: 50 }}>
       {/* Lumières supplémentaires */}
       <ambientLight intensity={1} color={0xffffff} />
       <directionalLight
