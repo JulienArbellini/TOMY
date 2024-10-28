@@ -16,23 +16,20 @@ const Scene = () => {
   }, []);
 
   return (
-    <Canvas shadows camera={{ position: [0,0, 30], fov: 110 }}>
+    <Canvas shadows camera={{ position: [200,0, 0], fov: 10 }}>
       {/* Lumières supplémentaires */}
-      <ambientLight intensity={1} color={0xffffff} />
+      <ambientLight intensity={1} color="red" />
       <directionalLight
         ref={directionalLightRef}
-        position={[10, 10, 10]}
-        intensity={1}
+        position={[50, 50, 10]}
+        intensity={10}
         castShadow
-        shadow-mapSize-width={1024}
+        shadow-mapSize-width={2024}
         shadow-mapSize-height={1024}
       />
 
       {/* Cible de la lumière directionnelle */}
-      <mesh ref={targetRef} position={[0, 0, 0]}>
-        <sphereGeometry args={[0.1, 16, 16]} />
-        <meshBasicMaterial color="red" />
-      </mesh>
+ 
 
       {/* Environnement HDRI */}
       <Environment preset="sunset" />
