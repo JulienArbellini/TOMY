@@ -52,9 +52,9 @@ export default function Home() {
 
   return (
     <div className="relative w-screen h-screen overflow-hidden"
-    style={{
-      cursor: 'url("/images/cursor-button2.png"), auto', // Ajouter le curseur personnalisé ici
-    }}
+    // style={{
+    //   cursor: 'url("/images/cursor-button2.png"), auto', // Ajouter le curseur personnalisé ici
+    // }}
     >
       {/* Vidéo de fond */}
       <video
