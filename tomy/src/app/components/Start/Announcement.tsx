@@ -1,5 +1,8 @@
 "use client";
 
+interface AnnouncementProps {
+}
+
 export default function Announcement({}: AnnouncementProps) {
   return (
       <div className="w-[588px] h-[88px] flex justify-center items-center bg-slate-300">
