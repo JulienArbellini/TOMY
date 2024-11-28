@@ -3,6 +3,12 @@
 import React, { useState } from "react";
 import DynamicButton from "../components/DynamicButton/DynamicButton";
 import { items } from "../../data/items"
+import dynamic from "next/dynamic";
+
+// Charger MusicPlayer uniquement côté client
+const MusicPlayer = dynamic(() => import("../components/SingularPlayers/MusicPlayer"),{
+  ssr: false, // Désactive le rendu côté serveur
+});
 
 
 const Menu = () => {
@@ -77,6 +83,13 @@ const Menu = () => {
             </div>
           </div>
         )}
+        {/* Affichage conditionnel du lecteur */}
+      {selectedItem === "Music" && (
+        <div className="mt-8">
+          <MusicPlayer frameSrc="/vectors/ELEMENTS/Cadres/CadreUltrasimple.png" audioUrl="/Album/02_Hublot_VX.wav" />
+        </div>
+      )}
+
       </div>
     );
   };
