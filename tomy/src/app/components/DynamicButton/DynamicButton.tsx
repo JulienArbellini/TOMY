@@ -3,14 +3,23 @@
 import React from 'react';
 
 interface DynamicButtonProps {
-  defaultIcon: string;
-  hoverIcon: string;
-  clickedIcon: string;
-  releasedIcon: string;
+  defaultIcon?: string;
+  hoverIcon?: string;
+  clickedIcon?: string;
+  releasedIcon?: string;
   onClick: () => void;
-  buttonState: 'default' | 'hover' | 'clicked' | 'released';
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
+  buttonState?: 'default' | 'hover' | 'clicked' | 'released';
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+  style?: {
+    bottom?: string;
+    left?: string;
+    right?: string;
+    top?: string;
+    height: string;
+    width: string;
+    zIndex?: number;
+  };
 }
 
 const DynamicButton: React.FC<DynamicButtonProps> = ({
