@@ -27,7 +27,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
     >
       {/* Cadre Principal */}
       <img
-        src="/vectors/ELEMENTS/Cadres/Cadre1.png"
+        src="/vectors/ELEMENTS/Cadres/CadreUltrasimple.png"
         alt="Cadre décoratif autour de la vidéo"
         style={{
           height: `${scaledValue(538)}px`,

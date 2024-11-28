@@ -32,7 +32,7 @@ const VideoPlayer: React.FC = () => {
         playerRef={playerRef}
         isPlayingAndDelay={isPlayingAndDelay}
         isVideoEnded={isVideoEnded}
-        scale={scale}
+        scale={1.5}
         src={videoSrc}
       />
     </div>
