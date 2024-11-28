@@ -12,15 +12,29 @@ export default function Home() {
   const [showVideo, setShowVideo] = useState(false);
   const [showButton, setShowButton] = useState(true);
   const [currentStep, setCurrentStep] = useState(0);
-  const [backgroundImage, setBackgroundImage] = useState('/vectors/ELEMENTS/FondDEcran.jpg');
+
+  const [backgroundImages, setBackgroundImages] = useState([
+    '/vectors/ELEMENTS/FondDEcran.jpg', // Fond 1 (bg1)
+    '/images/bg2.png', // Fond 2 (bg2)
+  ]);
+  const [activeBackgroundIndex, setActiveBackgroundIndex] = useState(0); // Index du fond actif
+  const [isBg2Visible, setIsBg2Visible] = useState(false); // Gérer la visibilité de bg2
 
   const [audio1, setAudio1] = useState<HTMLAudioElement | null>(null);
   const [audio2, setAudio2] = useState<HTMLAudioElement | null>(null);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const changeBackground = () => {
-    setBackgroundImage('/images/bg2.png'); // Mettre à jour l'image d'arrière-plan
+  const changeBackgroundToBg2 = () => {
+    setIsBg2Visible(true); // Afficher bg2
+    setActiveBackgroundIndex(1); // Mettre à jour l'index pour bg2
+  };
+
+  const changeBackgroundToBg1 = () => {
+    setIsBg2Visible(false); // Masquer bg2
+    setTimeout(() => {
+      setActiveBackgroundIndex(0); // Revenir à bg1 après le fade-out
+    }, 1500); // Correspond à la durée de l'animation
   };
 
   const nextStep = (step: number) => {
@@ -31,6 +45,7 @@ export default function Home() {
           audio1.currentTime = 0;
           setAudio1(null);
         }
+        changeBackgroundToBg2(); // Passer à bg2
         const newAudio1 = new Audio('/sounds/1_BuzzAvion.wav');
         setAudio1(newAudio1);
         newAudio1.play();
@@ -42,7 +57,7 @@ export default function Home() {
 
       case 2:
         setShowAnnouncement(true);
-        changeBackground(); // Changer le fond d'écran avec un effet
+        changeBackgroundToBg1(); // Revenir à bg1 avec fade-out de bg2
         if (audio2) {
           audio2.pause();
           audio2.currentTime = 0;
@@ -68,7 +83,7 @@ export default function Home() {
   };
 
   const handleButtonClick = () => {
-    changeBackground(); // Changer l'arrière-plan immédiatement
+    changeBackgroundToBg2(); // Passer à bg2 immédiatement
     setShowButton(false);
     setCurrentStep(1);
     nextStep(1);
@@ -86,6 +101,7 @@ export default function Home() {
       audio2.currentTime = 0;
       setAudio2(null);
       setShowAnnouncement(false);
+      changeBackgroundToBg1(); // Revenir à bg1 même en skip
       setCurrentStep(3);
       nextStep(3);
     } else if (currentStep < 3) {
@@ -95,16 +111,32 @@ export default function Home() {
   };
 
   return (
-    <motion.div
-      className="relative w-screen h-screen bg-cover"
-      initial={{ opacity: 0 }} // Début de l'animation (invisible)
-      animate={{ opacity: 1 }} // Fin de l'animation (visible)
-      exit={{ opacity: 0 }} // Animation de sortie (facultative)
-      transition={{ duration: 1.5 }} // Durée de l'effet de fondu
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-      }}
-    >
+    <div className="relative w-screen h-screen">
+      <AnimatePresence>
+        {/* Affichage des fonds */}
+        {backgroundImages.map((bg, index) => {
+          const isVisible =
+            (index === 0 && !isBg2Visible) || // Afficher bg1 uniquement quand bg2 est masqué
+            (index === 1 && isBg2Visible); // Afficher bg2 uniquement s'il est visible
+          return (
+            isVisible && (
+              <motion.div
+                key={bg}
+                className="absolute inset-0 bg-cover bg-center"
+                style={{
+                  backgroundImage: `url(${bg})`,
+                  zIndex: -1, // Derrière les autres éléments
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }} // Fade-in
+                exit={{ opacity: 0 }} // Fade-out
+                transition={{ duration: 1.5 }} // Durée du fondu
+              />
+            )
+          );
+        })}
+      </AnimatePresence>
+
       <div className="flex flex-col justify-center items-center h-full w-full">
         <AnimatePresence>
           {showButton && (
@@ -119,7 +151,7 @@ export default function Home() {
         </AnimatePresence>
 
         <AnimatePresence>
-          {showAnnouncement && <Announcement />}
+          {showAnnouncement && <Announcement audioUrl="/sounds/2_Announcement.wav"/>}
         </AnimatePresence>
 
         <AnimatePresence>
@@ -141,6 +173,6 @@ export default function Home() {
           }}
         />
       </div>
-    </motion.div>
+    </div>
   );
 }

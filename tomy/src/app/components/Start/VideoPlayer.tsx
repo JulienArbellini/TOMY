@@ -11,10 +11,12 @@ const VideoPlayer: React.FC = () => {
 
   // Ajoutez le paramètre autoplay=1 pour démarrer automatiquement la lecture
   const videoSrc = 'https://www.youtube.com/embed/2S3Pt8k344k?autoplay=1&mute=1';
+
   useEffect(() => {
     // Gestion de la mise à l'échelle en fonction de la taille de la fenêtre
     const handleResize = () => {
-      const newScale = window.innerWidth / 1920; // Ajustez cette valeur en fonction de votre design de référence
+      const factor = 1.8; // Augmentez ce facteur pour rendre la vidéo plus grande
+      const newScale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080) * factor; // Respect du ratio avec facteur
       setScale(newScale);
     };
 
@@ -32,8 +34,9 @@ const VideoPlayer: React.FC = () => {
         playerRef={playerRef}
         isPlayingAndDelay={isPlayingAndDelay}
         isVideoEnded={isVideoEnded}
-        scale={1.5}
+        scale={scale} // Utilisation du scale dynamique ajusté
         src={videoSrc}
+        frameSrc = '/vectors/ELEMENTS/Cadres/CadreUltrasimple.png'
       />
     </div>
   );

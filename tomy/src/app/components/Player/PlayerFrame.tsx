@@ -6,6 +6,7 @@ interface PlayerFrameProps {
   isVideoEnded: boolean;
   scale: number;
   src?: string;
+  frameSrc?: string; // Nouvelle prop pour le chemin du cadre
 }
 
 const PlayerFrame: React.FC<PlayerFrameProps> = ({
@@ -14,8 +15,13 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
   isVideoEnded,
   scale,
   src,
+  frameSrc = '/vectors/ELEMENTS/Cadres/Cadre1.png', // Valeur par défaut
 }) => {
   const scaledValue = (value: number) => value * scale;
+
+  // Dimensions standard du conteneur contenant l'iframe
+  const containerWidth = 590; // Largeur du conteneur en px
+  const containerHeight = 437; // Hauteur du conteneur en px
 
   return (
     <div
@@ -27,7 +33,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
     >
       {/* Cadre Principal */}
       <img
-        src="/vectors/ELEMENTS/Cadres/CadreUltrasimple.png"
+        src={frameSrc} // Utilisation de la prop frameSrc
         alt="Cadre décoratif autour de la vidéo"
         style={{
           height: `${scaledValue(538)}px`,
@@ -44,9 +50,9 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
           style={{
             top: `${scaledValue(43)}px`,
             left: `${scaledValue(26)}px`,
-            height: `${scaledValue(444)}px`,
-            width: `${scaledValue(592)}px`,
-            zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0, // Affiche l'écran noir à la fin de la vidéo
+            height: `${scaledValue(containerHeight)}px`,
+            width: `${scaledValue(containerWidth)}px`,
+            zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
           }}
         />
       )}
@@ -57,44 +63,42 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
         style={{
           top: `${scaledValue(47)}px`,
           left: `${scaledValue(29)}px`,
-          height: `${scaledValue(437)}px`,
-          width: `${scaledValue(590)}px`,
+          height: `${scaledValue(containerHeight)}px`,
+          width: `${scaledValue(containerWidth)}px`,
         }}
       >
-
-<img 
-        src="/vectors/ELEMENTS/Cadres/vitre.png"
-        alt="" 
-        className="absolute z-10 opacity-0"
-        style={{
-          top: `${scaledValue(55)}px`,
-          left: `${scaledValue(30)}px`,
-          height: `${scaledValue(440)}px`,
-          width: `${scaledValue(593)}px`,
-        }}
-      />
+        {/* Vitre alignée avec le conteneur */}
+        <img
+          src="/vectors/ELEMENTS/Cadres/vitre.png"
+          alt="Vitre transparente"
+          className="absolute z-10 opacity-0"
+          style={{
+            height: `${scaledValue(containerHeight)}px`, // Alignée avec la hauteur du conteneur
+            width: `${scaledValue(containerWidth)}px`, // Alignée avec la largeur du conteneur
+          }}
+        />
         <div
           className="absolute"
           style={{
             top: `${scaledValue(-653)}px`,
             left: 0,
-            height: `${scaledValue(435)}px`,
-            width: `${scaledValue(586)}px`,
-        }}
-      >
-        <iframe
-          ref={playerRef}
-          width="100%"
-            height="400%"
-          src={`${src}?enablejsapi=1`}
-          title="Lecteur vidéo YouTube"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          style={{
-            objectFit: 'cover',
+            height: `${scaledValue(containerHeight)}px`,
+            width: `${scaledValue(containerWidth)}px`,
           }}
-        ></iframe>
+        >
+          <iframe
+            ref={playerRef}
+            width="100%"
+            height="400%"
+            src={`${src}?enablejsapi=1`}
+            title="Lecteur vidéo YouTube"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{
+              objectFit: 'cover',
+            }}
+          ></iframe>
         </div>
       </div>
     </div>
