@@ -1,0 +1,5 @@
+- [ ] Garder la tete d’Évelyne quand ya announcement
+- [ ] Annooucement plus grand et moins de marge sur le coté
+- [ ] Pas de fondu sur Ann
+- [ ] Laisser un délais avant de faire apparaitre la séquence 2 (faire durer la disparition du bouton)
+- [ ] Sur le lecteur, la video doit etre bien centrée sur le cadre

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 
 interface DynamicButtonProps {
   defaultIcon: string;
@@ -8,15 +8,9 @@ interface DynamicButtonProps {
   clickedIcon: string;
   releasedIcon: string;
   onClick: () => void;
-  style: {
-    bottom?: string;
-    left?: string;
-    right?: string;
-    top?: string;
-    height: string;
-    width: string;
-    zIndex?: number;
-  };
+  buttonState: 'default' | 'hover' | 'clicked' | 'released';
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
 const DynamicButton: React.FC<DynamicButtonProps> = ({
@@ -25,18 +19,10 @@ const DynamicButton: React.FC<DynamicButtonProps> = ({
   clickedIcon,
   releasedIcon,
   onClick,
-  style,
+  buttonState,
+  onMouseEnter,
+  onMouseLeave,
 }) => {
-  const [buttonState, setButtonState] = useState<'default' | 'hover' | 'clicked' | 'released'>('default');
-
-  const handleMouseEnter = () => setButtonState('hover');
-  const handleMouseLeave = () => setButtonState('default');
-  const handleMouseDown = () => setButtonState('clicked');
-  const handleMouseUp = () => {
-    setButtonState('released');
-    onClick();
-  };
-
   const currentIcon =
     buttonState === 'clicked'
       ? clickedIcon
@@ -50,12 +36,9 @@ const DynamicButton: React.FC<DynamicButtonProps> = ({
     <img
       src={currentIcon}
       alt="Dynamic Button"
-      className="absolute cursor-pointer"
-      style={style}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
+      className="cursor-pointer w-36 h-36 object-contain"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       onClick={onClick}
     />
   );

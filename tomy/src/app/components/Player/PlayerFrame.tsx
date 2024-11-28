@@ -48,8 +48,8 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
           alt="Écran noir lorsque la vidéo est en pause ou terminée"
           className="absolute"
           style={{
-            top: `${scaledValue(43)}px`,
-            left: `${scaledValue(26)}px`,
+            top: `${scaledValue(47)}px`,
+            left: `${scaledValue(29)}px`,
             height: `${scaledValue(containerHeight)}px`,
             width: `${scaledValue(containerWidth)}px`,
             zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,

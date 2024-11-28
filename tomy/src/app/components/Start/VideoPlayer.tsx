@@ -1,42 +1,76 @@
-// VideoPlayer.tsx
-
 import React, { useEffect, useRef, useState } from 'react';
 import PlayerFrame from '../Player/PlayerFrame';
 
 const VideoPlayer: React.FC = () => {
   const playerRef = useRef<HTMLIFrameElement>(null);
-  const [isPlayingAndDelay, setIsPlayingAndDelay] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isVideoEnded, setIsVideoEnded] = useState(false);
   const [scale, setScale] = useState(1);
 
-  // Ajoutez le paramètre autoplay=1 pour démarrer automatiquement la lecture
-  const videoSrc = 'https://www.youtube.com/embed/2S3Pt8k344k?autoplay=1&mute=1';
+  const videoSrc = 'https://www.youtube.com/embed/2S3Pt8k344k?enablejsapi=1&autoplay=1&mute=1';
 
   useEffect(() => {
-    // Gestion de la mise à l'échelle en fonction de la taille de la fenêtre
+    const handleStateChange = (event: any) => {
+      if (event.data === window.YT.PlayerState.PLAYING) {
+        setIsPlaying(true);
+        setIsVideoEnded(false);
+      } else if (event.data === window.YT.PlayerState.PAUSED) {
+        setIsPlaying(false);
+      } else if (event.data === window.YT.PlayerState.ENDED) {
+        setIsPlaying(false);
+        setIsVideoEnded(true);
+      }
+    };
+
+    const initializePlayer = () => {
+      if (playerRef.current && playerRef.current.contentWindow) {
+        new window.YT.Player(playerRef.current, {
+          events: {
+            onStateChange: handleStateChange,
+          },
+        });
+      }
+    };
+
+    const loadYouTubeAPI = () => {
+      if (!window.YT) {
+        const tag = document.createElement('script');
+        tag.src = 'https://www.youtube.com/iframe_api';
+        document.body.appendChild(tag);
+
+        window.onYouTubeIframeAPIReady = () => {
+          initializePlayer(); // Appeler initializePlayer une fois l'API chargée
+        };
+      } else {
+        initializePlayer(); // Si l'API est déjà chargée
+      }
+    };
+
+    loadYouTubeAPI();
+
     const handleResize = () => {
-      const factor = 1.8; // Augmentez ce facteur pour rendre la vidéo plus grande
-      const newScale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080) * factor; // Respect du ratio avec facteur
+      const windowHeight = window.innerHeight;
+      const originalHeight = 555;
+      const desiredHeight = windowHeight * 0.8;
+      const newScale = desiredHeight / originalHeight;
       setScale(newScale);
     };
 
+    handleResize();
     window.addEventListener('resize', handleResize);
-    handleResize(); // Appel initial pour définir l'échelle
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return (
     <div>
       <PlayerFrame
         playerRef={playerRef}
-        isPlayingAndDelay={isPlayingAndDelay}
+        isPlayingAndDelay={!isPlaying}
         isVideoEnded={isVideoEnded}
-        scale={scale} // Utilisation du scale dynamique ajusté
+        scale={scale}
         src={videoSrc}
-        frameSrc = '/vectors/ELEMENTS/Cadres/CadreUltrasimple.png'
+        frameSrc={'/vectors/ELEMENTS/Cadres/CadreUltrasimple.png'}
       />
     </div>
   );

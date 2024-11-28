@@ -45,7 +45,7 @@ export default function Announcement({ audioUrl }: AnnouncementProps) {
       if (analyserRef.current && dataArrayRef.current) {
         analyserRef.current.getByteFrequencyData(dataArrayRef.current);
         const average = dataArrayRef.current.reduce((a, b) => a + b) / dataArrayRef.current.length;
-        setIsVisible(average > 20); // Définir un seuil pour le clignotement
+        setIsVisible(average < 90); // Définir un seuil pour le clignotement
       }
       requestAnimationFrame(updateVisibility); // Boucle d'animation
     };
@@ -62,11 +62,11 @@ export default function Announcement({ audioUrl }: AnnouncementProps) {
   return (
     <animated.div
       style={animationProps}
-      className="w-[788px] h-[98px] flex justify-center items-center bg-slate-300"
+      className="w-[560px] h-[98px] flex justify-center items-center bg-slate-300"
     >
       <div
         style={{
-          fontFamily: 'Roboto', // Police monospace
+          fontFamily: 'monospace', // Police monospace
           letterSpacing: '7px', // Espacement des lettres
         }}
         className="bg-black text-white p-2 h-full w-full text-6xl flex justify-center items-center"
