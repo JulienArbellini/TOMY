@@ -86,6 +86,7 @@ const Menu = () => {
       // Revenir à la position précédente
       window.scrollTo(0, -storedScrollY);
     }
+    console.log("selectedItem:", selectedItem);
   }, [selectedItem]);
 
   return (

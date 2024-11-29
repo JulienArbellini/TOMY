@@ -48,7 +48,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
     surfy: "/vectors/ELEMENTS/Cadres/CadreSurfy.avif",
     bois: "/vectors/ELEMENTS/Cadres/CadreBois.avif",
     magazine: "/vectors/ELEMENTS/Cadres/CadreMagazine.avif",
-    musique: "/vectors/ELEMENTS/Cadres/CadreMusique.avif",
+    musique: "/vectors/ELEMENTS/Cadres/CadreMusique.webp",
     simple: "/vectors/ELEMENTS/Cadres/CadreSimple.avif",
     // Assurez-vous que les chemins correspondent à vos fichiers
   };
@@ -70,9 +70,9 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
     );
   } else if (type === "audio" && src) {
     return (
-      <PlayerFrame frameSrc={frameSrc} scale={scale}  onClose={onClose}>
+
         <AudioPlayer src={src} autoplay={autoplay} controls={controls} />
-      </PlayerFrame>
+
     );
   } else if (type === "diaporama" && images) {
     return (

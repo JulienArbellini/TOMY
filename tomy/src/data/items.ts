@@ -261,7 +261,7 @@ export const items = [
       type: "Music",
       playerConfig: {
         type: "audio",
-        src: "/Album/02_Hublot_VX.wav",
+        src: "/Album/07_LaTerre.wav",
         frameType: "musique",
         autoplay: false,
         controls: true,
