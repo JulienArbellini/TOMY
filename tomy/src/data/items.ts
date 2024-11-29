@@ -134,8 +134,8 @@ export const items = [
       },
     },
     {
-      name: "Hôtesse",
-      type: "Hôtesse",
+      name: "Hotesse",
+      type: "Hotesse",
       playerConfig: {
         type: "video",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
@@ -352,8 +352,8 @@ export const items = [
       },
     },
     {
-      name: "Téléphone",
-      type: "Téléphone",
+      name: "Telephone",
+      type: "Telephone",
       playerConfig: {
         type: "interactive",
         action: "playSound",
