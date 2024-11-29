@@ -1,19 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, CSSProperties } from 'react';
 
 interface ControlButtonProps {
   defaultIcon: string;
   hoverIcon: string;
   clickedIcon: string;
   onClick: () => void;
-  style: {
-    bottom?: string;
-    left?: string;
-    right?: string;
-    top?: string;
-    height: string;
-    width: string;
-    zIndex?: number;
-  };
+  style: CSSProperties;
 }
 
 const ControlButton: React.FC<ControlButtonProps> = ({

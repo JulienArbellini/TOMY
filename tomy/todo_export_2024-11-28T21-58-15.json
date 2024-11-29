@@ -1,0 +1,244 @@
+{
+  "workspace": [
+    {
+      "id": 818393995357770,
+      "text": "Souvenirs: lance sur un diapo photo comme magazine",
+      "completed": false,
+      "creationDate": "2024-11-28T17:45:30.742Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 632543266618563,
+      "text": "Valise: Cadre1 + controls video",
+      "completed": false,
+      "creationDate": "2024-11-28T17:43:00.515Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 325274633421410,
+      "text": "TomyIsland: videoplayer cadre1 controls",
+      "completed": false,
+      "creationDate": "2024-11-28T17:42:31.071Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 745200335426317,
+      "text": "Téléphone: au clic un jingle se lance + animation bouton",
+      "completed": false,
+      "creationDate": "2024-11-28T17:42:04.256Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 536793131821018,
+      "text": "Terrasse: Cadre ultrasimple + ?",
+      "completed": false,
+      "creationDate": "2024-11-28T17:40:51.311Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 648963143841593,
+      "text": "Shop: Cade edgy, diapo et bouton order",
+      "completed": false,
+      "creationDate": "2024-11-28T17:40:17.244Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 666642877688770,
+      "text": "Serre:  Cadre ultrasimple Video autoplay loop",
+      "completed": false,
+      "creationDate": "2024-11-28T17:39:14.188Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 251488507059360,
+      "text": "Relax: Cadre simple diapo photo et videos pas de control piur la video mais control diapo",
+      "completed": false,
+      "creationDate": "2024-11-28T17:39:02.359Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 361194071240701,
+      "text": "OIseaux: Cadresurfy Video autoplay loop sans control",
+      "completed": false,
+      "creationDate": "2024-11-28T17:37:24.362Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 101816800926685,
+      "text": "Music: Cadre musique + controls + texte + image",
+      "completed": false,
+      "creationDate": "2024-11-28T17:36:41.173Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 699544375919118,
+      "text": "Movie: video player avec controls",
+      "completed": false,
+      "creationDate": "2024-11-28T17:31:32.333Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 708614857211634,
+      "text": "Magazine: Cadre magazine + diapo photo",
+      "completed": false,
+      "creationDate": "2024-11-28T17:30:40.796Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 671861781487622,
+      "text": "Machines: Cadrebois diapo de photo et video en autoplay avc controls en fonction de si photo ou video, affichage conditionel",
+      "completed": false,
+      "creationDate": "2024-11-28T17:29:04.459Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 179601573480178,
+      "text": "meteo: care ultrasimple",
+      "completed": false,
+      "creationDate": "2024-11-28T17:01:30.186Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 543704102968777,
+      "text": "Map: cadre ultrasimple autoplay",
+      "completed": false,
+      "creationDate": "2024-11-28T17:01:11.362Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 302659815802885,
+      "text": "Lit: Video player + player control + cadre 1",
+      "completed": false,
+      "creationDate": "2024-11-28T17:00:38.597Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 676668888125151,
+      "text": "Kiss: cf hublot",
+      "completed": false,
+      "creationDate": "2024-11-28T16:59:24.612Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 564561682754713,
+      "text": "Hublot: Cadre ultrasimple + video sans controles",
+      "completed": false,
+      "creationDate": "2024-11-28T16:57:19.564Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 538561231811936,
+      "text": "Hôtesse: Cadre1, video de base de safety + tous les controles player",
+      "completed": false,
+      "creationDate": "2024-11-28T16:50:17.260Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 464763741067562,
+      "text": "Hermes: le billet avec les infos en placeholder et envoi de mail ...",
+      "completed": false,
+      "creationDate": "2024-11-28T16:47:05.275Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 258430676700061,
+      "text": "Gourou: quand on clique dessus -> bulle aléatoire avec un conseil random a des endroits random mais autours de lui + disparait au bout de x secondes",
+      "completed": false,
+      "creationDate": "2024-11-28T16:46:27.099Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 389813830156495,
+      "text": "Game: Cadre ultrasimple, avec jeu video dedans",
+      "completed": false,
+      "creationDate": "2024-11-28T16:45:16.885Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 101596148322011,
+      "text": "DJ: Cadre Surfy, video qui se lance toute seule sans ctrl",
+      "completed": false,
+      "creationDate": "2024-11-28T16:44:46.692Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 229284751190758,
+      "text": "Cuisine: ?",
+      "completed": false,
+      "creationDate": "2024-11-28T16:44:23.402Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 452264160682478,
+      "text": "Crew: Cadre simple, avec images diaporama avec bouton next et précédent",
+      "completed": false,
+      "creationDate": "2024-11-28T16:44:08.650Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 352763028820335,
+      "text": "Connect: cadr1 + controls player + qui se lance toute seule video appolo",
+      "completed": false,
+      "creationDate": "2024-11-28T16:43:16.586Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 778997053413594,
+      "text": "Cockpit: cadre edgy dedans video qui se lance toute seule sans controle",
+      "completed": false,
+      "creationDate": "2024-11-28T16:42:44.445Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 179254536801478,
+      "text": "Airlounge: CadreUltraimple.png avec bouton exit dedans video qui se lance toute seule",
+      "completed": false,
+      "creationDate": "2024-11-28T16:39:05.220Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 638040375872767,
+      "text": "Brace: quand je hover l'icone, ça associe la souris avec une note qui la suit (dans la limite de l'icone)",
+      "completed": false,
+      "creationDate": "2024-11-28T16:41:03.305Z",
+      "isMarkdown": false,
+      "isNote": false
+    },
+    {
+      "id": 6339945756599,
+      "text": "Cigarette: cadre1 + video + player control",
+      "completed": false,
+      "creationDate": "2024-11-28T16:41:36.136Z",
+      "isMarkdown": false,
+      "isNote": false
+    }
+  ]
+}
