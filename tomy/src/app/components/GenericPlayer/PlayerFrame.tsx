@@ -19,7 +19,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
   isPlayingAndDelay = false,
   isVideoEnded = false,
   src,
-  frameSrc = '/vectors/ELEMENTS/Cadres/Cadre1.png',
+  frameSrc = '/vectors/ELEMENTS/Cadres/Cadre1.avif',
   onClose,
   children,
 }) => {
@@ -76,7 +76,7 @@ const handleExitClick = () => {
       {/* Écran Noir pour la Pause ou la Fin (uniquement pour la vidéo) */}
       {(isPlayingAndDelay || isVideoEnded) && (
         <img
-          src="/vectors/ELEMENTS/Cadres/EcranNoir.png"
+          src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
           alt="Écran noir lorsque la vidéo est en pause ou terminée"
           className="absolute"
           style={{
@@ -89,9 +89,9 @@ const handleExitClick = () => {
         />
       )}
             <ControlButton
-        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.png"
-        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.png"
-        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.png"
+        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif"
+        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
+        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif"
         onClick={handleExitClick}
         style={{
           position: "absolute",
@@ -116,7 +116,7 @@ const handleExitClick = () => {
       >
         {/* Vitre alignée avec le conteneur */}
         <img
-          src="/vectors/ELEMENTS/Cadres/vitre.png"
+          src="/vectors/ELEMENTS/Cadres/vitre.avif"
           alt="Vitre transparente"
           className="absolute z-10 opacity-0"
           style={{

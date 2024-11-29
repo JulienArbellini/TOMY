@@ -42,18 +42,18 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
 
   // Mapping de frameType à frameSrc
   const frameSrcMap: Record<string, string> = {
-    ultrasimple: "/vectors/ELEMENTS/Cadres/CadreUltraSimple.png",
-    cadre1: "/vectors/ELEMENTS/Cadres/Cadre1.png",
-    edgy: "/vectors/ELEMENTS/Cadres/CadreEdgy.png",
-    surfy: "/vectors/ELEMENTS/Cadres/CadreSurfy.png",
-    bois: "/vectors/ELEMENTS/Cadres/CadreBois.png",
-    magazine: "/vectors/ELEMENTS/Cadres/CadreMagazine.png",
-    musique: "/vectors/ELEMENTS/Cadres/CadreMusique.png",
-    simple: "/vectors/ELEMENTS/Cadres/CadreSimple.png",
+    ultrasimple: "/vectors/ELEMENTS/Cadres/CadreUltraSimple.avif",
+    cadre1: "/vectors/ELEMENTS/Cadres/Cadre1.avif",
+    edgy: "/vectors/ELEMENTS/Cadres/CadreEdgy.avif",
+    surfy: "/vectors/ELEMENTS/Cadres/CadreSurfy.avif",
+    bois: "/vectors/ELEMENTS/Cadres/CadreBois.avif",
+    magazine: "/vectors/ELEMENTS/Cadres/CadreMagazine.avif",
+    musique: "/vectors/ELEMENTS/Cadres/CadreMusique.avif",
+    simple: "/vectors/ELEMENTS/Cadres/CadreSimple.avif",
     // Assurez-vous que les chemins correspondent à vos fichiers
   };
 
-  const frameSrc = frameSrcMap[frameType] || "/vectors/ELEMENTS/Cadres/default.png";
+  const frameSrc = frameSrcMap[frameType] || "/vectors/ELEMENTS/Cadres/default.avif";
 
   // Gestion des types de contenu
   if (type === "video" && src) {

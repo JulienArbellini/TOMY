@@ -15,7 +15,7 @@ export default function Home() {
 
   const [backgroundImages, setBackgroundImages] = useState([
     '/vectors/ELEMENTS/FondDEcran.jpg', // Fond 1 (bg1)
-    '/images/bg2.png', // Fond 2 (bg2)
+    '/images/bg2.avif', // Fond 2 (bg2)
   ]);
   const [activeBackgroundIndex, setActiveBackgroundIndex] = useState(0); // Index du fond actif
   const [isBg2Visible, setIsBg2Visible] = useState(false); // Gérer la visibilité de bg2
@@ -159,10 +159,10 @@ export default function Home() {
         </AnimatePresence>
 
         <DynamicButton
-          defaultIcon="/vectors/ELEMENTS/BoutonsDivers/Skip.png"
-          hoverIcon="/vectors/ELEMENTS/BoutonsDivers/SkipOver.png"
-          clickedIcon="/vectors/ELEMENTS/BoutonsDivers/SkipClic.png"
-          releasedIcon="/vectors/ELEMENTS/BoutonsDivers/SkipOver.png"
+          defaultIcon="/vectors/ELEMENTS/BoutonsDivers/Skip.avif"
+          hoverIcon="/vectors/ELEMENTS/BoutonsDivers/SkipOver.avif"
+          clickedIcon="/vectors/ELEMENTS/BoutonsDivers/SkipClic.avif"
+          releasedIcon="/vectors/ELEMENTS/BoutonsDivers/SkipOver.avif"
           onClick={handleSkipClick}
           style={{
             bottom: '10px',

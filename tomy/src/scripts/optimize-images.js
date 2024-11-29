@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 // Chemin des images source et optimisées
-const inputDir = path.join(__dirname, '../../public/ICONES'); // Répertoire source des images
-const outputDir = path.join(__dirname, '../../public/OPTIMIZED_ICONES'); // Répertoire cible
+const inputDir = path.join(__dirname, '../../public/vectors/ELEMENTS/Cadres'); // Répertoire source des images
+const outputDir = path.join(__dirname, '../../public/OPTIMIZED_IMAGES'); // Répertoire cible
 
 // Créer le dossier cible si nécessaire
 if (!fs.existsSync(outputDir)) {
@@ -17,17 +17,12 @@ const optimizeImages = async () => {
 
   for (const file of files) {
     const inputFilePath = path.join(inputDir, file);
-    const outputFilePathWebP = path.join(outputDir, `${path.parse(file).name}.webp`);
     const outputFilePathAvif = path.join(outputDir, `${path.parse(file).name}.avif`);
 
     // Ignorer les fichiers non images
     if (!/\.(jpe?g|png|gif)$/i.test(file)) continue;
 
     try {
-      // Convertir en WebP
-      await sharp(inputFilePath)
-        .webp({ quality: 80 })
-        .toFile(outputFilePathWebP);
 
       // Convertir en AVIF
       await sharp(inputFilePath)

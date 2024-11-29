@@ -30,9 +30,9 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
     <div>
       {/* Bouton Exit */}
       <ControlButton
-        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.png"
-        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.png"
-        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.png"
+        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif"
+        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
+        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
         onClick={() => console.log('Exit button clicked')}
         style={{
           top: `${scaledValue(24)}px`,
@@ -47,18 +47,18 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
       <ControlButton
         defaultIcon={
           isPlaying
-            ? '/vectors/ELEMENTS/BoutonsPlayer/Pause.png'
-            : '/vectors/ELEMENTS/BoutonsPlayer/Play.png'
+            ? '/vectors/ELEMENTS/BoutonsPlayer/Pause.avif'
+            : '/vectors/ELEMENTS/BoutonsPlayer/Play.avif'
         }
         hoverIcon={
           isPlaying
-            ? '/vectors/ELEMENTS/BoutonsPlayer/PauseHover.png'
-            : '/vectors/ELEMENTS/BoutonsPlayer/PlayHover.png'
+            ? '/vectors/ELEMENTS/BoutonsPlayer/PauseHover.avif'
+            : '/vectors/ELEMENTS/BoutonsPlayer/PlayHover.avif'
         }
         clickedIcon={
           isPlaying
-            ? '/vectors/ELEMENTS/BoutonsPlayer/PauseClic.png'
-            : '/vectors/ELEMENTS/BoutonsPlayer/PlayClic.png'
+            ? '/vectors/ELEMENTS/BoutonsPlayer/PauseClic.avif'
+            : '/vectors/ELEMENTS/BoutonsPlayer/PlayClic.avif'
         }
         onClick={handlePlayClick}
         style={{
@@ -71,9 +71,9 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
 
       {/* Bouton Rewind */}
       <ControlButton
-        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Backwards.png"
-        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.png"
-        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.png"
+        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Backwards.avif"
+        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.avif"
+        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.avif"
         onClick={handleRewindClick}
         style={{
           bottom: `${scaledValue(32)}px`,
@@ -85,9 +85,9 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
 
       {/* Bouton Forward */}
       <ControlButton
-        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Forward.png"
-        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.png"
-        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.png"
+        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Forward.avif"
+        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.avif"
+        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.avif"
         onClick={handleForwardClick}
         style={{
           bottom: `${scaledValue(32)}px`,
@@ -101,15 +101,15 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
       <ControlButton
         defaultIcon={
           isMuted
-            ? '/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png'
-            : '/vectors/ELEMENTS/BoutonsPlayer/Mute.png'
+            ? '/vectors/ELEMENTS/BoutonsPlayer/MuteClic.avif'
+            : '/vectors/ELEMENTS/BoutonsPlayer/Mute.avif'
         }
         hoverIcon={
           isMuted
-            ? '/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png'
-            : '/vectors/ELEMENTS/BoutonsPlayer/MuteHover.png'
+            ? '/vectors/ELEMENTS/BoutonsPlayer/MuteClic.avif'
+            : '/vectors/ELEMENTS/BoutonsPlayer/MuteHover.avif'
         }
-        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png"
+        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/MuteClic.avif"
         onClick={handleMuteClick}
         style={{
           bottom: `${scaledValue(32)}px`,
@@ -121,9 +121,9 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
 
       {/* Bouton Volume Down */}
       <ControlButton
-        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeDown.png"
-        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.png"
-        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.png"
+        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeDown.avif"
+        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.avif"
+        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.avif"
         onClick={handleVolumeDownClick}
         style={{
           bottom: `${scaledValue(32)}px`,
@@ -135,9 +135,9 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
 
       {/* Bouton Volume Up */}
       <ControlButton
-        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.png"
-        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.png"
-        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.png"
+        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.avif"
+        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.avif"
+        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.avif"
         onClick={handleVolumeUpClick}
         style={{
           bottom: `${scaledValue(32)}px`,

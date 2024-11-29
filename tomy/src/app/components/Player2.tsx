@@ -61,8 +61,8 @@ const Player: React.FC = () => {
       <div
         className={`absolute bottom-[26px] left-[25px] h-[30px] w-[30px] bg-cover hover:cursor-pointer ${
           isPlaying
-            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseClic.png")]'
-            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Play.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayHover.png")]'
+            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseClic.avif")]'
+            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Play.avif")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayHover.avif")]'
         }`}
         onClick={handlePlayClick}
       ></div>

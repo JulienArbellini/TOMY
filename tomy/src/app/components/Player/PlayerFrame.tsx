@@ -15,7 +15,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
   isVideoEnded,
   scale,
   src,
-  frameSrc = '/vectors/ELEMENTS/Cadres/Cadre1.png', // Valeur par défaut
+  frameSrc = '/vectors/ELEMENTS/Cadres/Cadre1.avif', // Valeur par défaut
 }) => {
   const scaledValue = (value: number) => value * scale;
 
@@ -44,7 +44,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
       {/* Écran Noir pour la Pause ou la Fin */}
       {(isPlayingAndDelay || isVideoEnded) && (
         <img
-          src="/vectors/ELEMENTS/Cadres/EcranNoir.png"
+          src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
           alt="Écran noir lorsque la vidéo est en pause ou terminée"
           className="absolute"
           style={{
@@ -69,7 +69,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
       >
         {/* Vitre alignée avec le conteneur */}
         <img
-          src="/vectors/ELEMENTS/Cadres/vitre.png"
+          src="/vectors/ELEMENTS/Cadres/vitre.avif"
           alt="Vitre transparente"
           className="absolute z-10 opacity-0"
           style={{

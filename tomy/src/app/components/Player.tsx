@@ -52,27 +52,27 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
   // Précharger les images des boutons au montage du composant
   useEffect(() => {
     const imageUrls = [
-      '/vectors/ELEMENTS/BoutonsPlayer/Play.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/PlayHover.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/PlayClic.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/Pause.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/PauseHover.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/PauseClic.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/Mute.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/MuteHover.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/VolumeDown.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/Backwards.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/Forward.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.png',
-      '/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.png'
+      '/vectors/ELEMENTS/BoutonsPlayer/Play.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/PlayHover.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/PlayClic.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/Pause.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/PauseHover.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/PauseClic.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/Mute.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/MuteHover.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/MuteClic.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/VolumeDown.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/Backwards.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/Forward.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.avif',
+      '/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.avif'
     ];
 
     preloadImages(imageUrls); // Précharger les images au montage
@@ -214,20 +214,20 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
   const playButtonClass = () => {
     if (isPlaying) {
       if (isPressed) {
-        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseClic.png")]';
+        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseClic.avif")]';
       }
       if (isHovering) {
-        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseHover.png")]';
+        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PauseHover.avif")]';
       }
-      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Pause.png")]';
+      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Pause.avif")]';
     } else {
       if (isPressed) {
-        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayClic.png")]';
+        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayClic.avif")]';
       }
       if (isHovering) {
-        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayHover.png")]';
+        return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/PlayHover.avif")]';
       }
-      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Play.png")]';
+      return 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Play.avif")]';
     }
   };
 
@@ -253,7 +253,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
           }}
         >
         <img
-          src="/vectors/ELEMENTS/Cadres/Cadre1.png"
+          src="/vectors/ELEMENTS/Cadres/Cadre1.avif"
           alt=""
           style={{
             height: `${scaledValue(555)}px`,
@@ -261,7 +261,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
           }}
         />
         <img
-          src="/vectors/ELEMENTS/Cadres/EcranNoir.png"
+          src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
           alt=""
           className={`absolute`}
           style={{
@@ -273,7 +273,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
           }}
         />
         <img 
-          src="/vectors/ELEMENTS/Cadres/vitre.png"
+          src="/vectors/ELEMENTS/Cadres/vitre.avif"
           alt="" 
           className="absolute z-10 top-[50px] left-[33px] h-[440px] w-[586px] opacity-20" 
           style={{
@@ -315,7 +315,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
       </div>
 
       {/* Bouton Exit */}
-      <div className={`absolute bg-[url('/vectors/ELEMENTS/BoutonsPlayer/Exit.png')] hover:bg-[url('/vectors/ELEMENTS/BoutonsPlayer/ExitHover.png')] bg-cover hover:cursor-pointer`}
+      <div className={`absolute bg-[url('/vectors/ELEMENTS/BoutonsPlayer/Exit.avif')] hover:bg-[url('/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif')] bg-cover hover:cursor-pointer`}
       style={{
         top: `${scaledValue(20)}px`,
         left: `${scaledValue(24)}px`,
@@ -344,8 +344,8 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
       <div
         className={`absolute bg-cover hover:cursor-pointer ${
           isMuted
-            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteClic.png")]'
-            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Mute.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteHover.png")]'
+            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteClic.avif")]'
+            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Mute.avif")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/MuteHover.avif")]'
         }`}
         style={{
           bottom: `${scaledValue(30)}px`,
@@ -360,8 +360,8 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
       <div
         className={`absolute bg-cover hover:cursor-pointer ${
           isVolumeDown
-            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.png")]'
-            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDown.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.png")]'
+            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.avif")]'
+            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDown.avif")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.avif")]'
         }`}
         style={{
           bottom: `${scaledValue(30)}px`,
@@ -376,8 +376,8 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
       <div
         className={`absolute bg-cover hover:cursor-pointer ${
           isVolumeUp
-            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.png")]'
-            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.png")]'
+            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.avif")]'
+            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.avif")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.avif")]'
         }`}
         style={{
           bottom: `${scaledValue(30)}px`,
@@ -392,8 +392,8 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
       <div
         className={`absolute bg-cover hover:cursor-pointer ${
           isRewinding
-            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.png")]'
-            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Backwards.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.png")]'
+            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.avif")]'
+            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Backwards.avif")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.avif")]'
         }`}
         style={{
           bottom: `${scaledValue(30)}px`,
@@ -410,8 +410,8 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
       <div
         className={`absolute bg-cover hover:cursor-pointer ${
           isForwarding
-            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.png")]'
-            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Forward.png")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.png")]'
+            ? 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.avif")]'
+            : 'bg-[url("/vectors/ELEMENTS/BoutonsPlayer/Forward.avif")] hover:bg-[url("/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.avif")]'
         }`}
         style={{
           bottom: `${scaledValue(30)}px`,

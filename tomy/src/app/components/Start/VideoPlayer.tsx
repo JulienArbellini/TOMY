@@ -70,7 +70,7 @@ const VideoPlayer: React.FC = () => {
         isVideoEnded={isVideoEnded}
         scale={scale}
         src={videoSrc}
-        frameSrc={'/vectors/ELEMENTS/Cadres/CadreUltrasimple.png'}
+        frameSrc={'/vectors/ELEMENTS/Cadres/CadreUltrasimple.avif'}
       />
     </div>
   );

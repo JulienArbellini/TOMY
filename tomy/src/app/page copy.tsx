@@ -135,7 +135,7 @@ export default function Home() {
                 {/* Conteneur de l'image avec position relative */}
                 <div className="relative w-full h-full">
                   <Image
-                    src="/images/button.png"
+                    src="/images/button.avif"
                     alt="Button Image"
                     width={610}
                     height={150}

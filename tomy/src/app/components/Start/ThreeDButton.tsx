@@ -126,13 +126,13 @@ export default function ThreeDButton({  }: ThreeDButtonProps) {
         <div className="relative w-full h-full">
 
               <Image
-                src={isPressed ? "/images/button-pressed.png" : "/images/button.png"}
+                src={isPressed ? "/images/button-pressed.avif" : "/images/button.avif"}
                 alt="Button Image"
                 width={610}
                 height={150}
                 className="w-full"
                 // style={{
-                //   cursor: 'url("/images/cursor-button2.png"), auto', // Ajouter le curseur personnalisé ici
+                //   cursor: 'url("/images/cursor-button2.avif"), auto', // Ajouter le curseur personnalisé ici
                 // }}
               />
 
