@@ -42,7 +42,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
 
   // Mapping de frameType à frameSrc
   const frameSrcMap: Record<string, string> = {
-    ultrasimple: "/vectors/ELEMENTS/Cadres/CadreUltraSimple.avif",
+    ultrasimple: "/vectors/ELEMENTS/Cadres/CadreUltrasimple.avif",
     cadre1: "/vectors/ELEMENTS/Cadres/Cadre1.avif",
     edgy: "/vectors/ELEMENTS/Cadres/CadreEdgy.avif",
     surfy: "/vectors/ELEMENTS/Cadres/CadreSurfy.avif",
