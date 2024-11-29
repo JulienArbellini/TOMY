@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DynamicButton from "../components/DynamicButton/DynamicButton";
 import { items } from "../../data/items";
 import dynamic from "next/dynamic";
@@ -55,8 +55,31 @@ const Menu = () => {
     setHoveredIcons([]);
   };
 
+  useEffect(() => {
+    let scrollY = 0;
+  
+    if (selectedItem) {
+      // Sauvegarder la position actuelle
+      scrollY = window.scrollY;
+  
+      // Empêcher le défilement et fixer la page
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+    } else {
+      // Récupérer la position précédente
+      const storedScrollY = parseInt(document.body.style.top || "0", 10);
+  
+      // Restaurer le défilement normal
+      document.body.style.position = "";
+      document.body.style.top = "";
+  
+      // Revenir à la position précédente
+      window.scrollTo(0, -storedScrollY);
+    }
+  }, [selectedItem]);
+
   return (
-    <div className="h-full bg-blue-700 p-5 flex justify-center items-center">
+    <div className="h-full min-h-screen w-screen bg-blue-700 p-5 flex justify-center items-center">
       <div className="grid grid-cols-4 gap-4">
         {items.map((item, index) => (
           <DynamicButton
@@ -77,8 +100,7 @@ const Menu = () => {
 
       {/* Affichage conditionnel du lecteur */}
       {selectedItem && (
-        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="relative">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">          <div className="relative">
             {/* Rendu du UniversalPlayer avec la configuration sélectionnée */}
             <UniversalPlayer {...selectedItem} onClose={handleCloseModal} />
           </div>

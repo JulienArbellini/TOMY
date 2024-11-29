@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ControlButton from '../Player/ControlButton';
 
 interface PlayerFrameProps {
@@ -18,16 +18,36 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
   playerRef,
   isPlayingAndDelay = false,
   isVideoEnded = false,
-  scale,
   src,
   frameSrc = '/vectors/ELEMENTS/Cadres/Cadre1.png',
   onClose,
   children,
 }) => {
 
-    const handleExitClick = () => {
-        onClose();
-        };
+const [scale, setScale] = useState(1);
+
+useEffect(() => {
+    const handleResize = () => {
+        const windowHeight = window.innerHeight;
+        const originalHeight = 555;
+        const desiredHeight = windowHeight * 0.8;
+        const newScale = desiredHeight / originalHeight;
+        setScale(newScale);
+      };
+  
+      handleResize();
+      window.addEventListener('resize', handleResize);
+  
+      return () => window.removeEventListener('resize', handleResize);
+
+}, []);
+const handleExitClick = () => {
+    onClose();
+    };
+
+
+
+
     
   const scaledValue = (value: number) => value * scale;
 

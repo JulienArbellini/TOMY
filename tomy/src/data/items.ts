@@ -29,7 +29,7 @@ export const items = [
       type: "Cigarette",
       playerConfig: {
         type: "video",
-        src: "/videos/cigarette.mp4",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
         frameType: "cadre1",
         autoplay: false,
         loop: false,
@@ -41,7 +41,7 @@ export const items = [
       type: "Cockpit",
       playerConfig: {
         type: "video",
-        src: "/videos/cockpit.mp4",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
         frameType: "edgy",
         autoplay: true,
         loop: true,
@@ -53,7 +53,7 @@ export const items = [
       type: "Connect",
       playerConfig: {
         type: "video",
-        src: "/videos/apollo.mp4",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
         frameType: "cadre1",
         autoplay: true,
         loop: false,
@@ -88,7 +88,7 @@ export const items = [
       type: "DJ",
       playerConfig: {
         type: "video",
-        src: "/videos/dj.mp4",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
         frameType: "surfy",
         autoplay: true,
         loop: true,
@@ -138,7 +138,7 @@ export const items = [
       type: "Hôtesse",
       playerConfig: {
         type: "video",
-        src: "/videos/safety.mp4",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
         frameType: "cadre1",
         autoplay: false,
         loop: false,
@@ -183,7 +183,7 @@ export const items = [
       type: "MAP",
       playerConfig: {
         type: "video",
-        src: "/videos/map.mp4",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
         frameType: "ultrasimple",
         autoplay: true,
         loop: true,

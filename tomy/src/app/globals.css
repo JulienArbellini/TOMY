@@ -18,6 +18,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
+  overflow-x: hidden;
   background: linear-gradient(
       to bottom,
       transparent,
@@ -50,6 +51,11 @@ body {
 
 .fade-in.visible {
   opacity: 1;
+}
+
+.no-scroll {
+  overflow: hidden;
+  height: 100vh;
 }
 
 
