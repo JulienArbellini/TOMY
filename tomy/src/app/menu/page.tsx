@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import DynamicButton from "../components/DynamicButton/DynamicButton";
 import { items } from "../../data/items";
 import dynamic from "next/dynamic";
+import { usePreloadImages } from "../hooks/usePreloadImages"
 
 // Charger UniversalPlayer uniquement côté client
 const UniversalPlayer = dynamic(
@@ -24,6 +25,15 @@ const Menu = () => {
     ["MOVIES", "Movie-watching"],
     // ... autres groupes
   ];
+
+  const allImageUrls = items.flatMap((item) => [
+    `/OPTIMIZED_ICONES/${item.type}-hover.avif`,
+    `/OPTIMIZED_ICONES/${item.type}.avif`,
+    `/OPTIMIZED_ICONES/${item.type}-clic.avif`,
+  ]);
+
+  // Précharger les images
+  usePreloadImages(allImageUrls);
 
   const iconToGroupMap: { [key: string]: string[] } = {};
   iconGroups.forEach((group) => {
