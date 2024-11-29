@@ -84,10 +84,10 @@ const Menu = () => {
         {items.map((item, index) => (
           <DynamicButton
             key={index}
-            defaultIcon={`/ICONES/${item.type}-hover.png`}
-            hoverIcon={`/ICONES/${item.type}.png`}
-            clickedIcon={`/ICONES/${item.type}-clic.png`}
-            releasedIcon={`/ICONES/${item.type}.png`}
+            defaultIcon={`/OPTIMIZED_ICONES/${item.type}-hover.avif`}
+            hoverIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
+            clickedIcon={`/OPTIMIZED_ICONES/${item.type}-clic.avif`}
+            releasedIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
             onClick={() => handleItemClick(item.type)}
             onMouseEnter={() => handleMouseEnter(item.type)}
             onMouseLeave={() => handleMouseLeave(item.type)}
