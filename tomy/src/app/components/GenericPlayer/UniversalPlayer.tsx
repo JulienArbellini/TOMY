@@ -8,6 +8,7 @@ import PlayerControls from "./PlayerControls";
 interface UniversalPlayerProps {
   type: string;
   src?: string;
+  tracks?: { src: string; title: string }[];
   images?: string[];
   frameType: string;
   autoplay?: boolean;
@@ -68,12 +69,17 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
         frameSrc={frameSrc}
       />
     );
-  } else if (type === "audio" && src) {
+  } else if (type === "audio") {
     return (
-
-        <AudioPlayer src={src} autoplay={autoplay} controls={controls} />
-
+      <AudioPlayer
+        tracks={props.tracks} // Passer la liste des pistes
+        src={src} // Optionnel : pour compatibilité avec une seule piste
+        autoplay={autoplay}
+        controls={controls}
+        onClose={onClose}
+      />
     );
+
   } else if (type === "diaporama" && images) {
     return (
       <PlayerFrame frameSrc={frameSrc} scale={scale}  onClose={onClose}>
