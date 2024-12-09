@@ -77,6 +77,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
         autoplay={autoplay}
         controls={controls}
         onClose={onClose}
+        scale={scale}
       />
     );
 

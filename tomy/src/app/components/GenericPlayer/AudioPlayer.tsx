@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, CSSProperties} from "react";
 
 interface Track {
   src: string;
@@ -11,6 +11,7 @@ interface AudioPlayerProps {
   tracks?: Track[];
   src?: string;
   title?: string;
+  scale?: number;
   autoplay?: boolean;
   controls?: boolean;
   frameSrc?: string;
@@ -133,6 +134,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
       setIsPlaying(!isPlaying);
     }
   };
+  
 
   const toggleMute = () => {
     if (audioRef.current) {
@@ -174,11 +176,13 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
     defaultIcon,
     hoverIcon,
     clickedIcon,
+    style,
     onClick,
   }: {
     defaultIcon: string;
     hoverIcon: string;
     clickedIcon: string;
+    style: CSSProperties;
     onClick: () => void;
   }) => {
     const [buttonState, setButtonState] = useState<"default" | "hover" | "clicked">("default");
@@ -201,6 +205,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
         style={{
           height: `${scaledValue(40)}px`,
           width: `${scaledValue(40)}px`,
+          ...style,
           backgroundImage: `url(${currentIcon})`,
         }}
         onMouseEnter={handleMouseEnter}
@@ -216,8 +221,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
     <div
       className="relative flex flex-col items-center"
       style={{
-        height: `${scaledValue(550)}px`,
-        width: `${scaledValue(640)}px`,
+        height: `${scaledValue(337)}px`,
+        width: `${scaledValue(556)}px`,
       }}
     >
       {/* Cadre décoratif */}
@@ -225,16 +230,20 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
         src={frameSrc}
         alt="Cadre décoratif autour du contenu"
         style={{
-          height: `${scaledValue(538)}px`,
-          width: `${scaledValue(638)}px`,
+          height: `${scaledValue(337)}px`,
+          width: `${scaledValue(556)}px`,
         }}
       />
 
       {/* Titre de la piste */}
       <div
-        className="absolute text-center text-lg font-bold mb-4"
+        className="text-lg font-bold mb-4 z-10"
         style={{
-          marginTop: `${scaledValue(30)}px`,
+          position: "absolute",
+          top: `${scaledValue(60)}px`,   // centre vertical
+          left: `${scaledValue(208 + 335/2)}px`, // centre horizontal
+          transform: "translate(-50%, -50%)",    // décale le texte de la moitié de sa propre largeur/hauteur
+          textAlign: "center",
         }}
       >
         {currentTrack.title}
@@ -245,9 +254,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
         ref={canvasContainerRef}
         className="absolute w-full flex justify-center items-center"
         style={{
-          top: `${scaledValue(100)}px`,
-          height: `${scaledValue(280)}px`,
-          width: `${scaledValue(580)}px`,
+          top: `${scaledValue(8)}px`,
+          left: `${scaledValue(208)}px`,
+          height: `${scaledValue(210)}px`,
+          width: `${scaledValue(335)}px`,
           borderRadius: `50%`,
           backgroundColor: "black",
           overflow: "hidden",
@@ -255,19 +265,21 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
       ></div>
 
       {/* Contrôles audio personnalisés */}
-      <div
-        className="absolute bottom-0 flex justify-between items-center w-full"
+    
+      {/* Previous Track */}
+      <AudioControlButton
+        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Backwards.avif"
+        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.avif"
+        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.avif"
+        onClick={playPreviousTrack}
         style={{
-          padding: `${scaledValue(10)}px`,
+          position: "absolute",
+          bottom: `${scaledValue(52)}px`,
+          left: `${scaledValue(112)}px`,
+          width: `${scaledValue(60)}px`,
+          height: `${scaledValue(60)}px`,
         }}
-      >
-        {/* Previous Track */}
-        <AudioControlButton
-          defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Backwards.avif"
-          hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.avif"
-          clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.avif"
-          onClick={playPreviousTrack}
-        />
+      />
 
         {/* Play/Pause */}
         <AudioControlButton
@@ -275,6 +287,13 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
           hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/PlayHover.avif"
           clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/PlayClic.avif"
           onClick={togglePlayPause}
+          style={{
+            position: "absolute",
+            bottom: `${scaledValue(52)}px`,
+            left: `${scaledValue(45)}px`,
+            width: `${scaledValue(60)}px`,
+            height: `${scaledValue(60)}px`,
+          }}
         />
 
         {/* Next Track */}
@@ -283,6 +302,13 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
           hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.avif"
           clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.avif"
           onClick={playNextTrack}
+          style={{
+            position: "absolute",
+            bottom: `${scaledValue(52)}px`,
+            left: `${scaledValue(180)}px`,
+            width: `${scaledValue(60)}px`,
+            height: `${scaledValue(60)}px`,
+          }}
         />
 
         {/* Volume Down */}
@@ -291,6 +317,11 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
           hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeDownHover.avif"
           clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeDownClic.avif"
           onClick={decreaseVolume}
+          style={{
+            position: "absolute",
+            bottom: `${scaledValue(85)}px`,
+            right: `${scaledValue(60)}px`,
+          }}
         />
 
         {/* Volume Up */}
@@ -299,6 +330,11 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
           hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.avif"
           clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.avif"
           onClick={increaseVolume}
+          style={{
+            position: "absolute",
+            bottom: `${scaledValue(65)}px`,
+            right: `${scaledValue(15)}px`,
+          }}
         />
 
         {/* Mute */}
@@ -307,6 +343,11 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
           hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/MuteHover.avif"
           clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/MuteClic.avif"
           onClick={toggleMute}
+          style={{
+            position: "absolute",
+            bottom: `${scaledValue(110)}px`,
+            right: `${scaledValue(15)}px`,
+          }}
         />
 
         {/* Close */}
@@ -315,8 +356,13 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
           hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
           clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif"
           onClick={onClose}
+          style={{
+            position: "absolute",
+            bottom: `${scaledValue(7)}px`,
+            left: `${scaledValue(7)}px`,
+          }}
         />
-      </div>
+
 
       {/* Élément audio caché */}
       <audio
