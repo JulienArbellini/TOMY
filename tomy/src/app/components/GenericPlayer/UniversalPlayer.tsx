@@ -4,6 +4,7 @@ import AudioPlayer from "./AudioPlayer";
 import Slideshow from "./Slideshow";
 import ControlButton from "../Player/ControlButton"; // Ajustez le chemin si nécessaire
 import PlayerControls from "./PlayerControls";
+import { usePreloadImages } from "../../hooks/usePreloadImages";
 
 interface UniversalPlayerProps {
   type: string;
@@ -40,6 +41,27 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
   // États pour gérer la lecture et la fin de la vidéo
   const [isPlayingAndDelay, setIsPlayingAndDelay] = useState<boolean>(false);
   const [isVideoEnded, setIsVideoEnded] = useState<boolean>(false);
+
+  const playerImages = [
+    "/OPTIMIZED_PLAYER/Play.avif",
+    "/OPTIMIZED_PLAYER/PlayHover.avif",
+    "/OPTIMIZED_PLAYER/PlayClic.avif",
+    "/OPTIMIZED_PLAYER/Pause.avif",
+    "/OPTIMIZED_PLAYER/PauseHover.avif",
+    "/OPTIMIZED_PLAYER/PauseClic.avif",
+    "/OPTIMIZED_PLAYER/Next.avif",
+    "/OPTIMIZED_PLAYER/NextHover.avif",
+    "/OPTIMIZED_PLAYER/NextClic.avif",
+    "/OPTIMIZED_PLAYER/Previous.avif",
+    "/OPTIMIZED_PLAYER/PreviousHover.avif",
+    "/OPTIMIZED_PLAYER/PreviousClic.avif",
+    "/OPTIMIZED_PLAYER/Exit.avif",
+    "/OPTIMIZED_PLAYER/ExitHover.avif",
+    "/OPTIMIZED_PLAYER/ExitClic.avif",
+  ];
+
+  // Précharger les images
+  usePreloadImages(playerImages);
 
   // Mapping de frameType à frameSrc
   const frameSrcMap: Record<string, string> = {
