@@ -45,15 +45,27 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
   useEffect(() => {
     const handleResize = () => {
       const windowHeight = window.innerHeight;
-      const originalHeight = 555;
+      const windowWidth = window.innerWidth;
+  
+      const originalWidth = 556; // Votre largeur de référence
+      const originalHeight = 337; // Votre hauteur de référence
+  
+      // On vise 80% de la taille de la fenêtre en largeur et en hauteur
+      const desiredWidth = windowWidth * 0.8;
       const desiredHeight = windowHeight * 0.8;
-      const newScale = desiredHeight / originalHeight;
+  
+      // Calculer le scale basé sur la hauteur et la largeur
+      const scaleHeight = desiredHeight / originalHeight;
+      const scaleWidth = desiredWidth / originalWidth;
+  
+      // Choisir le plus petit scale pour que tout rentre sans déformation
+      const newScale = Math.min(scaleHeight, scaleWidth);
+  
       setScale(newScale);
     };
-
+  
     handleResize();
     window.addEventListener("resize", handleResize);
-
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -283,9 +295,9 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
 
         {/* Play/Pause */}
         <AudioControlButton
-          defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Play.avif"
-          hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/PlayHover.avif"
-          clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/PlayClic.avif"
+          defaultIcon={isPlaying ? "/vectors/ELEMENTS/BoutonsPlayer/Pause.avif" : "/vectors/ELEMENTS/BoutonsPlayer/Play.avif"}
+          hoverIcon={isPlaying ? "/vectors/ELEMENTS/BoutonsPlayer/PauseHover.avif" : "/vectors/ELEMENTS/BoutonsPlayer/PlayHover.avif"}
+          clickedIcon={isPlaying ? "/vectors/ELEMENTS/BoutonsPlayer/PauseClic.avif" : "/vectors/ELEMENTS/BoutonsPlayer/PlayClic.avif"}
           onClick={togglePlayPause}
           style={{
             position: "absolute",

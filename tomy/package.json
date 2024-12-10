@@ -22,6 +22,7 @@
     "framer-motion": "^11.11.10",
     "next": "14.2.5",
     "next-cloudinary": "^6.16.0",
+    "ngrok": "^5.0.0-beta.2",
     "p5": "^1.11.2",
     "p5.sound": "^0.1.0",
     "postcss": "8.4.40",
