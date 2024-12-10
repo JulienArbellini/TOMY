@@ -30,6 +30,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
   const audioRef = useRef<HTMLAudioElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
+  const [p5Instance, setP5Instance] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(autoplay);
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(1);
@@ -51,8 +52,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
       const originalHeight = 337; // Votre hauteur de référence
   
       // On vise 80% de la taille de la fenêtre en largeur et en hauteur
-      const desiredWidth = windowWidth * 0.8;
-      const desiredHeight = windowHeight * 0.8;
+      const desiredWidth = windowWidth * 0.5;
+      const desiredHeight = windowHeight * 0.5;
   
       // Calculer le scale basé sur la hauteur et la largeur
       const scaleHeight = desiredHeight / originalHeight;
@@ -72,7 +73,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
   }, []);
 
   useEffect(() => {
-    let p5Instance: any;
+    let localP5Instance: any;
     let fft: any;
 
     const loadP5 = async () => {
@@ -116,15 +117,25 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
         };
       };
 
-      p5Instance = new p5(sketch);
+      localP5Instance = new p5(sketch);
+      setP5Instance(localP5Instance);
     };
 
     loadP5();
 
     return () => {
-      if (p5Instance) p5Instance.remove();
+      if (localP5Instance) localP5Instance.remove();
     };
   }, []);
+
+  useEffect(() => {
+    if (p5Instance) {
+      // On attend le prochain rafraîchissement d'affichage
+      requestAnimationFrame(() => {
+        p5Instance.resizeCanvas(scaledValue(580), scaledValue(280));
+      });
+    }
+  }, [p5Instance, scale]);
 
   useEffect(() => {
     if (audioRef.current) {
