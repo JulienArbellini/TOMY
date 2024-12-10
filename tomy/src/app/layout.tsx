@@ -16,6 +16,34 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+            <head>
+        {/* Ajoutez les liens de préchargement ici */}
+        <link
+          rel="preload"
+          href="/OPTIMIZED_PLAYER/Play.avif"
+          as="image"
+          type="image/avif"
+        />
+        <link
+          rel="preload"
+          href="/OPTIMIZED_PLAYER/PlayHover.avif"
+          as="image"
+          type="image/avif"
+        />
+        <link
+          rel="preload"
+          href="/OPTIMIZED_PLAYER/PlayClic.avif"
+          as="image"
+          type="image/avif"
+        />
+        <link
+          rel="preload"
+          href="/OPTIMIZED_PLAYER/Pause.avif"
+          as="image"
+          type="image/avif"
+        />
+        {/* Ajoutez toutes les autres images critiques */}
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   )
