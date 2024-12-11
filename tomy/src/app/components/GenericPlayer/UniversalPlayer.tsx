@@ -116,9 +116,9 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
     );
   } else if (type === "interactive") {
     return (
-      <div className="relative">
-        <Gourou /> {/* Ajout du composant Gourou */}
-      </div>
+      <PlayerFrame frameSrc={frameSrc} scale={scale}  onClose={onClose}>
+        {/* Votre contenu interactif */}
+      </PlayerFrame>
     );
   } else if (type === "custom") {
     // Gérer les contenus personnalisés selon vos besoins
