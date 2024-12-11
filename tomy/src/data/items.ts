@@ -122,6 +122,18 @@ export const items = [
         frameType: "simple",
         // Affiche une bulle avec un conseil aléatoire
       },
+      advice: [
+        "Il faut battre le frère tant qu'il est chauve",
+        "On ne fait pas d'omelette sans casser du vieux",
+        "Qui vole un œuf, tue un keuf",
+        "C'est au pied du mur qu'on voit le mieux le mur",
+        "Il ne faut pas vendre la peau de l'ours... non, il ne faut pas",
+        "Scavenger Reeeeeeigns",
+        "Détail",
+        "...",
+        "Saluheeeeu ... ça fart ?",
+        "Adelie ? Psychopathe ??? (cqfd)"
+      ],
     },
     {
       name: "Hermes",

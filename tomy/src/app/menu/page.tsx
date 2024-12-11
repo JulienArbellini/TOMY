@@ -5,6 +5,7 @@ import DynamicButton from "../components/DynamicButton/DynamicButton";
 import { items } from "../../data/items";
 import dynamic from "next/dynamic";
 import { usePreloadImages } from "../hooks/usePreloadImages"
+import Gourou from "../components/Gourou/Gourou";
 
 // Charger UniversalPlayer uniquement côté client
 const UniversalPlayer = dynamic(
@@ -17,6 +18,10 @@ const UniversalPlayer = dynamic(
 const Menu = () => {
   const [selectedItem, setSelectedItem] = useState<any | null>(null);
   const [hoveredIcons, setHoveredIcons] = useState<string[]>([]);
+  const [message, setMessage] = useState<string | null>(null);
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [isMessageVisible, setIsMessageVisible] = useState(false);
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
   // Map pour associer chaque icône à son groupe (si nécessaire)
   const iconGroups = [
@@ -42,8 +47,37 @@ const Menu = () => {
     });
   });
 
-  const handleItemClick = (type: string) => {
-    // Trouver l'item correspondant au type
+  const handleItemClick = (type: string, event?: React.MouseEvent) => {
+    // Cas particulier Gourou
+    if (type === "Gourou" && event) {
+      const gourouItem = items.find((item) => item.type === "Gourou");
+      let displayedMessage = "Le Gourou est silencieux aujourd'hui.";
+      if (gourouItem && Array.isArray(gourouItem.advice) && gourouItem.advice.length > 0) {
+        const randomIndex = Math.floor(Math.random() * gourouItem.advice.length);
+        displayedMessage = gourouItem.advice[randomIndex];
+      }
+    
+      const { clientX, clientY } = event;
+      setCursorPosition({ x: clientX, y: clientY });
+      setMessage(displayedMessage);
+      setIsMessageVisible(true);
+    
+      // Annuler le précédent timeout s’il existe
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    
+      // Définir un nouveau timeout pour ce message
+      const newTimeoutId = setTimeout(() => {
+        setIsMessageVisible(false);
+        setMessage(null);
+      }, 5000);
+    
+      setTimeoutId(newTimeoutId); // Stocker le nouvel ID de timeout
+      return;
+    }
+  
+    // Cas générique pour les autres items
     const item = items.find((item) => item.type === type);
     if (item && item.playerConfig) {
       setSelectedItem(item.playerConfig);
@@ -64,6 +98,20 @@ const Menu = () => {
   const handleMouseLeave = (type: string) => {
     setHoveredIcons([]);
   };
+
+  useEffect(() => {
+    if (isMessageVisible) {
+      const handleMouseMove = (e: MouseEvent) => {
+        setCursorPosition({ x: e.clientX, y: e.clientY });
+      };
+  
+      window.addEventListener("mousemove", handleMouseMove);
+  
+      return () => {
+        window.removeEventListener("mousemove", handleMouseMove);
+      };
+    }
+  }, [isMessageVisible]);
 
   useEffect(() => {
     let scrollY = 0;
@@ -99,7 +147,7 @@ const Menu = () => {
             hoverIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
             clickedIcon={`/OPTIMIZED_ICONES/${item.type}-clic.avif`}
             releasedIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
-            onClick={() => handleItemClick(item.type)}
+            onClick={(e) => handleItemClick(item.type, e)}
             onMouseEnter={() => handleMouseEnter(item.type)}
             onMouseLeave={() => handleMouseLeave(item.type)}
             buttonState={
@@ -115,6 +163,26 @@ const Menu = () => {
             {/* Rendu du UniversalPlayer avec la configuration sélectionnée */}
             <UniversalPlayer {...selectedItem} onClose={handleCloseModal} />
           </div>
+        </div>
+      )}
+
+      {isMessageVisible && message && (
+        <div
+          className="popup-message"
+          style={{
+            position: "fixed",
+            left: cursorPosition.x + 15,
+            top: cursorPosition.y - 50,
+            textAlign: "center",
+            background: "rgba(0, 0, 0, 0.8)",
+            color: "white",
+            padding: "1px",
+            borderRadius: "5px",
+            pointerEvents: "none",
+            zIndex: 1000,
+          }}
+        >
+          {message}
         </div>
       )}
     </div>

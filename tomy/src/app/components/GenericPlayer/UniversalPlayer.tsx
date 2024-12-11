@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import PlayerFrame from "./PlayerFrame"; // Chemin vers votre PlayerFrame existant
 import AudioPlayer from "./AudioPlayer";
+import Gourou from "../Gourou/Gourou";
 import Slideshow from "./Slideshow";
 import ControlButton from "../Player/ControlButton"; // Ajustez le chemin si nécessaire
 import PlayerControls from "./PlayerControls";
@@ -116,11 +117,10 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
       </PlayerFrame>
     );
   } else if (type === "interactive") {
-    // Gérer les contenus interactifs selon vos besoins
     return (
-      <PlayerFrame frameSrc={frameSrc} scale={scale}  onClose={onClose}>
-        {/* Votre contenu interactif */}
-      </PlayerFrame>
+      <div className="relative">
+        <Gourou /> {/* Ajout du composant Gourou */}
+      </div>
     );
   } else if (type === "custom") {
     // Gérer les contenus personnalisés selon vos besoins
