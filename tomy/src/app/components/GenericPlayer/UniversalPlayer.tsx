@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import PlayerFrame from "./PlayerFrame"; // Chemin vers votre PlayerFrame existant
 import AudioPlayer from "./AudioPlayer";
 import Gourou from "../Gourou/Gourou";
-import Slideshow from "./Slideshow";
+import DiaporamaPlayer from "./DiaporamaPlayer";
 import ControlButton from "../Player/ControlButton"; // Ajustez le chemin si nécessaire
 import PlayerControls from "./PlayerControls";
 import { usePreloadImages } from "../../hooks/usePreloadImages";
@@ -106,9 +106,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
 
   } else if (type === "diaporama" && images) {
     return (
-      <PlayerFrame frameSrc={frameSrc} scale={scale}  onClose={onClose}>
-        <Slideshow images={images} />
-      </PlayerFrame>
+      <DiaporamaPlayer images={images} onClose={onClose} />
     );
   } else if (type === "game" && src) {
     return (
