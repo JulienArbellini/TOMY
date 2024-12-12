@@ -66,10 +66,10 @@ export const items = [
       playerConfig: {
         type: "diaporama",
         images: [
-          "/images/content/Crew1.jpg",
-          "/images/content/Crew2.png",
-          "/images/content/Crew3.png",
-          "/images/content/Crew4.png",
+          "/images/content/Crew1.avif",
+          "/images/content/Crew2.avif",
+          "/images/content/Crew3.avif",
+          "/images/content/Crew4.avif",
         ],
         frameType: "simple",
         controls: true,
