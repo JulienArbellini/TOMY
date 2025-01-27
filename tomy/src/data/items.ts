@@ -216,7 +216,7 @@ export const items = [
       name: "Machines",
       type: "Machines",
       playerConfig: {
-        type: "diaporama",
+        type: "custom",
         images: [
           "/images/machine1.jpg",
           // Ajoutez d'autres images

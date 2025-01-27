@@ -3,8 +3,8 @@ const fs = require('fs');
 const path = require('path');
 
 // Chemin des images source et optimisées
-const inputDir = path.join(__dirname, '../../public/images/content'); // Répertoire source des images
-const outputDir = path.join(__dirname, '../../public/images/content'); // Répertoire cible
+const inputDir = path.join(__dirname, '../../public/vectors/ELEMENTS/Cadres/NEW'); // Répertoire source des images
+const outputDir = path.join(__dirname, '../../public/vectors/ELEMENTS/Cadres/NEW'); // Répertoire cible
 
 // Créer le dossier cible si nécessaire
 if (!fs.existsSync(outputDir)) {
