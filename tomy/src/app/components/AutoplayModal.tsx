@@ -8,6 +8,7 @@ const AutoplayModal = ({ onClose }: { onClose: () => void }) => (
       <div className="flex justify-center items-center w-auto h-[90%]">
         <Player
           src="https://www.youtube.com/embed/YoQjD5O8Fzw"
+          onClose={onClose}
         />
       </div>
     </div>

@@ -88,22 +88,27 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
   // Gestion des types de contenu
   if (type === "video" && src) {
     return (
-      // <PlayerFrame
-      //   playerRef={playerRef}
-      //   isPlayingAndDelay={isPlayingAndDelay}
-      //   isVideoEnded={isVideoEnded}
-      //   scale={scale}
-      //   src={src}
-      //   onClose={onClose} // Passer la prop onClose
-      //   frameSrc={frameSrc}
-      //   controls={controls}
-      // />
       <Player src="https://www.youtube.com/embed/RS2jNCqCjPs" onClose={onClose} frameSrc={frameSrc}>
       {/* <Player src="https://www.youtube.com/embed/Qi1krsuYN1M"> */}
       </Player>
  
     );
-  } else if (type === "audio") {
+  } else if (type === "video-automatique" && src){
+    return (
+            <PlayerFrame
+        playerRef={playerRef}
+        isPlayingAndDelay={isPlayingAndDelay}
+        isVideoEnded={isVideoEnded}
+        scale={scale}
+        src={src}
+        onClose={onClose} // Passer la prop onClose
+        frameSrc={frameSrc}
+        controls={controls}
+      />
+    );
+  }
+  
+  else if (type === "audio") {
     return (
       <AudioPlayer
         tracks={props.tracks} // Passer la liste des pistes

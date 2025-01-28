@@ -5,7 +5,7 @@ export const items = [
       name: "AirLounge",
       type: "AirLounge",
       playerConfig: {
-        type: "video",
+        type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
         frameType: "ultrasimple",
         autoplay: true,
@@ -162,7 +162,7 @@ export const items = [
       name: "Hublot",
       type: "Hublot",
       playerConfig: {
-        type: "video",
+        type: "video-automatique",
         src: "/videos/hublot.mp4",
         frameType: "ultrasimple",
         autoplay: true,
@@ -195,7 +195,7 @@ export const items = [
       name: "MAP",
       type: "MAP",
       playerConfig: {
-        type: "video",
+        type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
         frameType: "ultrasimple",
         autoplay: true,
@@ -249,7 +249,7 @@ export const items = [
       name: "Movie-watching",
       type: "Movie-watching",
       playerConfig: {
-        type: "video",
+        type: "video-automatique",
         src: "/videos/movie-watching.mp4",
         frameType: "ultrasimple",
         autoplay: false,
@@ -261,7 +261,7 @@ export const items = [
       name: "MOVIES",
       type: "MOVIES",
       playerConfig: {
-        type: "video",
+        type: "video-automatique",
         src: "/videos/movies.mp4",
         frameType: "ultrasimple",
         autoplay: false,
@@ -350,7 +350,7 @@ export const items = [
       name: "Serre",
       type: "Serre",
       playerConfig: {
-        type: "video",
+        type: "video-automatique",
         src: "/videos/serre.mp4",
         frameType: "ultrasimple",
         autoplay: true,
