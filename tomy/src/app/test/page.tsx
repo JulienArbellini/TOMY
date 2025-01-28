@@ -21,9 +21,9 @@ const Test = () => {
 
   return (
     <div className="h-screen bg-cover bg-[url('/vectors/ELEMENTS/FondDEcran.jpg')] p-5 flex justify-center items-center">
-      <Player src="https://www.youtube.com/embed/RS2jNCqCjPs">
+      {/* <Player src="https://www.youtube.com/embed/RS2jNCqCjPs"> */}
       {/* <Player src="https://www.youtube.com/embed/Qi1krsuYN1M"> */}
-      </Player>
+      {/* </Player> */}
 
     </div>
 
