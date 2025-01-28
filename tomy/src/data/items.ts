@@ -19,18 +19,32 @@ export const items = [
       type: "Brace",
       playerConfig: {
         type: "interactive",
-        action: "hoverNote",
+        action: "randomAdvice",
         frameType: "simple",
+        //comme Gourou maus garder icone de Brace
         // Associe la souris avec une note au survol
       },
+      advice: [
+        "Il faut battre le frère tant qu'il est chauve",
+        "On ne fait pas d'omelette sans casser du vieux",
+        "Qui vole un œuf, tue un keuf",
+        "C'est au pied du mur qu'on voit le mieux le mur",
+        "Il ne faut pas vendre la peau de l'ours... non, il ne faut pas",
+        "Scavenger Reeeeeeigns",
+        "Détail",
+        "...",
+        "Saluheeeeu ... ça fart ?",
+        "Adelie ? Psychopathe ??? (cqfd)"
+      ],
     },
+    
     {
       name: "Cigarette",
       type: "Cigarette",
       playerConfig: {
-        type: "video",
+        type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
-        frameType: "cadre1",
+        frameType: "ultrasimple",
         autoplay: false,
         loop: false,
         controls: true,
@@ -40,24 +54,13 @@ export const items = [
       name: "Cockpit",
       type: "Cockpit",
       playerConfig: {
-        type: "video",
+        type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
         frameType: "edgy",
         autoplay: true,
         loop: true,
         controls: false,
-      },
-    },
-    {
-      name: "Connect",
-      type: "Connect",
-      playerConfig: {
-        type: "video",
-        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
-        frameType: "cadre1",
-        autoplay: true,
-        loop: false,
-        controls: true,
+        // ajuster taille video pour que ça fit
       },
     },
     {
@@ -74,6 +77,7 @@ export const items = [
         frameType: "simple",
         controls: true,
       },
+      // ajouter possibilité de rajouter des liens
     },
     {
       name: "Cuisine",
@@ -81,14 +85,14 @@ export const items = [
       playerConfig: {
         type: "custom",
         frameType: "simple",
-        // Contenu spécifique à définir
+        // Juste bouton sans fonctionalité
       },
     },
     {
       name: "DJ",
       type: "DJ",
       playerConfig: {
-        type: "video",
+        type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
         frameType: "surfy",
         autoplay: true,
@@ -101,16 +105,18 @@ export const items = [
       type: "Game",
       playerConfig: {
         type: "game",
-        src: "/games/my-game.html",
+        src: "https://snazzy-khapse-8e5871.netlify.app/",
         frameType: "ultrasimple",
       },
+      //rendre cliquable
+      // boutons volume
     },
     {
       name: "GAMEr-Manette",
       type: "GAMEr-Manette",
       playerConfig: {
         type: "game",
-        src: "/games/another-game.html",
+        src: "https://snazzy-khapse-8e5871.netlify.app/",
         frameType: "ultrasimple",
       },
     },
@@ -121,7 +127,7 @@ export const items = [
         type: "interactive",
         action: "randomAdvice",
         frameType: "simple",
-        // Affiche une bulle avec un conseil aléatoire
+        // Faut que la bulle reste coté au gourou et ajouter du style écriture noire sur fond blanc police BD
       },
       advice: [
         "Il faut battre le frère tant qu'il est chauve",
@@ -142,7 +148,7 @@ export const items = [
       playerConfig: {
         type: "interactive",
         action: "ticketForm",
-        frameType: "simple",
+        frameType: "bois",
         // Formulaire avec placeholders et envoi d'email
       },
     },
@@ -150,9 +156,9 @@ export const items = [
       name: "Hotesse",
       type: "Hotesse",
       playerConfig: {
-        type: "video",
+        type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
-        frameType: "cadre1",
+        frameType: "ultrasimple",
         autoplay: false,
         loop: false,
         controls: true,
@@ -163,7 +169,7 @@ export const items = [
       type: "Hublot",
       playerConfig: {
         type: "video-automatique",
-        src: "/videos/hublot.mp4",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
         frameType: "ultrasimple",
         autoplay: true,
         loop: true,
@@ -174,18 +180,21 @@ export const items = [
       name: "Kiss",
       type: "Kiss",
       playerConfig: {
-        type: "reference",
-        referenceType: "Hublot",
-        // Se réfère au même contenu que "Hublot"
+        type: "video-automatique",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+        frameType: "ultrasimple",
+        autoplay: true,
+        loop: true,
+        controls: false,
       },
     },
     {
       name: "Lit",
       type: "Lit",
       playerConfig: {
-        type: "video",
-        src: "/videos/lit.mp4",
-        frameType: "cadre1",
+        type: "video-automatique",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+        frameType: "ultrasimple",
         autoplay: false,
         loop: false,
         controls: true,
@@ -204,31 +213,21 @@ export const items = [
       },
     },
     {
-      name: "METEO",
-      type: "METEO",
-      playerConfig: {
-        type: "custom",
-        frameType: "ultrasimple",
-        // Intégration d'une API météo possible
-      },
-    },
-    {
       name: "Machines",
       type: "Machines",
       playerConfig: {
-        type: "custom",
+        type: "mixed",
         images: [
-          "/images/machine1.jpg",
-          // Ajoutez d'autres images
-        ],
-        videos: [
-          "/videos/machine1.mp4",
-          // Ajoutez d'autres vidéos
+          "/images/content/Crew1.avif",
+          "/images/content/Crew2.avif",
+          "/images/content/Crew3.avif",
+          "/images/content/Crew4.avif",
         ],
         frameType: "bois",
-        autoplay: true,
-        controls: true,
-        // Affichage conditionnel selon le média
+        videoSrc: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+        videoAutoplay: true,
+        videoControls: false,
+        // Affichage conditionnel entre images et vidéo
       },
     },
     {
@@ -237,21 +236,23 @@ export const items = [
       playerConfig: {
         type: "diaporama",
         images: [
-          "/images/magazine1.jpg",
-          "/images/magazine2.jpg",
-          // Ajoutez d'autres images
+          "/images/content/Crew1.avif",
+          "/images/content/Crew2.avif",
+          "/images/content/Crew3.avif",
+          "/images/content/Crew4.avif",
         ],
         frameType: "magazine",
         controls: true,
       },
+      //gérer un peu mieux l'affichage des images
     },
     {
       name: "Movie-watching",
       type: "Movie-watching",
       playerConfig: {
-        type: "video-automatique",
-        src: "/videos/movie-watching.mp4",
-        frameType: "ultrasimple",
+        type: "video",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+        frameType: "cadre1",
         autoplay: false,
         loop: false,
         controls: true,
@@ -261,9 +262,9 @@ export const items = [
       name: "MOVIES",
       type: "MOVIES",
       playerConfig: {
-        type: "video-automatique",
-        src: "/videos/movies.mp4",
-        frameType: "ultrasimple",
+        type: "video",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+        frameType: "cadre1",
         autoplay: false,
         loop: false,
         controls: true,
@@ -300,19 +301,37 @@ export const items = [
           image: "/images/album-cover.jpg",
         },
       },
+      //retablir l'affichage du titre 
     },
     {
       name: "Music-boy",
       type: "Music-boy",
       playerConfig: {
         type: "audio",
-        src: "/Album/another-song.wav",
+        tracks: [
+          { src: "/Album/01_Tomyairlines.wav", title: "Tomyairlines" },
+          { src: "/Album/02_Hublot_VX.wav", title: "Hublot VX" },
+          { src: "/Album/03_Ocean.wav", title: "Ocean" },
+          { src: "/Album/04_Mid interlude.wav", title: "Mid Interlude" },
+          { src: "/Album/05_Kiss.wav", title: "Kiss" },
+          { src: "/Album/06_Pop.wav", title: "Pop" },
+          { src: "/Album/06,5_fly&party.wav", title: "Fly & Party" },
+          { src: "/Album/07_LaTerre.wav", title: "La Terre" },
+          { src: "/Album/08_Nebulosus_VX.wav", title: "Nebulosus VX" },
+          { src: "/Album/09_Seraphim Silver Y.wav", title: "Seraphim Silver Y" },
+          { src: "/Album/10_thefinalfight.wav", title: "The Final Fight" },
+          { src: "/Album/11_Bourdon 2.wav", title: "Bourdon 2" },
+          { src: "/Album/12_Une longue plage avec des vagues V2.wav", title: "Une longue plage avec des vagues V2" },
+          { src: "/Album/13_Mission Tomy.wav", title: "Mission Tomy" },
+          { src: "/Album/14_Flight Feeling reprise.m4a", title: "Flight Feeling Reprise" },
+          { src: "/Album/Bombay.wav", title: "Bombay" },
+        ],
         frameType: "musique",
         autoplay: false,
         controls: true,
         extraContent: {
           text: "Titre de la musique",
-          image: "/images/another-album-cover.jpg",
+          image: "/images/album-cover.jpg",
         },
       },
     },
@@ -320,8 +339,8 @@ export const items = [
       name: "OIseaux",
       type: "OIseaux",
       playerConfig: {
-        type: "video",
-        src: "/videos/oiseaux.mp4",
+        type: "video-automatique",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
         frameType: "surfy",
         autoplay: true,
         loop: true,
@@ -351,7 +370,7 @@ export const items = [
       type: "Serre",
       playerConfig: {
         type: "video-automatique",
-        src: "/videos/serre.mp4",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
         frameType: "ultrasimple",
         autoplay: true,
         loop: true,
@@ -364,22 +383,31 @@ export const items = [
       playerConfig: {
         type: "diaporama",
         images: [
-          "/images/shop1.jpg",
-          "/images/shop2.jpg",
-          // Ajoutez d'autres images
+          "/images/content/Crew1.avif",
+          "/images/content/Crew2.avif",
+          "/images/content/Crew3.avif",
+          "/images/content/Crew4.avif",
         ],
         frameType: "edgy",
         controls: true,
         extraButton: "orderButton",
       },
+      // rajouter boutons order
     },
     {
       name: "Terrasse",
       type: "Terrasse",
       playerConfig: {
-        type: "custom",
-        frameType: "ultrasimple",
-        // Contenu spécifique à définir
+        type: "diaporama",
+        images: [
+          "/images/content/Crew1.avif",
+          "/images/content/Crew2.avif",
+          "/images/content/Crew3.avif",
+          "/images/content/Crew4.avif",
+        ],
+        frameType: "simple",
+        controls: true,
+        extraButton: "orderButton",
       },
     },
     {
@@ -390,6 +418,7 @@ export const items = [
         action: "playSound",
         soundSrc: "/sounds/jingle.mp3",
         animation: "buttonAnimation",
+        //au clic un son sonne 
       },
     },
     {
@@ -408,12 +437,18 @@ export const items = [
       name: "Valise",
       type: "Valise",
       playerConfig: {
-        type: "video",
-        src: "/videos/valise.mp4",
-        frameType: "cadre1",
-        autoplay: false,
-        loop: false,
-        controls: true,
+        type: "mixed",
+        images: [
+          "/images/content/Crew1.avif",
+          "/images/content/Crew2.avif",
+          "/images/content/Crew3.avif",
+          "/images/content/Crew4.avif",
+        ],
+        frameType: "simple",
+        videoSrc: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+        videoAutoplay: true,
+        videoControls: false,
+        // Affichage conditionnel entre images et vidéo
       },
     },
   ];

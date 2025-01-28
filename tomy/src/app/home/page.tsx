@@ -1,12 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import AutoplayModal from '../components/AutoplayModal';
-import SafetyModal from '../components/SafetyModal';
-import MovieModal from '../components/MovieModal';
-import TomyIslandModal from '../components/TomyIslandModal';
-import WebcamModal from '../components/WebcamModal';
-import MusicModal from '../components/MusicModal';
 
 const items = [
   { name: 'AUTOPLAY', type: 'autoplay' },
@@ -44,12 +38,7 @@ const Home = () => {
           </div>
         ))}
       </div>
-      {selectedItem === 'autoplay' && <AutoplayModal onClose={handleCloseModal} />}
-      {selectedItem === 'safety' && <SafetyModal onClose={handleCloseModal} />}
-      {selectedItem === 'movie' && <MovieModal onClose={handleCloseModal} />}
-      {selectedItem === 'tomyIsland' && <TomyIslandModal onClose={handleCloseModal} />}
-      {selectedItem === 'webcam' && <WebcamModal onClose={handleCloseModal} />}
-      {selectedItem === 'music' && <MusicModal onClose={handleCloseModal} />}
+
       {/* Ajoutez d'autres modales ici */}
     </div>
 

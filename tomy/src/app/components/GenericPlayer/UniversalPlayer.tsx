@@ -122,7 +122,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
 
   } else if (type === "diaporama" && images) {
     return (
-      <DiaporamaPlayer images={images} onClose={onClose} />
+      <DiaporamaPlayer images={images} frameSrc={frameSrc} onClose={onClose} />
     );
   } else if (type === "game" && src) {
     return (

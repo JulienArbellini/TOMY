@@ -1,12 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import AutoplayModal from '../components/AutoplayModal';
-import SafetyModal from '../components/SafetyModal';
-import MovieModal from '../components/MovieModal';
-import TomyIslandModal from '../components/TomyIslandModal';
-import WebcamModal from '../components/WebcamModal';
-import MusicModal from '../components/MusicModal';
 import Player from '../components/Player/Player';
 import ThreeScene from '../components/Three/ThreeScene';
 
