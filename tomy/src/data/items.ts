@@ -332,14 +332,15 @@ export const items = [
       name: "Relax",
       type: "Relax",
       playerConfig: {
-        type: "diaporama",
+        type: "mixed",
         images: [
-          "/images/relax1.jpg",
-          "/images/relax2.jpg",
-          // Ajoutez d'autres images
+          "/images/content/Crew1.avif",
+          "/images/content/Crew2.avif",
+          "/images/content/Crew3.avif",
+          "/images/content/Crew4.avif",
         ],
-        frameType: "simple",
-        videoSrc: "/videos/relax.mp4",
+        frameType: "plante",
+        videoSrc: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
         videoAutoplay: true,
         videoControls: false,
         // Affichage conditionnel entre images et vidéo

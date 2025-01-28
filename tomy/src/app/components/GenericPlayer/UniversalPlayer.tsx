@@ -6,6 +6,7 @@ import DiaporamaPlayer from "./DiaporamaPlayer";
 import ControlButton from "../Player/ControlButton"; // Ajustez le chemin si nécessaire
 import PlayerControls from "./PlayerControls";
 import { usePreloadImages } from "../../hooks/usePreloadImages";
+import MixedDiaporama from "./MixedDiaporama";
 
 interface UniversalPlayerProps {
   type: string;
@@ -13,6 +14,7 @@ interface UniversalPlayerProps {
   tracks?: { src: string; title: string }[];
   images?: string[];
   frameType: string;
+  videoSrc?: string; // Vidéo spécifique pour les types "mixed"
   autoplay?: boolean;
   loop?: boolean;
   controls?: boolean;
@@ -28,6 +30,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
     src,
     images,
     frameType,
+    videoSrc,
     autoplay = false,
     loop = false,
     controls = true,
@@ -74,6 +77,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
     magazine: "/vectors/ELEMENTS/Cadres/CadreMagazine.avif",
     musique: "/vectors/ELEMENTS/Cadres/CadreMusique.webp",
     simple: "/vectors/ELEMENTS/Cadres/CadreSimple.avif",
+    plante: "/vectors/ELEMENTS/Cadres/CadrePlante.png",
     // Assurez-vous que les chemins correspondent à vos fichiers
   };
 
@@ -127,9 +131,23 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
         {/* Votre contenu personnalisé */}
       </PlayerFrame>
     );
-  } else {
-    return null;
+  }else if (type === "mixed" && images && videoSrc) {
+    // Conversion explicite en types "image" et "video"
+    const items = [
+      ...images.map((image) => ({ type: "image" as const, src: image })),
+      { type: "video" as const, src: videoSrc },
+    ];
+  
+    return (
+      <MixedDiaporama
+        items={items}
+        frameSrc={frameSrc}
+        onClose={onClose}
+      />
+    );
   }
+
+  return null;
 };
 
 export default UniversalPlayer;
