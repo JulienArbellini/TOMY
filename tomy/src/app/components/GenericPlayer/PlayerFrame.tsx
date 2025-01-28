@@ -6,6 +6,7 @@ interface PlayerFrameProps {
   isPlayingAndDelay?: boolean;
   isVideoEnded?: boolean;
   scale: number;
+  controls?: boolean;
   src?: string;
   frameSrc?: string;
   onClose: () => void;
@@ -19,6 +20,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
   isPlayingAndDelay = false,
   isVideoEnded = false,
   src,
+  controls = true,
   frameSrc = '/vectors/ELEMENTS/Cadres/Cadre1.avif',
   onClose,
   children,

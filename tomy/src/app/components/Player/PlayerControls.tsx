@@ -11,6 +11,7 @@ interface PlayerControlsProps {
   isPlaying: boolean;
   isMuted: boolean;
   scale: number;
+  onClose: () => void;
 }
 
 const PlayerControls: React.FC<PlayerControlsProps> = ({
@@ -20,11 +21,15 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
   handleVolumeUpClick,
   handleRewindClick,
   handleForwardClick,
+  onClose,
   isPlaying,
   isMuted,
   scale,
 }) => {
   const scaledValue = (value: number) => value * scale;
+  const handleExitClick = () => {
+    onClose();
+    };
 
   return (
     <div>
@@ -33,7 +38,7 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
         defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif"
         hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
         clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
-        onClick={() => console.log('Exit button clicked')}
+        onClick={handleExitClick}
         style={{
           top: `${scaledValue(24)}px`,
           left: `${scaledValue(24)}px`,

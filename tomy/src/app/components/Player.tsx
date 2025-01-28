@@ -3,6 +3,8 @@ import React, { useState, useRef, useEffect } from 'react';
 interface PlayerProps {
   className?: string;
   src?: string;
+  onClose: () => void;
+  frameSrc?: string;
 }
 
 declare global {
@@ -12,7 +14,11 @@ declare global {
   }
 }
 
-const Player: React.FC<PlayerProps> = ({ src }) => {
+const Player: React.FC<PlayerProps> = ({ 
+  src, 
+  onClose,
+  frameSrc = '/vectors/ELEMENTS/Cadres/Cadre1.avif',
+ }) => {
   // États pour chaque bouton
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPlayingAndDelay, setIsPlayingAndDelay] = useState(true);
@@ -90,6 +96,10 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
       return !prevState;
     });
   };
+
+  const handleExitClick = () => {
+    onClose();
+    };
 
   const handleStateChange = (event: any) => {
     if (event.data === window.YT.PlayerState.PLAYING) {
@@ -234,7 +244,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
   const scaledValue = (value: number) => value * scale;
 
   return (
-    <div className="absolute h-screen w-full flex justify-center items-center">
+    <div className="relative">
       {!imagesPreloaded ? (
         <div>Loading...</div> // Affichage de chargement tant que les images ne sont pas prêtes
       ) : (
@@ -253,7 +263,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
           }}
         >
         <img
-          src="/vectors/ELEMENTS/Cadres/Cadre1.avif"
+          src={frameSrc}
           alt=""
           style={{
             height: `${scaledValue(555)}px`,
@@ -275,7 +285,7 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
         <img 
           src="/vectors/ELEMENTS/Cadres/vitre.avif"
           alt="" 
-          className="absolute z-10 top-[50px] left-[33px] h-[440px] w-[586px] opacity-20" 
+          className="absolute z-10 top-[50px] left-[33px] h-[440px] w-[586px] opacity-0" 
           style={{
             top: `${scaledValue(66)}px`,
             left: `${scaledValue(30)}px`,
@@ -322,6 +332,8 @@ const Player: React.FC<PlayerProps> = ({ src }) => {
         height: `${scaledValue(25)}px`,
         width: `${scaledValue(25)}px`,
       }}
+      onClick={handleExitClick}
+
       ></div>
 
       {/* Bouton Play */}

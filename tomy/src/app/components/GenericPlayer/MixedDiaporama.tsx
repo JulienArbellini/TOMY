@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import InteractiveButton from "./InteractiveButton"; // Boutons personnalisés
+/// <reference path="../../../types/youtube.d.ts" />
 
 interface MixedDiaporamaProps {
   items: { type: "image" | "video"; src: string }[]; // Liste mixte des médias
@@ -7,12 +8,7 @@ interface MixedDiaporamaProps {
   onClose: () => void; // Fonction pour fermer le diaporama
 }
 
-declare global {
-  interface Window {
-    YT: any;
-    onYouTubeIframeAPIReady?: () => void;
-  }
-}
+
 
 const MixedDiaporama: React.FC<MixedDiaporamaProps> = ({
   items,

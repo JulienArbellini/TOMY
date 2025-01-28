@@ -7,6 +7,7 @@ import ControlButton from "../Player/ControlButton"; // Ajustez le chemin si né
 import PlayerControls from "./PlayerControls";
 import { usePreloadImages } from "../../hooks/usePreloadImages";
 import MixedDiaporama from "./MixedDiaporama";
+import Player from "../Player/Player";
 
 interface UniversalPlayerProps {
   type: string;
@@ -78,6 +79,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
     musique: "/vectors/ELEMENTS/Cadres/CadreMusique.webp",
     simple: "/vectors/ELEMENTS/Cadres/CadreSimple.avif",
     plante: "/vectors/ELEMENTS/Cadres/CadrePlante.png",
+    bleu: "/vectors/ELEMENTS/Cadres/CadreBleu.avif",
     // Assurez-vous que les chemins correspondent à vos fichiers
   };
 
@@ -86,15 +88,20 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
   // Gestion des types de contenu
   if (type === "video" && src) {
     return (
-      <PlayerFrame
-        playerRef={playerRef}
-        isPlayingAndDelay={isPlayingAndDelay}
-        isVideoEnded={isVideoEnded}
-        scale={scale}
-        src={src}
-        onClose={onClose} // Passer la prop onClose
-        frameSrc={frameSrc}
-      />
+      // <PlayerFrame
+      //   playerRef={playerRef}
+      //   isPlayingAndDelay={isPlayingAndDelay}
+      //   isVideoEnded={isVideoEnded}
+      //   scale={scale}
+      //   src={src}
+      //   onClose={onClose} // Passer la prop onClose
+      //   frameSrc={frameSrc}
+      //   controls={controls}
+      // />
+      <Player src="https://www.youtube.com/embed/RS2jNCqCjPs" onClose={onClose} frameSrc={frameSrc}>
+      {/* <Player src="https://www.youtube.com/embed/Qi1krsuYN1M"> */}
+      </Player>
+ 
     );
   } else if (type === "audio") {
     return (

@@ -397,8 +397,8 @@ export const items = [
       type: "Tomy-Island",
       playerConfig: {
         type: "video",
-        src: "/videos/tomy-island.mp4",
-        frameType: "cadre1",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+        frameType: "bleu",
         autoplay: false,
         loop: false,
         controls: true,
