@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import DynamicButton from "../components/DynamicButton/DynamicButton";
 import { items } from "../../data/items";
 import dynamic from "next/dynamic";
-import { usePreloadImages } from "../hooks/usePreloadImages";
-import Gourou from "../components/Gourou/Gourou";
 
 const UniversalPlayer = dynamic(
   () => import("../components/GenericPlayer/UniversalPlayer"),
@@ -15,37 +13,31 @@ const UniversalPlayer = dynamic(
 const Menu = () => {
   const [selectedItem, setSelectedItem] = useState<any | null>(null);
   const [hoveredIcons, setHoveredIcons] = useState<string[]>([]);
-  const [scaleFactor, setScaleFactor] = useState(1);
-
-  const handleMouseEnter = (type: string) => {
-    console.log(`🟢 Hover ON: ${type}`);
-    setHoveredIcons((prev) => [...prev, type]);
-    
-    // Vérifier l'icône utilisée
-    const item = items.find((item) => item.type === type);
-    if (item) {
-      console.log("🔄 Image hover:", `/OPTIMIZED_ICONES/${item.type}.avif`);
-    }
-  };
-  
-  const handleMouseLeave = (type: string) => {
-    console.log(`🔴 Hover OFF: ${type}`);
-    setHoveredIcons((prev) => prev.filter((icon) => icon !== type));
-  };
+  const avionContainerRef = useRef<HTMLDivElement | null>(null);
+  const [containerSize, setContainerSize] = useState({ width: 1, height: 1 });
 
   useEffect(() => {
-    const handleResize = () => {
-      const baseWidth = 1440;
-      const baseHeight = 900;
-      const scaleX = window.innerWidth / baseWidth;
-      const scaleY = window.innerHeight / baseHeight;
-      setScaleFactor(Math.min(scaleX, scaleY));
+    const updateSize = () => {
+      if (avionContainerRef.current) {
+        setContainerSize({
+          width: avionContainerRef.current.clientWidth,
+          height: avionContainerRef.current.clientHeight,
+        });
+      }
     };
 
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
   }, []);
+
+  const handleMouseEnter = (type: string) => {
+    setHoveredIcons((prev) => [...prev, type]);
+  };
+
+  const handleMouseLeave = (type: string) => {
+    setHoveredIcons((prev) => prev.filter((icon) => icon !== type));
+  };
 
   const handleItemClick = (type: string) => {
     const item = items.find((item) => item.type === type);
@@ -53,41 +45,46 @@ const Menu = () => {
   };
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden">
+    <div className="relative w-screen h-screen flex justify-center items-center overflow-hidden bg-[url('/vectors/ELEMENTS/FondDEcran.jpg')] bg-cover bg-center">
+      {/* Conteneur principal qui garde les proportions */}
       <div
-        className="absolute top-0 left-0 w-full h-full"
+        ref={avionContainerRef}
+        className="relative"
         style={{
-          backgroundImage: `url("/vectors/ELEMENTS/AVION_MODELE.png")`,
-          backgroundSize: "contain",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          zIndex: 1,
+          width: "90vw",
+          height: "auto",
+          maxWidth: "1440px",
         }}
-      />
+      >
+        {/* Image de l'avion */}
+        <img
+          src="/vectors/ELEMENTS/AVION_MODELE.png"
+          alt="Avion"
+          className="w-full h-auto opacity-90"
+        />
 
-      <div className="relative top-0 left-0 w-full h-full" style={{ zIndex: 10 }}>
+        {/* Icônes positionnées en fonction du conteneur parent */}
         {items.map((item, index) => (
-                    <DynamicButton
-                    key={index}
-                    defaultIcon={`/OPTIMIZED_ICONES/${item.type}-hover.avif`}
-                    hoverIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
-                    clickedIcon={`/OPTIMIZED_ICONES/${item.type}-clic.avif`}
-                    releasedIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
-                    onClick={(e) => handleItemClick(item.type, e)}
-                    onMouseEnter={() => handleMouseEnter(item.type)}
-                    onMouseLeave={() => handleMouseLeave(item.type)}
-                    buttonState={
-                      hoveredIcons.includes(item.type) ? "hover" : "default"
-                    }
-                    style={{
-                        position: "absolute",
-                        top: `${item.y * scaleFactor}px`,
-                        left: `${item.x * scaleFactor}px`,
-                        width: `${(item.width || 50) * scaleFactor}px`,
-                        height: `${(item.height || 50) * scaleFactor}px`,
-                        zIndex: 20,
-                      }}
-                  />
+          <DynamicButton
+            key={index}
+            defaultIcon={`/OPTIMIZED_ICONES/${item.type}-hover.avif`}
+            hoverIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
+            clickedIcon={`/OPTIMIZED_ICONES/${item.type}-clic.avif`}
+            releasedIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
+            onClick={() => handleItemClick(item.type)}
+            onMouseEnter={() => handleMouseEnter(item.type)}
+            onMouseLeave={() => handleMouseLeave(item.type)}
+            buttonState={hoveredIcons.includes(item.type) ? "hover" : "default"}
+            style={{
+              position: "absolute",
+              top: `${(item.y / 900) * 100}%`, // 900px = hauteur de ref
+              left: `${(item.x / 1440) * 100}%`, // 1440px = largeur de ref
+              width: `${(item.width || 50) / 1440 * 100}%`, 
+              height: `${(item.height || 50) / 900 * 100}%`,
+              transform: "translate(-50%, -50%)",
+              opacity: '1',
+            }}
+          />
         ))}
       </div>
 

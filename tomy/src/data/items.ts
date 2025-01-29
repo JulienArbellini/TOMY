@@ -2,11 +2,66 @@
 
 export const items = [
     {
+      name: "Terrasse",
+      type: "Terrasse",
+      x: 1058,
+      y: 276,
+      width:178,
+      playerConfig: {
+        type: "diaporama",
+        images: [
+          "/images/content/Crew1.avif",
+          "/images/content/Crew2.avif",
+          "/images/content/Crew3.avif",
+          "/images/content/Crew4.avif",
+        ],
+        frameType: "simple",
+        controls: true,
+        extraButton: "orderButton",
+      },
+    },
+    {
+      name: "Serre",
+      type: "Serre",
+      x: 744,
+      y: 274,
+      width:185,
+      playerConfig: {
+        type: "video-automatique",
+        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+        frameType: "ultrasimple",
+        autoplay: true,
+        loop: true,
+        controls: false,
+      },
+    },
+    {
+      name: "Machines",
+      type: "Machines",
+      x: 1076,
+      y: 568,
+      width:115,
+      playerConfig: {
+        type: "mixed",
+        images: [
+          "/images/content/Crew1.avif",
+          "/images/content/Crew2.avif",
+          "/images/content/Crew3.avif",
+          "/images/content/Crew4.avif",
+        ],
+        frameType: "bois",
+        videoSrc: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+        videoAutoplay: true,
+        videoControls: false,
+        // Affichage conditionnel entre images et vidéo
+      },
+    },
+    {
       name: "AirLounge",
       type: "AirLounge",
-      x: 987,
-      y: 250,
-width: 155,
+      x: 902,
+      y: 275,
+      width: 175,
       playerConfig: {
         type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
@@ -20,8 +75,9 @@ width: 155,
     {
       name: "Brace",
       type: "Brace",
-      x: 50,
-      y: 5000,
+      x: 175,
+      y: 436,
+      width: 212,
       playerConfig: {
         type: "interactive",
         action: "randomAdvice",
@@ -46,6 +102,9 @@ width: 155,
     {
       name: "Cigarette",
       type: "Cigarette",
+      x: 251,
+      y: 390,
+      width: 62,
       playerConfig: {
         type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
@@ -58,6 +117,9 @@ width: 155,
     {
       name: "Cockpit",
       type: "Cockpit",
+      x: 1335,
+      y: 320,
+      width: 150,
       playerConfig: {
         type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
@@ -71,6 +133,9 @@ width: 155,
     {
       name: "Crew",
       type: "Crew",
+      x: 1149,
+      y: 580,
+      width: 105,
       playerConfig: {
         type: "diaporama",
         images: [
@@ -87,6 +152,9 @@ width: 155,
     {
       name: "Cuisine",
       type: "Cuisine",
+      x: 1045,
+      y: 379,
+      width: 145,
       playerConfig: {
         type: "custom",
         frameType: "simple",
@@ -96,6 +164,9 @@ width: 155,
     {
       name: "DJ",
       type: "DJ",
+      x: 863,
+      y: 574,
+      width:49,
       playerConfig: {
         type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
@@ -108,6 +179,9 @@ width: 155,
     {
       name: "Game",
       type: "Game",
+      x: 572,
+      y: 247,
+      width:270,
       playerConfig: {
         type: "game",
         src: "https://snazzy-khapse-8e5871.netlify.app/",
@@ -128,6 +202,9 @@ width: 155,
     {
       name: "Gourou",
       type: "Gourou",
+      x: 707,
+      y: 645,
+      width:125,
       playerConfig: {
         type: "interactive",
         action: "randomAdvice",
@@ -160,6 +237,9 @@ width: 155,
     {
       name: "Hotesse",
       type: "Hotesse",
+      x: 1258,
+      y: 582,
+      width: 105,
       playerConfig: {
         type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
@@ -172,6 +252,9 @@ width: 155,
     {
       name: "Hublot",
       type: "Hublot",
+      x: 871,
+      y: 425,
+      width:120,
       playerConfig: {
         type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
@@ -184,6 +267,9 @@ width: 155,
     {
       name: "Kiss",
       type: "Kiss",
+      x: 1092,
+      y: 470,
+      width: 216,
       playerConfig: {
         type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
@@ -196,6 +282,9 @@ width: 155,
     {
       name: "Lit",
       type: "Lit",
+      x: 429,
+      y: 389,
+      width:96,
       playerConfig: {
         type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
@@ -218,26 +307,11 @@ width: 155,
       },
     },
     {
-      name: "Machines",
-      type: "Machines",
-      playerConfig: {
-        type: "mixed",
-        images: [
-          "/images/content/Crew1.avif",
-          "/images/content/Crew2.avif",
-          "/images/content/Crew3.avif",
-          "/images/content/Crew4.avif",
-        ],
-        frameType: "bois",
-        videoSrc: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
-        videoAutoplay: true,
-        videoControls: false,
-        // Affichage conditionnel entre images et vidéo
-      },
-    },
-    {
       name: "Magazine",
       type: "Magazine",
+      x: 643,
+      y: 436,
+      width:264,
       playerConfig: {
         type: "diaporama",
         images: [
@@ -254,6 +328,9 @@ width: 155,
     {
       name: "Movie-watching",
       type: "Movie-watching",
+      x: 1071,
+      y: 470,
+      width:64,
       playerConfig: {
         type: "video",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
@@ -311,6 +388,9 @@ width: 155,
     {
       name: "Music-boy",
       type: "Music-boy",
+      x: 969,
+      y: 471,
+      width:73,
       playerConfig: {
         type: "audio",
         tracks: [
@@ -343,6 +423,9 @@ width: 155,
     {
       name: "OIseaux",
       type: "OIseaux",
+      x: 827,
+      y: 60,
+      width:160,
       playerConfig: {
         type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
@@ -355,6 +438,9 @@ width: 155,
     {
       name: "Relax",
       type: "Relax",
+      x: 443,
+      y: 446,
+      width:140,
       playerConfig: {
         type: "mixed",
         images: [
@@ -371,20 +457,11 @@ width: 155,
       },
     },
     {
-      name: "Serre",
-      type: "Serre",
-      playerConfig: {
-        type: "video-automatique",
-        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
-        frameType: "ultrasimple",
-        autoplay: true,
-        loop: true,
-        controls: false,
-      },
-    },
-    {
       name: "Shop",
       type: "Shop",
+      x: 1258,
+      y: 483,
+      width: 105,
       playerConfig: {
         type: "diaporama",
         images: [
@@ -400,24 +477,11 @@ width: 155,
       // rajouter boutons order
     },
     {
-      name: "Terrasse",
-      type: "Terrasse",
-      playerConfig: {
-        type: "diaporama",
-        images: [
-          "/images/content/Crew1.avif",
-          "/images/content/Crew2.avif",
-          "/images/content/Crew3.avif",
-          "/images/content/Crew4.avif",
-        ],
-        frameType: "simple",
-        controls: true,
-        extraButton: "orderButton",
-      },
-    },
-    {
       name: "Telephone",
       type: "Telephone",
+      x: 517,
+      y: 390,
+      width: 40,
       playerConfig: {
         type: "interactive",
         action: "playSound",
@@ -441,6 +505,9 @@ width: 155,
     {
       name: "Valise",
       type: "Valise",
+      x: 976,
+      y: 595,
+      width: 41,
       playerConfig: {
         type: "mixed",
         images: [
