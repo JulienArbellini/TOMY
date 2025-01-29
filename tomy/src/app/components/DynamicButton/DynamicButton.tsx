@@ -11,7 +11,9 @@ interface DynamicButtonProps {
   buttonState?: 'default' | 'hover' | 'clicked' | 'released';
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  className?: React.HTMLAttributes<HTMLDivElement>['className'];
   style?: {
+    position?: 'absolute' | 'relative' | 'fixed' | 'sticky';
     bottom?: string;
     left?: string;
     right?: string;
@@ -31,6 +33,7 @@ const DynamicButton: React.FC<DynamicButtonProps> = ({
   buttonState,
   onMouseEnter,
   onMouseLeave,
+  style,
 }) => {
   const currentIcon =
     buttonState === 'clicked'
@@ -42,11 +45,11 @@ const DynamicButton: React.FC<DynamicButtonProps> = ({
       : defaultIcon;
 
   return (
-    <div onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <div onClick={onClick} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} style={style} >
       <img
         src={currentIcon}
         alt="Dynamic Button"
-        className="cursor-pointer w-36 h-36 object-contain"
+        className="cursor-pointer w-full object-contain"
       />
     </div>
   );

@@ -4,6 +4,9 @@ export const items = [
     {
       name: "AirLounge",
       type: "AirLounge",
+      x: 987,
+      y: 250,
+width: 155,
       playerConfig: {
         type: "video-automatique",
         src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
@@ -17,6 +20,8 @@ export const items = [
     {
       name: "Brace",
       type: "Brace",
+      x: 50,
+      y: 5000,
       playerConfig: {
         type: "interactive",
         action: "randomAdvice",

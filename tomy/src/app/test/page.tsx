@@ -20,11 +20,12 @@ const Test = () => {
   };
 
   return (
-    <div className="h-screen bg-cover bg-[url('/vectors/ELEMENTS/FondDEcran.jpg')] p-5 flex justify-center items-center">
-      {/* <Player src="https://www.youtube.com/embed/RS2jNCqCjPs"> */}
-      {/* <Player src="https://www.youtube.com/embed/Qi1krsuYN1M"> */}
-      {/* </Player> */}
 
+    <div
+      className="absolute inset-0 bg-no-repeat bg-center bg-contain"
+      style={{ backgroundImage: "url('/vectors/ELEMENTS/AVION_MODELE.png')" }}
+    >
+      
     </div>
 
   );
