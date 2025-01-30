@@ -15,6 +15,7 @@ const Menu = () => {
   const [hoveredIcons, setHoveredIcons] = useState<string[]>([]);
   const avionContainerRef = useRef<HTMLDivElement | null>(null);
   const [containerSize, setContainerSize] = useState({ width: 1, height: 1 });
+  const [zoomLevel, setZoomLevel] = useState(1);
 
   useEffect(() => {
     const updateSize = () => {
@@ -48,15 +49,18 @@ const Menu = () => {
 
 
   return (
+    <div>
     <div className="relative w-screen h-screen flex justify-center items-center overflow-hidden bg-[url('/vectors/ELEMENTS/FondDEcran.jpg')] bg-cover bg-center">
       {/* Conteneur principal qui garde les proportions */}
       <div
         ref={avionContainerRef}
-        className="relative"
+        className="relative transition-transform duration-300"
         style={{
-          width: "90vw",
+          width: `${90 * zoomLevel}vw`,
           height: "auto",
-          maxWidth: "1440px",
+          maxWidth: `${1440 * zoomLevel}px`,
+          transform: `scale(${zoomLevel})`,
+          transformOrigin: "center",
         }}
       >
         {/* Image de l'avion */}
@@ -67,6 +71,7 @@ const Menu = () => {
         />
 
 {/* Icônes positionnées en fonction du conteneur parent */}
+
 {items.map((item, index) => {
           const isFloating = floatingIcons.includes(item.type);
           const isHovered = hoveredIcons.includes(item.type);
@@ -106,7 +111,23 @@ const Menu = () => {
         </div>
       )}
     </div>
+    <div className="fixed top-5 right-5 flex gap-2 z-50">
+    <button
+      onClick={() => setZoomLevel((prev) => Math.min(prev + 0.1, 2))}
+      className="p-2 bg-white shadow-lg rounded-md text-black font-bold"
+    >
+      ➕ Zoom In
+    </button>
+    <button
+      onClick={() => setZoomLevel((prev) => Math.max(prev - 0.1, 0.5))}
+      className="p-2 bg-white shadow-lg rounded-md text-black font-bold"
+    >
+      ➖ Zoom Out
+    </button>
+  </div>
+  </div>
   );
+  
 };
 
 export default Menu;
