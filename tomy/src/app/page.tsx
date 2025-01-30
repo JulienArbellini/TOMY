@@ -6,6 +6,8 @@ import ThreeDButton from './components/Start/ThreeDButton';
 import Announcement from './components/Start/Announcement';
 import VideoPlayer from './components/Start/VideoPlayer';
 import DynamicButton from './components/DynamicButton/DynamicButton';
+import Background from './components/Background';
+import { a } from '@react-spring/web';
 
 export default function Home() {
   const [showAnnouncement, setShowAnnouncement] = useState(false);
@@ -14,7 +16,7 @@ export default function Home() {
   const [currentStep, setCurrentStep] = useState(0);
 
   const [backgroundImages, setBackgroundImages] = useState([
-    '/vectors/ELEMENTS/FondDEcran.jpg', // Fond 1 (bg1)
+    // '/vectors/ELEMENTS/FondDEcran.jpg', // Fond 1 (bg1)
     '/images/bg2.avif', // Fond 2 (bg2)
   ]);
   const [activeBackgroundIndex, setActiveBackgroundIndex] = useState(0); // Index du fond actif
@@ -90,52 +92,57 @@ export default function Home() {
   };
 
   const handleSkipClick = () => {
-    if (currentStep === 1 && audio1) {
-      audio1.pause();
-      audio1.currentTime = 0;
-      setAudio1(null);
-      setCurrentStep(2);
-      nextStep(2);
-    } else if (currentStep === 2 && audio2) {
-      audio2.pause();
-      audio2.currentTime = 0;
-      setAudio2(null);
-      setShowAnnouncement(false);
-      changeBackgroundToBg1(); // Revenir à bg1 même en skip
-      setCurrentStep(3);
-      nextStep(3);
-    } else if (currentStep < 3) {
-      setCurrentStep(currentStep + 1);
-      nextStep(currentStep + 1);
-    }
+    // if (currentStep === 1 && audio1) {
+    //   audio1.pause();
+    //   audio1.currentTime = 0;
+    //   setAudio1(null);
+    //   setCurrentStep(2);
+    //   nextStep(2);
+    // } else if (currentStep === 2 && audio2) {
+    //   audio2.pause();
+    //   audio2.currentTime = 0;
+    //   setAudio2(null);
+    //   setShowAnnouncement(false);
+    //   changeBackgroundToBg1(); // Revenir à bg1 même en skip
+    //   setCurrentStep(3);
+    //   nextStep(3);
+    // } else if (currentStep < 3) {
+    //   setCurrentStep(currentStep + 1);
+    //   nextStep(currentStep + 1);
+    // }
+    window.location.href = '/menu';
   };
 
   return (
     <div className="relative w-screen h-screen">
-      <AnimatePresence>
-        {/* Affichage des fonds */}
-        {backgroundImages.map((bg, index) => {
-          const isVisible =
-            (index === 0 && !isBg2Visible) || // Afficher bg1 uniquement quand bg2 est masqué
-            (index === 1 && isBg2Visible); // Afficher bg2 uniquement s'il est visible
-          return (
-            isVisible && (
-              <motion.div
-                key={bg}
-                className="absolute inset-0 bg-cover bg-center"
-                style={{
-                  backgroundImage: `url(${bg})`,
-                  zIndex: -1, // Derrière les autres éléments
-                }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }} // Fade-in
-                exit={{ opacity: 0 }} // Fade-out
-                transition={{ duration: 1.5 }} // Durée du fondu
-              />
-            )
-          );
-        })}
-      </AnimatePresence>
+<AnimatePresence>
+  {activeBackgroundIndex === 0 && (
+    <motion.div
+      key="vanta-bg"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1.5 }}
+      className="absolute inset-0 -z-10"
+    >
+      <Background />
+    </motion.div>
+  )}
+
+  {activeBackgroundIndex === 1 && (
+    <motion.div
+      key="bg2"
+      className="absolute inset-0 bg-cover bg-center -z-10"
+      style={{
+        backgroundImage: 'url(/images/bg2.avif)',
+      }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1.5 }}
+    />
+  )}
+</AnimatePresence>
 
       <div className="flex flex-col justify-center items-center h-full w-full">
         <AnimatePresence>
@@ -165,6 +172,7 @@ export default function Home() {
           releasedIcon="/vectors/ELEMENTS/BoutonsDivers/SkipOver.avif"
           onClick={handleSkipClick}
           style={{
+            position: "absolute",
             bottom: '10px',
             right: '10px',
             height: 'auto',

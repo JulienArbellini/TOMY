@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import DynamicButton from "../components/DynamicButton/DynamicButton";
-import { items } from "../../data/items";
+import { items } from "../../data/items-avion";
 import dynamic from "next/dynamic";
+import Background from "../components/Background";
 
 const UniversalPlayer = dynamic(
   () => import("../components/GenericPlayer/UniversalPlayer"),
@@ -50,7 +51,8 @@ const Menu = () => {
 
   return (
     <div>
-    <div className="relative w-screen h-screen flex justify-center items-center overflow-hidden bg-[url('/vectors/ELEMENTS/FondDEcran.jpg')] bg-cover bg-center">
+    <div className="relative w-screen h-screen flex justify-center items-center overflow-hidden">
+    <Background />
       {/* Conteneur principal qui garde les proportions */}
       <div
         ref={avionContainerRef}
@@ -67,7 +69,7 @@ const Menu = () => {
         <img
           src="/vectors/ELEMENTS/AVION_MODELE.png"
           alt="Avion"
-          className="w-full h-auto opacity-90"
+          className="w-full h-auto opacity-1"
         />
 
 {/* Icônes positionnées en fonction du conteneur parent */}

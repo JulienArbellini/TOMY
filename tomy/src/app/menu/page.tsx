@@ -5,6 +5,8 @@ import DynamicButton from "../components/DynamicButton/DynamicButton";
 import { items } from "../../data/items";
 import dynamic from "next/dynamic";
 import { usePreloadImages } from "../hooks/usePreloadImages"
+import { useRouter } from "next/navigation"; // Import du router
+import Background from "../components/Background";
 import Gourou from "../components/Gourou/Gourou";
 
 // Charger UniversalPlayer uniquement côté client
@@ -22,6 +24,7 @@ const Menu = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isMessageVisible, setIsMessageVisible] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const router = useRouter(); // Initialisation du routeur
 
   // Map pour associer chaque icône à son groupe (si nécessaire)
   const iconGroups = [
@@ -49,34 +52,40 @@ const Menu = () => {
 
   const handleItemClick = (type: string, event?: React.MouseEvent) => {
     // Cas particulier Gourou
-    if (type === "Gourou" && event) {
-      const gourouItem = items.find((item) => item.type === "Gourou");
-      let displayedMessage = "Le Gourou est silencieux aujourd'hui.";
-      if (gourouItem && Array.isArray(gourouItem.advice) && gourouItem.advice.length > 0) {
-        const randomIndex = Math.floor(Math.random() * gourouItem.advice.length);
-        displayedMessage = gourouItem.advice[randomIndex];
-      }
+    // if (type === "Gourou" && event) {
+    //   const gourouItem = items.find((item) => item.type === "Gourou");
+    //   let displayedMessage = "Le Gourou est silencieux aujourd'hui.";
+    //   if (gourouItem && Array.isArray(gourouItem.advice) && gourouItem.advice.length > 0) {
+    //     const randomIndex = Math.floor(Math.random() * gourouItem.advice.length);
+    //     displayedMessage = gourouItem.advice[randomIndex];
+    //   }
     
-      const { clientX, clientY } = event;
-      setCursorPosition({ x: clientX, y: clientY });
-      setMessage(displayedMessage);
-      setIsMessageVisible(true);
+    //   const { clientX, clientY } = event;
+    //   setCursorPosition({ x: clientX, y: clientY });
+    //   setMessage(displayedMessage);
+    //   setIsMessageVisible(true);
     
-      // Annuler le précédent timeout s’il existe
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+    //   // Annuler le précédent timeout s’il existe
+    //   if (timeoutId) {
+    //     clearTimeout(timeoutId);
+    //   }
     
-      // Définir un nouveau timeout pour ce message
-      const newTimeoutId = setTimeout(() => {
-        setIsMessageVisible(false);
-        setMessage(null);
-      }, 5000);
+    //   // Définir un nouveau timeout pour ce message
+    //   const newTimeoutId = setTimeout(() => {
+    //     setIsMessageVisible(false);
+    //     setMessage(null);
+    //   }, 5000);
     
-      setTimeoutId(newTimeoutId); // Stocker le nouvel ID de timeout
+    //   setTimeoutId(newTimeoutId); // Stocker le nouvel ID de timeout
+    //   return;
+    // }
+  
+    if (type === "MAP") {
+      router.push("/avion"); // Redirection vers la page map
       return;
     }
-  
+
+
     // Cas générique pour les autres items
     const item = items.find((item) => item.type === type);
     if (item && item.playerConfig) {
@@ -138,23 +147,35 @@ const Menu = () => {
   }, [selectedItem]);
 
   return (
-    <div className="h-full min-h-screen w-screen bg-blue-700 p-5 flex justify-center items-center">
-      <div className="grid grid-cols-4 gap-4">
-        {items.map((item, index) => (
-          <DynamicButton
-            key={index}
-            defaultIcon={`/OPTIMIZED_ICONES/${item.type}-hover.avif`}
-            hoverIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
-            clickedIcon={`/OPTIMIZED_ICONES/${item.type}-clic.avif`}
-            releasedIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
-            onClick={(e) => handleItemClick(item.type, e)}
-            onMouseEnter={() => handleMouseEnter(item.type)}
-            onMouseLeave={() => handleMouseLeave(item.type)}
-            buttonState={
-              hoveredIcons.includes(item.type) ? "hover" : "default"
-            }
-          />
-        ))}
+    <div className="relative h-full min-h-screen w-screen flex justify-center items-center">
+      {/* Ajout du fond dynamique */}
+      <Background />
+  
+      {/* Contenu principal avec le hublot transparent */}
+      <div className="relative h-full min-h-screen w-screen bg-[url('/vectors/ELEMENTS/fond.avif')] bg-cover p-5 flex justify-center items-center">
+        <div className="absolute grid grid-cols-3 gap-4 top-[560px] right-[500px] w-[960px] h-[660px] bg-blue-600 p-5 place-items-center">         
+          {items.map((item, index) => (
+            <DynamicButton
+              key={index}
+              defaultIcon={`/OPTIMIZED_ICONES/${item.type}-hover.avif`}
+              hoverIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
+              clickedIcon={`/OPTIMIZED_ICONES/${item.type}-clic.avif`}
+              releasedIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
+              onClick={(e) => handleItemClick(item.type, e)}
+              onMouseEnter={() => handleMouseEnter(item.type)}
+              onMouseLeave={() => handleMouseLeave(item.type)}
+              buttonState={
+                hoveredIcons.includes(item.type) ? "hover" : "default"
+              }
+              style={{
+                width: `230px`,
+                height: `230px`,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            />
+          ))}
       </div>
 
       {/* Affichage conditionnel du lecteur */}
@@ -183,9 +204,10 @@ const Menu = () => {
           }}
         >
           {message}
-        </div>
+      </div>
       )}
     </div>
+  </div>
   );
 };
 

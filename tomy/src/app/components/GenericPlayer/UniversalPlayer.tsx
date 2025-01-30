@@ -8,6 +8,7 @@ import PlayerControls from "./PlayerControls";
 import { usePreloadImages } from "../../hooks/usePreloadImages";
 import MixedDiaporama from "./MixedDiaporama";
 import Player from "../Player/Player";
+import { redirect } from "next/dist/server/api-utils";
 
 interface UniversalPlayerProps {
   type: string;

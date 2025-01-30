@@ -7,11 +7,14 @@ const nextConfig = {
     },
   }
 
+  const path = require("path");
+
 // next.config.js
 module.exports = {
   reactStrictMode: false,
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // Modifie la config Webpack ici si nécessaire
+    config.resolve.alias["vanta"] = path.resolve(__dirname, "node_modules/vanta");
     return config;
   },
   async headers() {

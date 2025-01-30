@@ -40,7 +40,7 @@ const DynamicButton: React.FC<DynamicButtonProps> = ({
       <img
         src={currentIcon}
         alt="Dynamic Button"
-        className="cursor-pointer w-full object-contain"
+        className="cursor-pointer w-auto h-55 justify-center items-center object-contain"
       />
     </div>
   );
