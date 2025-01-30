@@ -87,14 +87,14 @@ const Menu = () => {
               }`}
               style={{
                 position: "absolute",
-                top: `${(item.y / 900) * 100}%`, 
-                left: `${(item.x / 1440) * 100}%`, 
+                top: `${(item.y || 0) / 900 * 100}%`,
+                left: `${(item.x || 0) / 1440 * 100}%`,
                 width: `${(item.width || 50) / 1440 * 100}%`,
-                height: `${(item.height || 50) / 900 * 100}%`,
-                transform: `translate(-50%, -50%) ${isFloating && isHovered ? "translateY(-10px)" : ""}`, 
+                height: `${(50) / 900 * 100}%`,
+                transform: `translate(-50%, -50%) ${isFloating && isHovered ? "translateY(-10px)" : ""}`,
                 transition: "transform 0.3s ease-in-out",
                 opacity: "1",
-              }}
+              } as React.CSSProperties}
             />
           );
         })}

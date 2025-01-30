@@ -12,16 +12,7 @@ interface DynamicButtonProps {
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   className?: React.HTMLAttributes<HTMLDivElement>['className'];
-  style?: {
-    position?: 'absolute' | 'relative' | 'fixed' | 'sticky';
-    bottom?: string;
-    left?: string;
-    right?: string;
-    top?: string;
-    height: string;
-    width: string;
-    zIndex?: number;
-  };
+  style?: React.CSSProperties; // Ajout de style ici
 }
 
 const DynamicButton: React.FC<DynamicButtonProps> = ({
