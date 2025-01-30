@@ -10,6 +10,7 @@ interface PlayerFrameProps {
   src?: string;
   frameSrc?: string;
   onClose: () => void;
+  vitre?: boolean;
   children?: React.ReactNode; // Ajoutez cette ligne
 }
 
@@ -20,6 +21,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
   isPlayingAndDelay = false,
   isVideoEnded = false,
   src,
+  vitre = true,
   controls = true,
   frameSrc = '/vectors/ELEMENTS/Cadres/Cadre1.avif',
   onClose,
@@ -117,15 +119,19 @@ const handleExitClick = () => {
         }}
       >
         {/* Vitre alignée avec le conteneur */}
-        <img
-          src="/vectors/ELEMENTS/Cadres/vitre.avif"
-          alt="Vitre transparente"
-          className="absolute z-10 opacity-0"
-          style={{
-            height: `${scaledValue(containerHeight)}px`,
-            width: `${scaledValue(containerWidth)}px`,
-          }}
-        />
+
+        {vitre && ( // Ajoutez cette ligne
+          <img
+            src="/vectors/ELEMENTS/Cadres/vitre.avif"
+            alt="Vitre transparente"
+            className="absolute z-10 opacity-0"
+            style={{
+              height: `${scaledValue(containerHeight)}px`,
+              width: `${scaledValue(containerWidth)}px`,
+            }}
+          />
+        )}
+
 
         {/* Affichage du contenu */}
         {src && playerRef ? (

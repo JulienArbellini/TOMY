@@ -30,7 +30,9 @@ const Menu = () => {
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);
   }, []);
-
+  
+  const floatingIcons = ["AirLounge", "Serre", "Terrasse"];
+  
   const handleMouseEnter = (type: string) => {
     setHoveredIcons((prev) => [...prev, type]);
   };
@@ -43,6 +45,7 @@ const Menu = () => {
     const item = items.find((item) => item.type === type);
     setSelectedItem(item?.playerConfig || null);
   };
+
 
   return (
     <div className="relative w-screen h-screen flex justify-center items-center overflow-hidden bg-[url('/vectors/ELEMENTS/FondDEcran.jpg')] bg-cover bg-center">
@@ -63,29 +66,38 @@ const Menu = () => {
           className="w-full h-auto opacity-90"
         />
 
-        {/* Icônes positionnées en fonction du conteneur parent */}
-        {items.map((item, index) => (
-          <DynamicButton
-            key={index}
-            defaultIcon={`/OPTIMIZED_ICONES/${item.type}-hover.avif`}
-            hoverIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
-            clickedIcon={`/OPTIMIZED_ICONES/${item.type}-clic.avif`}
-            releasedIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
-            onClick={() => handleItemClick(item.type)}
-            onMouseEnter={() => handleMouseEnter(item.type)}
-            onMouseLeave={() => handleMouseLeave(item.type)}
-            buttonState={hoveredIcons.includes(item.type) ? "hover" : "default"}
-            style={{
-              position: "absolute",
-              top: `${(item.y / 900) * 100}%`, // 900px = hauteur de ref
-              left: `${(item.x / 1440) * 100}%`, // 1440px = largeur de ref
-              width: `${(item.width || 50) / 1440 * 100}%`, 
-              height: `${(item.height || 50) / 900 * 100}%`,
-              transform: "translate(-50%, -50%)",
-              opacity: '1',
-            }}
-          />
-        ))}
+{/* Icônes positionnées en fonction du conteneur parent */}
+{items.map((item, index) => {
+          const isFloating = floatingIcons.includes(item.type);
+          const isHovered = hoveredIcons.includes(item.type);
+
+          return (
+            <DynamicButton
+              key={index}
+              defaultIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
+              hoverIcon={`/OPTIMIZED_ICONES/${item.type}-hover.avif`}
+              clickedIcon={`/OPTIMIZED_ICONES/${item.type}-clic.avif`}
+              releasedIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
+              onClick={() => handleItemClick(item.type)}
+              onMouseEnter={() => handleMouseEnter(item.type)}
+              onMouseLeave={() => handleMouseLeave(item.type)}
+              buttonState={isHovered ? "hover" : "default"}
+              className={`transition-all duration-300 ${
+                isFloating && isHovered ? "floating-icon" : ""
+              }`}
+              style={{
+                position: "absolute",
+                top: `${(item.y / 900) * 100}%`, 
+                left: `${(item.x / 1440) * 100}%`, 
+                width: `${(item.width || 50) / 1440 * 100}%`,
+                height: `${(item.height || 50) / 900 * 100}%`,
+                transform: `translate(-50%, -50%) ${isFloating && isHovered ? "translateY(-10px)" : ""}`, 
+                transition: "transform 0.3s ease-in-out",
+                opacity: "1",
+              }}
+            />
+          );
+        })}
       </div>
 
       {selectedItem && (

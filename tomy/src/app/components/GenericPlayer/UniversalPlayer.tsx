@@ -126,8 +126,8 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
     );
   } else if (type === "game" && src) {
     return (
-      <PlayerFrame frameSrc={frameSrc} scale={scale}  onClose={onClose}>
-        <iframe src={src} className="w-full h-full" title="Game Content"></iframe>
+      <PlayerFrame frameSrc={frameSrc} scale={scale}  onClose={onClose} vitre={false}>
+        <iframe src={src} className="w-full h-full" title="Game Content" ></iframe>
       </PlayerFrame>
     );
   } else if (type === "interactive") {

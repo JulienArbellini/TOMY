@@ -58,4 +58,17 @@ body {
   height: 100vh;
 }
 
+.floating-icon {
+  animation: levitate 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes levitate {
+  from {
+    transform: translate(-50%, -50%) translateY(0px);
+  }
+  to {
+    transform: translate(-50%, -50%) translateY(-10px);
+  }
+}
+
 

@@ -184,7 +184,7 @@ export const items = [
       width:270,
       playerConfig: {
         type: "game",
-        src: "https://snazzy-khapse-8e5871.netlify.app/",
+        src: "https://tomy-jeu.vercel.app/",
         frameType: "ultrasimple",
       },
       //rendre cliquable
@@ -195,7 +195,7 @@ export const items = [
       type: "GAMEr-Manette",
       playerConfig: {
         type: "game",
-        src: "https://snazzy-khapse-8e5871.netlify.app/",
+        src: "https://tomy-jeu.vercel.app/",
         frameType: "ultrasimple",
       },
     },
