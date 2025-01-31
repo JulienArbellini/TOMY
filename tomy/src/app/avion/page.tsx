@@ -44,9 +44,17 @@ const Menu = () => {
   };
 
   const handleItemClick = (type: string) => {
+    
     const item = items.find((item) => item.type === type);
+    if (item && item.type === "Telephone" && item.playerConfig?.action === "playSound") {
+      const audio = new Audio(item.playerConfig.soundSrc);
+      audio.play().catch((err) => console.error("Erreur lors de la lecture du son :", err));
+      return; // Empêche l'ouverture d'un lecteur
+    }
     setSelectedItem(item?.playerConfig || null);
   };
+
+
 
 
   return (

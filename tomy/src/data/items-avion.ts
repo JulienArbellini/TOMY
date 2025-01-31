@@ -410,7 +410,7 @@ export const items = [
       playerConfig: {
         type: "interactive",
         action: "playSound",
-        soundSrc: "/sounds/jingle.mp3",
+        soundSrc: "/sounds/click-sound.wav",
         animation: "buttonAnimation",
         //au clic un son sonne 
       },
