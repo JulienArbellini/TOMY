@@ -17,6 +17,8 @@ const Menu = () => {
   const avionContainerRef = useRef<HTMLDivElement | null>(null);
   const [containerSize, setContainerSize] = useState({ width: 1, height: 1 });
   const [zoomLevel, setZoomLevel] = useState(1);
+  const [isPhoneShaking, setIsPhoneShaking] = useState(false);
+
 
   useEffect(() => {
     const updateSize = () => {
@@ -48,8 +50,19 @@ const Menu = () => {
     const item = items.find((item) => item.type === type);
     if (item && item.type === "Telephone" && item.playerConfig?.action === "playSound") {
       const audio = new Audio(item.playerConfig.soundSrc);
-      audio.play().catch((err) => console.error("Erreur lors de la lecture du son :", err));
-      return; // Empêche l'ouverture d'un lecteur
+      
+      // Active l'animation
+      setIsPhoneShaking(true);
+  
+      // Joue le son
+      audio.play().catch((err) => console.error("Erreur de lecture audio :", err));
+  
+      // Désactive le shake à la fin du son
+      audio.onended = () => {
+        setIsPhoneShaking(false);
+      };
+  
+      return;
     }
     setSelectedItem(item?.playerConfig || null);
   };
@@ -97,17 +110,15 @@ const Menu = () => {
               onMouseEnter={() => handleMouseEnter(item.type)}
               onMouseLeave={() => handleMouseLeave(item.type)}
               buttonState={isHovered ? "hover" : "default"}
-              className={`transition-all duration-300 ${
-                isFloating && isHovered ? "floating-icon" : ""
-              }`}
               style={{
                 position: "absolute",
                 top: `${(item.y || 0) / 900 * 100}%`,
                 left: `${(item.x || 0) / 1440 * 100}%`,
                 width: `${(item.width || 50) / 1440 * 100}%`,
                 height: `${(50) / 900 * 100}%`,
-                transform: `translate(-50%, -50%) ${isFloating && isHovered ? "translateY(-10px)" : ""}`,
+                transform: `translate(-50%, -50%) ${isFloating && isHovered ? "translateY(-10px)" : ""} `,
                 transition: "transform 0.3s ease-in-out",
+                animation: item.type === "Telephone" && isPhoneShaking ? "shake 0.4s ease-in-out infinite" : "none",
                 opacity: "1",
               } as React.CSSProperties}
             />

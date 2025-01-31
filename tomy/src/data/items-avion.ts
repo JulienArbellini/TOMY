@@ -410,7 +410,7 @@ export const items = [
       playerConfig: {
         type: "interactive",
         action: "playSound",
-        soundSrc: "/sounds/click-sound.wav",
+        soundSrc: "/sounds/TomyAirlinesBonjour.mp3",
         animation: "buttonAnimation",
         //au clic un son sonne 
       },
