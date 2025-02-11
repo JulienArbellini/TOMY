@@ -79,7 +79,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
     magazine: "/vectors/ELEMENTS/Cadres/CadreMagazine.avif",
     musique: "/vectors/ELEMENTS/Cadres/CadreMusique.webp",
     simple: "/vectors/ELEMENTS/Cadres/CadreSimple.avif",
-    plante: "/vectors/ELEMENTS/Cadres/CadrePlante.png",
+    plante: "/vectors/ELEMENTS/Cadres/CadrePlante.avif",
     bleu: "/vectors/ELEMENTS/Cadres/CadreBleu.avif",
     // Assurez-vous que les chemins correspondent à vos fichiers
   };

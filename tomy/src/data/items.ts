@@ -2,29 +2,6 @@
 
 export const items = [
   {
-    name: "GAMEr-Manette",
-    type: "GAMEr-Manette",
-    playerConfig: {
-      type: "game",
-      src: "https://tomy-jeu.vercel.app/",
-      frameType: "ultrasimple",
-    },
-  },
-  {
-    name: "Hermes",
-    type: "Hermes",
-    playerConfig: {
-      type: "interactive",
-      action: "ticketForm",
-      frameType: "bois",
-      // Formulaire avec placeholders et envoi d'email
-    },
-  },
-  {
-    name: "MAP",
-    type: "MAP",
-  },
-  {
     name: "MOVIES",
     type: "MOVIES",
     playerConfig: {
@@ -70,8 +47,8 @@ export const items = [
     //retablir l'affichage du titre 
   },
   {
-    name: "Tomy-Island",
-    type: "Tomy-Island",
+    name: "TomyIsland",
+    type: "TomyIsland",
     playerConfig: {
       type: "video",
       src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
@@ -79,6 +56,82 @@ export const items = [
       autoplay: false,
       loop: false,
       controls: true,
+    },
+  },
+  {
+    name: "TomyMag",
+    type: "TomyMag",
+    playerConfig: {
+      type: "diaporama",
+      images: [
+        "/images/content/Crew1.avif",
+        "/images/content/Crew2.avif",
+        "/images/content/Crew3.avif",
+        "/images/content/Crew4.avif",
+      ],
+      frameType: "magazine",
+      controls: true,
+    },
+  },
+  {
+    name: "PlaneMap",
+    type: "PlaneMap",
+    playerConfig: {
+      type: "video",
+      src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+      frameType: "bleu",
+      autoplay: false,
+      loop: false,
+      controls: true,
+    },
+  },
+  {
+    name: "MAP",
+    type: "MAP",
+    playerConfig: {
+      type: "video",
+      src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+      frameType: "edgy",
+      autoplay: false,
+      loop: false,
+      controls: true,
+    },
+  },
+  {
+    name: "Hermes",
+    type: "Hermes",
+    playerConfig: {
+      type: "interactive",
+      action: "ticketForm",
+      frameType: "bois",
+      // Formulaire avec placeholders et envoi d'email
+    },
+  },
+  {
+    name: "Relaxation",
+    type: "Relaxation",
+    playerConfig: {
+      type: "mixed",
+      images: [
+        "/images/content/Crew1.avif",
+        "/images/content/Crew2.avif",
+        "/images/content/Crew3.avif",
+        "/images/content/Crew4.avif",
+      ],
+      frameType: "plante",
+      videoSrc: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+      videoAutoplay: true,
+      videoControls: false,
+      // Affichage conditionnel entre images et vidéo
+    },
+  },
+  {
+    name: "GAMEr-Manette",
+    type: "GAMEr-Manette",
+    playerConfig: {
+      type: "game",
+      src: "https://tomy-jeu.vercel.app/",
+      frameType: "ultrasimple",
     },
   },
 ];

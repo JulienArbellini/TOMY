@@ -169,7 +169,7 @@ export const items = [
       width:49,
       playerConfig: {
         type: "video-automatique",
-        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+        src: "https://www.youtube.com/embed/8sy5ETad0Z8?si=b0AAK3nFlPXmk_Nm?enablejsapi=1&autoplay=1&mute=1",
         frameType: "surfy",
         autoplay: true,
         loop: true,

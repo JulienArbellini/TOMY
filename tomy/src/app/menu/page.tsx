@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import DynamicButton from "../components/DynamicButton/DynamicButton";
+import DynamicButton from "../components/DynamicButton/DynamicButtonMenu";
 import { items } from "../../data/items";
 import dynamic from "next/dynamic";
 import { usePreloadImages } from "../hooks/usePreloadImages"
 import { useRouter } from "next/navigation"; // Import du router
 import Background from "../components/Background";
 import Gourou from "../components/Gourou/Gourou";
+import TicketPlayer from "../components/SingularPlayers/TicketPlayer";
 
 // Charger UniversalPlayer uniquement côté client
 const UniversalPlayer = dynamic(
@@ -25,6 +26,7 @@ const Menu = () => {
   const [isMessageVisible, setIsMessageVisible] = useState(false);
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const router = useRouter(); // Initialisation du routeur
+  const [showTicketPlayer, setShowTicketPlayer] = useState(false);
 
   // Map pour associer chaque icône à son groupe (si nécessaire)
   const iconGroups = [
@@ -79,8 +81,13 @@ const Menu = () => {
     //   setTimeoutId(newTimeoutId); // Stocker le nouvel ID de timeout
     //   return;
     // }
+
+    if (type === "Hermes") {
+      setShowTicketPlayer(true);
+      return;
+    }
   
-    if (type === "MAP") {
+    if (type === "PlaneMap") {
       router.push("/avion"); // Redirection vers la page map
       return;
     }
@@ -153,7 +160,7 @@ const Menu = () => {
   
       {/* Contenu principal avec le hublot transparent */}
       <div className="relative h-full min-h-screen w-screen bg-[url('/vectors/ELEMENTS/fond.avif')] bg-cover p-5 flex justify-center items-center">
-        <div className="absolute grid grid-cols-3 gap-4 top-[560px] right-[500px] w-[960px] h-[660px] bg-blue-600 p-5 place-items-center">         
+        <div className="absolute grid grid-cols-3 gap-4 top-[560px] right-[500px] w-[960px] h-[660px] bg-blue-600 p-5 place-items-center object-contain">         
           {items.map((item, index) => (
             <DynamicButton
               key={index}
@@ -168,14 +175,17 @@ const Menu = () => {
                 hoveredIcons.includes(item.type) ? "hover" : "default"
               }
               style={{
-                width: `230px`,
-                height: `230px`,
+                width: `210px`,
+                height: `160px`,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                objectFit: "contain",
+                // backgroundColor: "red",
               }}
             />
           ))}
+          {showTicketPlayer && <TicketPlayer onClose={() => setShowTicketPlayer(false)} />}
       </div>
 
       {/* Affichage conditionnel du lecteur */}

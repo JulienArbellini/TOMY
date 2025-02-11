@@ -102,8 +102,8 @@ const Menu = () => {
           return (
             <DynamicButton
               key={index}
-              defaultIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
-              hoverIcon={`/OPTIMIZED_ICONES/${item.type}-hover.avif`}
+              defaultIcon={`/OPTIMIZED_ICONES/${item.type}-hover.avif`}
+              hoverIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
               clickedIcon={`/OPTIMIZED_ICONES/${item.type}-clic.avif`}
               releasedIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
               onClick={() => handleItemClick(item.type)}
