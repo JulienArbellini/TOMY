@@ -7,18 +7,20 @@ interface TicketPlayerProps {
 
 const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
   // ---------- États pour tous les champs ----------
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("MYSTERIOUS");
   const [sex, setSex] = useState("M");    // H ou F
   const [age, setAge] = useState("18");   // 1 à 99
   const [date, setDate] = useState("07/12/1995");   // format yyyy-mm-dd
-  const [time, setTime] = useState("");   // format HH:mm
-  const [seat, setSeat] = useState("");   // texte libre (ex: 14B)
+  const [time, setTime] = useState("08:00");   // format HH:mm
+  const [seat, setSeat] = useState("14B");   // texte libre (ex: 14B)
   const [gate, setGate] = useState("A");  // A, B ou C
   const [depart, setDepart] = useState("PARIS");  // A, B ou C
 
   // ---------- Preview : 670×300 (ratio 2,233) ----------
   const previewWidth = 670;
   const previewHeight = 300;
+
+  //get the curent hour HH::mm
 
   // ---------- PDF : 3350×1500 ----------
   // => scaleX = scaleY = 5
