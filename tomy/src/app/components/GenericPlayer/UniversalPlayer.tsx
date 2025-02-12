@@ -126,6 +126,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
     return (
       <TicketPlayer
         onClose={onClose}
+        scale = {scale}
       />
     );
 

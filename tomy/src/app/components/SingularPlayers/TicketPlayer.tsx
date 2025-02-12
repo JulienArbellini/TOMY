@@ -4,6 +4,7 @@ import InteractiveButton from "../GenericPlayer/InteractiveButton"; // Vérifie 
 
 interface TicketPlayerProps {
   onClose: () => void;
+  scale?: number; 
 }
 
 const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
@@ -11,16 +12,37 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
   const [userName, setUserName] = useState("MYSTERIOUS");
   const [sex, setSex] = useState("M");
   const [age, setAge] = useState("18");
-  const [date, setDate] = useState("07/12/1995");
+  const [date, setDate] = useState("1995-12-07");  // Format ISO pour plus de fiabilité
   const [time, setTime] = useState("08:00");
   const [seat, setSeat] = useState("14B");
   const [gate, setGate] = useState("A");
   const [depart, setDepart] = useState("PARIS");
+  const [classe, setClasse] = useState("FIRST CLASS");
   // Nouvel état pour l'email du destinataire
   const [recipientEmail, setRecipientEmail] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // Message d'erreur pour l'utilisateur
 
 
   const [scale, setScale] = useState(1); // Gestion de l'échelle dynamique
+
+  const classAbbreviations: { [key: string]: string } = {
+    "SPECIAL ECONOMY": "SE",
+    "BUSINESS CLASS": "BC",
+    "FIRST CLASS": "FC",
+    "GENIUS CLASS": "GC",
+    "CHEESE LOVERS CLASS": "CLC",
+    "POPSTAR CLASS": "PC",
+    "GOONER CLASS": "GC",
+    "FASHION IDOL CLASS": "FIC",
+    "NON DUAL LOUNGE": "NDL",
+    "ANIMAL SECTION": "AS",
+    "ALIEN CLASS": "AC",
+    "TORTURED ARTIST CLASS": "TAC",
+    "NINJA CLASS": "NC",
+    "KIWI CLASS": "KC",
+    "SURFER’S CLASS": "SC",
+    "CREW": "CR",
+  };
 
   // Gestion de l'échelle en fonction de la taille de la fenêtre
   useEffect(() => {
@@ -53,7 +75,39 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
   // Taille du texte (ex: 60px) dans le PDF
   const pdfFontSize = 60;
 
+    // Fonction pour échapper les caractères spéciaux (sécurité XSS)
+    const sanitizeInput = (input: string) => {
+      const element = document.createElement("div");
+      element.innerText = input;
+      return element.innerHTML;
+    };
+
+    // Fonction de validation des champs
+  const validateFields = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!recipientEmail || !emailRegex.test(recipientEmail)) {
+      setErrorMessage("Veuillez entrer une adresse email valide.");
+      return false;
+    }
+
+    if (!userName.trim()) {
+      setErrorMessage("Le nom ne peut pas être vide.");
+      return false;
+    }
+
+    if (isNaN(Number(age)) || Number(age) < 0 || Number(age) > 120) {
+      setErrorMessage("Veuillez entrer un âge valide.");
+      return false;
+    }
+
+    setErrorMessage(null);  // Pas d'erreurs
+    return true;
+  };
+
+
   const generateAndSendPDF = async () => {
+    if (!validateFields()) return;
     try {
       // 1. Charger le PDF template
       const templatePdfUrl = "/BILLET/Billet_Vierge.pdf";
@@ -82,19 +136,25 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
       };
 
       // 3. Dessiner les champs
-      drawText(userName, 75, 100);
-      drawText(sex, 270, 99);
-      drawText(age, 320, 99);
-      drawText(date, 170, 137);
-      drawText(time, 265, 137);
-      drawText(seat, 320, 137);
-      drawText(gate, 375, 135);
-      drawText(time, 190, 218);
-      drawText(time, 190, 218);
-      drawText(time, 505, 99);
-      drawText(seat, 572, 99);
-      drawText(depart, 75, 174);
+      drawText(sanitizeInput(time), 190, 218);
+      drawText(sanitizeInput(time), 190, 218);
+      drawText(sanitizeInput(time), 505, 90);
+      drawText(sanitizeInput(seat), 565, 90);
+
+      drawText(sanitizeInput(userName), 75, 100);
+      drawText(sanitizeInput(sex), 270, 99);
+      drawText(sanitizeInput(age), 320, 99);
+      drawText(sanitizeInput(date), 170, 137);
+      drawText(sanitizeInput(time), 265, 137);
+      drawText(sanitizeInput(seat), 320, 137);
+      drawText(sanitizeInput(gate), 375, 135);
+      drawText(sanitizeInput(depart), 75, 174);
       drawText("JFK190FW", 75, 137);
+      drawText(sanitizeInput(classe), 75, 65);
+
+
+      const abbreviatedClass = classAbbreviations[classe] || classe;
+      drawText(abbreviatedClass, 610, 90);
 
       // 4. Sauvegarder le PDF en binaire
       const pdfBytes = await pdfDoc.save();
@@ -120,9 +180,11 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
         console.error("Échec de l'envoi du PDF");
       } else {
         console.log("PDF envoyé par email avec succès !");
+        alert("PDF envoyé avec succès !");
       }
     } catch (error) {
       console.error("Erreur lors de la génération / envoi du PDF :", error);
+      setErrorMessage("Une erreur est survenue lors de l'envoi.");
     }
   };
 
@@ -133,6 +195,7 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
         style={{
           height: `${scaledValue(550)}px`,
           width: `${scaledValue(640)}px`,
+          // backgroundColor: "red",
         }}
       >
         {/* Cadre décoratif inspiré du DiaporamaPlayer */}
@@ -140,8 +203,8 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
           src="/vectors/ELEMENTS/Cadres/CadreBois.avif"
           alt="Cadre décoratif"
           style={{
-            height: `${scaledValue(538)}px`,
-            width: `${scaledValue(638)}px`,
+            height: `${scaledValue(550)}px`,
+            width: `${scaledValue(640)}px`,
           }}
         />
 
@@ -163,13 +226,14 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
 
         {/* Contenu principal (Formulaire et Prévisualisation) */}
         <div
-          className="absolute  rounded-lg shadow-lg p-6"
+          className="absolute"
           style={{
             top: `${scaledValue(47)}px`,
-            left: `${scaledValue(29)}px`,
+            left: `${scaledValue(33)}px`,
             height: `${scaledValue(437)}px`,
-            width: `${scaledValue(560)}px`,
+            width: `${scaledValue(580)}px`,
             overflow: "auto",
+            // backgroundColor: "red",
             zIndex: 10,
           }}
         >
@@ -185,23 +249,14 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
             placeholder="ex: user@example.com"
           />
 
-          {/* Preview 670×300 */}
-          <div
-            style={{
-              width: "100%",
-              height: "auto",
-              position: "relative",
-              margin: "0 auto",
-            }}
-          >
             <img
               src="BILLET/Billet_Vierge.jpg"
               alt="Billet"
               style={{
-                display: "block",
-                width: "100%",
+                position: "absolute",
+                top: `${scaledValue(90)}px`,
+                width: `${scaledValue(580)}px`,
                 height: "auto",
-                objectFit: "cover",
               }}
             />
 
@@ -213,12 +268,12 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
               onChange={(e) => setUserName(e.target.value)}
               style={{
                 position: "absolute",
-                top: "165px",
-                left: "125px",
-                width: "170px",
+                top: `${scaledValue(171)}px`,
+                left: `${scaledValue(60)}px`,
+                width: "23vh",
                 border: "none",
                 background: "transparent",
-                fontSize: "14px",
+                fontSize: "1.7vh",
                 color: "#000",
               }}
             />
@@ -229,12 +284,12 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
               onChange={(e) => setDepart(e.target.value)}
               style={{
                 position: "absolute",
-                top: "290px",
-                left: "125px",
-                width: "90px",
+                top: `${scaledValue(234)}px`,
+                left: `${scaledValue(60)}px`,
+                width: "23vh",
                 border: "none",
                 background: "transparent",
-                fontSize: "14px",
+                fontSize: "1.7vh",
                 color: "#000",
               }}
             >
@@ -244,18 +299,53 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
               {/* ... */}
             </select>
 
+
+            {/* Classe */}
+            <select
+              value={classe}
+              onChange={(e) => setClasse(e.target.value)}
+              style={{
+                position: "absolute",
+                top: `${scaledValue(140)}px`,
+                left: `${scaledValue(60)}px`,
+                width: "27vh",
+                border: "none",
+                background: "transparent",
+                fontSize: "1.7vh",
+                color: "#000",
+              }}
+            >
+              <option value="SPECIAL ECONOMY">SPECIAL ECONOMY</option>
+              <option value="BUSINESS CLASS">BUSINESS CLASS</option>
+              <option value="FIRST CLASS">FIRST CLASS</option>
+              <option value="GENIUS CLASS">GENIUS CLASS</option>
+              <option value="CHEESE LOVERS CLASS">CHEESE LOVERS CLASS</option>
+              <option value="POPSTAR CLASS">POPSTAR CLASS</option>
+              <option value="GOONER CLASS">FIRST CLASS</option>
+              <option value="FASHION IDOL CLASS">FASHION IDOL CLASS</option>
+              <option value="NON DUAL LOUNGE">NON DUAL LOUNGE</option>
+              <option value="ANIMAL SECTION">ANIMAL SECTION</option>
+              <option value="ALIEN CLASS">ALIEN CLASS</option>
+              <option value="TORTURED ARTIST CLASS">TORTURED ARTIST CLASS</option>
+              <option value="NINJA CLASS">NINJA CLASS</option>
+              <option value="KIWI CLASS">KIWI CLASS</option>
+              <option value="SURFER’S CLASS">SURFER’S CLASS</option>
+              <option value="CREW">CREW</option>
+              {/* ... */}
+            </select>
+
             {/* Sex */}
             <select
               value={sex}
               onChange={(e) => setSex(e.target.value)}
               style={{
                 position: "absolute",
-                top: "165px",
-                left: "450px",
-                width: "40px",
+                top: `${scaledValue(171)}px`,
+                left: `${scaledValue(230)}px`,
+                width: "5vh",
                 border: "none",
                 background: "transparent",
-                fontSize: "14px",
+                fontSize: "1.7vh",
                 color: "#000",
               }}
             >
@@ -270,12 +360,12 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
               onChange={(e) => setAge(e.target.value)}
               style={{
                 position: "absolute",
-                top: "165px",
-                left: "540px",
-                width: "50px",
+                top: `${scaledValue(171)}px`,
+                left: `${scaledValue(273)}px`,
+                width: "5.5vh",
                 border: "none",
                 background: "transparent",
-                fontSize: "14px",
+                fontSize: "1.7vh",
                 color: "#000",
               }}
             >
@@ -293,12 +383,12 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
               onChange={(e) => setDate(e.target.value)}
               style={{
                 position: "absolute",
-                top: "229px",
-                left: "300px",
-                width: "80px",
+                top: `${scaledValue(202)}px`,
+                left:`${scaledValue(144)}px`,
+                width: "10vh",
                 border: "none",
                 background: "transparent",
-                fontSize: "14px",
+                fontSize: "1.7vh",
                 color: "#000",
               }}
             />
@@ -310,12 +400,12 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
               onChange={(e) => setTime(e.target.value)}
               style={{
                 position: "absolute",
-                top: "227px",
-                left: "450px",
-                width: "30px",
+                top: `${scaledValue(202)}px`,
+                left: `${scaledValue(225)}px`,
+                width: "4vh",
                 border: "none",
                 background: "transparent",
-                fontSize: "14px",
+                fontSize: "1.7vh",
                 color: "#000",
               }}
             />
@@ -326,17 +416,17 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
               onChange={(e) => setSeat(e.target.value)}
               style={{
                 position: "absolute",
-                top: "229px",
-                left: "540px",
-                width: "40px",
+                top: `${scaledValue(203)}px`,
+                left: `${scaledValue(270)}px`,
+                width: "5.5vh",
                 border: "none",
                 background: "transparent",
-                fontSize: "14px",
+                fontSize: "1.7vh",
                 color: "#000",
               }}
             >
-              <option value="1">1</option>
-              <option value="2">2</option>
+              <option value="99A">99A</option>
+              <option value="28C">28C</option>
               <option value="14B">14B</option>
               {/* ... */}
             </select>
@@ -347,12 +437,12 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
               onChange={(e) => setGate(e.target.value)}
               style={{
                 position: "absolute",
-                top: "229px",
-                left: "620px",
-                width: "30px",
+                top: `${scaledValue(203)}px`,
+                left: `${scaledValue(316)}px`,
+                width: "5vh",
                 border: "none",
                 background: "transparent",
-                fontSize: "14px",
+                fontSize: "1.7vh",
                 color: "#000",
               }}
             >
@@ -373,7 +463,6 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
