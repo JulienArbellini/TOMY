@@ -44,6 +44,7 @@
     "video.js": "^8.17.1"
   },
   "devDependencies": {
+    "@types/nodemailer": "^6.4.17",
     "@types/p5": "^1.7.6",
     "@types/three": "^0.169.0"
   }
