@@ -81,11 +81,6 @@ const Menu = () => {
     //   setTimeoutId(newTimeoutId); // Stocker le nouvel ID de timeout
     //   return;
     // }
-
-    if (type === "Hermes") {
-      setShowTicketPlayer(true);
-      return;
-    }
   
     if (type === "PlaneMap") {
       router.push("/avion"); // Redirection vers la page map

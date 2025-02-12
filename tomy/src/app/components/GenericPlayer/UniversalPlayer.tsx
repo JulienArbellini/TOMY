@@ -9,6 +9,7 @@ import { usePreloadImages } from "../../hooks/usePreloadImages";
 import MixedDiaporama from "./MixedDiaporama";
 import Player from "../Player/Player";
 import { redirect } from "next/dist/server/api-utils";
+import TicketPlayer from "../SingularPlayers/TicketPlayer";
 
 interface UniversalPlayerProps {
   type: string;
@@ -121,7 +122,15 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
       />
     );
 
-  } else if (type === "diaporama" && images) {
+  }else if (type === "Hermes") {
+    return (
+      <TicketPlayer
+        onClose={onClose}
+      />
+    );
+
+  }
+  else if (type === "diaporama" && images) {
     return (
       <DiaporamaPlayer images={images} frameSrc={frameSrc} onClose={onClose} />
     );

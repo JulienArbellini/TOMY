@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { PDFDocument, rgb } from "pdf-lib";
+import InteractiveButton from "../GenericPlayer/InteractiveButton"; // Vérifie le bon chemin
 
 interface TicketPlayerProps {
   onClose: () => void;
@@ -8,51 +9,67 @@ interface TicketPlayerProps {
 const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
   // ---------- États pour tous les champs ----------
   const [userName, setUserName] = useState("MYSTERIOUS");
-  const [sex, setSex] = useState("M");    // H ou F
-  const [age, setAge] = useState("18");   // 1 à 99
-  const [date, setDate] = useState("07/12/1995");   // format yyyy-mm-dd
-  const [time, setTime] = useState("08:00");   // format HH:mm
-  const [seat, setSeat] = useState("14B");   // texte libre (ex: 14B)
-  const [gate, setGate] = useState("A");  // A, B ou C
-  const [depart, setDepart] = useState("PARIS");  // A, B ou C
+  const [sex, setSex] = useState("M");
+  const [age, setAge] = useState("18");
+  const [date, setDate] = useState("07/12/1995");
+  const [time, setTime] = useState("08:00");
+  const [seat, setSeat] = useState("14B");
+  const [gate, setGate] = useState("A");
+  const [depart, setDepart] = useState("PARIS");
+  // Nouvel état pour l'email du destinataire
+  const [recipientEmail, setRecipientEmail] = useState("");
 
-  // ---------- Preview : 670×300 (ratio 2,233) ----------
+
+  const [scale, setScale] = useState(1); // Gestion de l'échelle dynamique
+
+  // Gestion de l'échelle en fonction de la taille de la fenêtre
+  useEffect(() => {
+    const handleResize = () => {
+      const windowHeight = window.innerHeight;
+      const baseHeight = 555; // Hauteur de référence
+      const newScale = (windowHeight * 0.8) / baseHeight;
+      setScale(newScale);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const scaledValue = (value: number) => value * scale;
+
+  // ---------- Preview : 670×300 (ratio ~2.233) ----------
   const previewWidth = 670;
   const previewHeight = 300;
 
-  //get the curent hour HH::mm
-
-  // ---------- PDF : 3350×1500 ----------
-  // => scaleX = scaleY = 5
+  // ---------- PDF : 3350×1500 (scaleX=5, scaleY=5) ----------
   const PDF_WIDTH = 3350;
   const PDF_HEIGHT = 1500;
-  const scaleX = PDF_WIDTH / previewWidth;    // 5
-  const scaleY = PDF_HEIGHT / previewHeight;  // 5
+  const scaleX = PDF_WIDTH / previewWidth;    
+  const scaleY = PDF_HEIGHT / previewHeight;
 
   // Offset vertical pour la baseline
   const baselineOffset = 45;
-
   // Taille du texte (ex: 60px) dans le PDF
-  // Vous pouvez ajuster au besoin
   const pdfFontSize = 60;
 
-  const generatePDF = async () => {
+  const generateAndSendPDF = async () => {
     try {
-      // 1. Charger le PDF template (3350×1500)
+      // 1. Charger le PDF template
       const templatePdfUrl = "/BILLET/Billet_Vierge.pdf";
       const templateBytes = await fetch(templatePdfUrl).then((res) =>
         res.arrayBuffer()
       );
       const pdfDoc = await PDFDocument.load(templateBytes);
 
-      // 2. Récupérer la première page (dimensions réelles)
+      // 2. Récupérer la page
       const firstPage = pdfDoc.getPages()[0];
-      const pageWidth = firstPage.getWidth();   // 3350
-      const pageHeight = firstPage.getHeight(); // 1500
+      const pageWidth = firstPage.getWidth();
+      const pageHeight = firstPage.getHeight();
+
       console.log("Dimensions PDF :", pageWidth, pageHeight);
 
-      // Petite fonction utilitaire pour dessiner du texte
-      // en tenant compte du ratio et de l'offset
+      // Petite fonction pour dessiner le texte
       const drawText = (text: string, leftCSS: number, topCSS: number) => {
         const x = leftCSS * scaleX;
         const y = pageHeight - (topCSS * scaleY) - baselineOffset;
@@ -60,14 +77,11 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
           x,
           y,
           size: pdfFontSize,
-          color: rgb(0, 0, 0), // En rouge, par exemple
+          color: rgb(0, 0, 0),
         });
       };
 
-      // 3. Dessiner chaque champ aux mêmes coords que la preview
-      //    (Adaptez `leftCSS` / `topCSS` si besoin)
-
-
+      // 3. Dessiner les champs
       drawText(userName, 75, 100);
       drawText(sex, 270, 99);
       drawText(age, 320, 99);
@@ -81,248 +95,282 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
       drawText(seat, 572, 99);
       drawText(depart, 75, 174);
       drawText("JFK190FW", 75, 137);
-      
 
-      // 4. Sauvegarder le PDF et proposer téléchargement
+      // 4. Sauvegarder le PDF en binaire
       const pdfBytes = await pdfDoc.save();
-      const blob = new Blob([pdfBytes], { type: "application/pdf" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "billet.pdf";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+
+      // 5. Créer un Blob depuis pdfBytes
+      const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
+
+      // 6. Préparer un FormData pour envoyer en multipart/form-data
+      const formData = new FormData();
+      formData.append("pdfFile", pdfBlob, "billet.pdf");
+
+      // On utilise la valeur saisie par l'utilisateur
+      formData.append("toEmail", recipientEmail || "destinataire@example.com");
+      formData.append("subject", "Votre Billet Personnalisé");
+
+      // 7. Envoyer la requête vers l'API Route Next.js
+      const response = await fetch("/api/send-pdf", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        console.error("Échec de l'envoi du PDF");
+      } else {
+        console.log("PDF envoyé par email avec succès !");
+      }
     } catch (error) {
-      console.error("Erreur lors de la génération du PDF :", error);
+      console.error("Erreur lors de la génération / envoi du PDF :", error);
     }
   };
 
   return (
-    <div className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-[800px] text-xs">
-        <h2 className="text-xs font-bold mb-4">Billet d'Avion Personnalisé</h2>
-
-        {/* 
-          Preview : 670×300
-          - Image de fond
-          - Champs en absolute
-        */}
-        <div
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div
+        className="relative"
+        style={{
+          height: `${scaledValue(550)}px`,
+          width: `${scaledValue(640)}px`,
+        }}
+      >
+        {/* Cadre décoratif inspiré du DiaporamaPlayer */}
+        <img
+          src="/vectors/ELEMENTS/Cadres/CadreBois.avif"
+          alt="Cadre décoratif"
           style={{
-            width: "670px",
-            height: "300px",
-            position: "relative",
-            margin: "0 auto",
+            height: `${scaledValue(538)}px`,
+            width: `${scaledValue(638)}px`,
+          }}
+        />
+
+        {/* Bouton de fermeture */}
+        <InteractiveButton
+          defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif"
+          hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
+          clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif"
+          onClick={onClose}
+          style={{
+            position: "absolute",
+            top: `${scaledValue(24)}px`,
+            left: `${scaledValue(24)}px`,
+            height: `${scaledValue(16)}px`,
+            width: `${scaledValue(16)}px`,
+            zIndex: 50,
+          }}
+        />
+
+        {/* Contenu principal (Formulaire et Prévisualisation) */}
+        <div
+          className="absolute  rounded-lg shadow-lg p-6"
+          style={{
+            top: `${scaledValue(47)}px`,
+            left: `${scaledValue(29)}px`,
+            height: `${scaledValue(437)}px`,
+            width: `${scaledValue(560)}px`,
+            overflow: "auto",
+            zIndex: 10,
           }}
         >
-          <img
-            src="BILLET/Billet_Vierge.jpg"
-            alt="Billet"
-            style={{
-              display: "block",
-              width: "670px",
-              height: "300px",
-              objectFit: "cover",
-            }}
-          />
 
-          {/*
-            Positionnez les champs sur l'image
-            Exemple : name => top=130px, left=110px
-          */}
+
+          {/* Champ Email */}
+          <label className="block font-semibold mb-2">Email :</label>
           <input
-            type="text"
-            placeholder="Name"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            style={{
-              position: "absolute",
-              top: "95px",
-              left: "75px",
-              width: "170px",
-              border: "none",
-              background: "transparent",
-              fontSize: "14px",
-              color: "#000",
-            }}
+            type="email"
+            value={recipientEmail}
+            onChange={(e) => setRecipientEmail(e.target.value)}
+            className="border p-2 mb-4"
+            placeholder="ex: user@example.com"
           />
 
-          {/* Sex (H / F) */}
-          <select
-            value={depart}
-            onChange={(e) => setDepart(e.target.value)}
+          {/* Preview 670×300 */}
+          <div
             style={{
-              position: "absolute",
-              top: "168px",
-              left: "70px",
-              width: "90px",
-              border: "none",
-              background: "transparent",
-              fontSize: "14px",
-              color: "#000",
+              width: "100%",
+              height: "auto",
+              position: "relative",
+              margin: "0 auto",
             }}
           >
-            <option value="PARIS">PARIS</option>
-            <option value="NEW YORK">NEW YORK</option>
-            <option value="TOKYO">TOKYO</option>
-            <option value="MAUBEUGE">MAUBEUGE</option>
-            <option value="SYDNEY">SYDNEY</option>
-            <option value="ROMA">ROMA</option>
-            <option value="LONDON">LONDON</option>
-            <option value="MAROCO">MAROCO</option>
-            <option value="GOTHAM CITY">GOTHAM CITY</option>
-            <option value="MOSCOU">MOSCOU</option>
-            <option value="BERLIN">BERLIN</option>
-            <option value="MADRID">MADRID</option>
-            <option value="DUBAI">DUBAI</option>
-            <option value="MEXICO">MEXICO</option>
-            <option value="MONTREAL">MONTREAL</option>
-            <option value="BEIJING">BEIJING</option>
-            <option value="SEOUL">SEOUL</option>
-            <option value="HANOI">HANOI</option>
-            <option value="BANGKOK">BANGKOK</option>
-            <option value="MUMBAI">MUMBAI</option>
-            <option value="HOBBIT TOWN">HOBBIT TOWN</option>
-            <option value="HOGSMEADE">HOGSMEADE</option>
-            <option value="SPRINGFIELD">SPRINGFIELD</option>
-            <option value="SCRANTON">SCRANTON</option>
+            <img
+              src="BILLET/Billet_Vierge.jpg"
+              alt="Billet"
+              style={{
+                display: "block",
+                width: "100%",
+                height: "auto",
+                objectFit: "cover",
+              }}
+            />
 
-          </select>
+            {/* Champ Name */}
+            <input
+              type="text"
+              placeholder="Name"
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              style={{
+                position: "absolute",
+                top: "165px",
+                left: "125px",
+                width: "170px",
+                border: "none",
+                background: "transparent",
+                fontSize: "14px",
+                color: "#000",
+              }}
+            />
 
-          <select
-            value={sex}
-            onChange={(e) => setSex(e.target.value)}
-            style={{
-              position: "absolute",
-              top: "94px",
-              left: "260px",
-              width: "40px",
-              border: "none",
-              background: "transparent",
-              fontSize: "14px",
-              color: "#000",
-            }}
-          >
-            <option value="M">M</option>
-            <option value="F">F</option>
-            <option value="NB">NB</option>
-          </select>
-          
-
-          {/* Age (1 à 99) */}
-          <select
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            style={{
-              position: "absolute",
-              top: "94px",
-              left: "310px",
-              width: "50px",
-              border: "none",
-              background: "transparent",
-              fontSize: "14px",
-              color: "#000",
-            }}
-          >
-            {Array.from({ length: 99 }, (_, i) => i + 1).map((val) => (
-              <option key={val} value={val}>
-                {val}
-              </option>
-            ))}
-          </select>
-
-          {/* Date */}
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            style={{
-              position: "absolute",
-              top: "132px",
-              left: "170px",
-              width: "80px",
-              border: "none",
-              background: "transparent",
-              fontSize: "14px",
-              color: "#000",
-            }}
-          />
-
-          {/* Time */}
-          <input
-            type="time"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            style={{
-              position: "absolute",
-              top: "132px",
-              left: "280px",
-              width: "30px",
-              border: "none",
-              background: "transparent",
-              fontSize: "14px",
-              color: "#000",
-            }}
-          />
-
-          {/* Seat */}
-          <select
-            value={seat}
-            onChange={(e) => setSeat(e.target.value)}
-            style={{
-              position: "absolute",
-              top: "132px",
-              left: "315px",
-              width: "40px",
-              border: "none",
-              background: "transparent",
-              fontSize: "14px",
-              color: "#000",
-            }}
+            {/* Depart */}
+            <select
+              value={depart}
+              onChange={(e) => setDepart(e.target.value)}
+              style={{
+                position: "absolute",
+                top: "290px",
+                left: "125px",
+                width: "90px",
+                border: "none",
+                background: "transparent",
+                fontSize: "14px",
+                color: "#000",
+              }}
             >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-          </select>
+              <option value="PARIS">PARIS</option>
+              <option value="NEW YORK">NEW YORK</option>
+              <option value="TOKYO">TOKYO</option>
+              {/* ... */}
+            </select>
 
-          {/* Gate (A, B, C) */}
-          <select
-            value={gate}
-            onChange={(e) => setGate(e.target.value)}
-            style={{
-              position: "absolute",
-              top: "130px",
-              left: "365px",
-              width: "30px",
-              border: "none",
-              background: "transparent",
-              fontSize: "14px",
-              color: "#000",
-            }}
-          >
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-          </select>
-        </div>
+            {/* Sex */}
+            <select
+              value={sex}
+              onChange={(e) => setSex(e.target.value)}
+              style={{
+                position: "absolute",
+                top: "165px",
+                left: "450px",
+                width: "40px",
+                border: "none",
+                background: "transparent",
+                fontSize: "14px",
+                color: "#000",
+              }}
+            >
+              <option value="M">M</option>
+              <option value="F">F</option>
+              <option value="NB">NB</option>
+            </select>
 
-        {/* Boutons */}
-        <div className="flex flex-col gap-3 mt-4">
-          <button
-            onClick={generatePDF}
-            className="bg-green-500 text-white p-2 rounded-md"
-          >
-            Générer le PDF
-          </button>
-          <button
-            onClick={onClose}
-            className="mt-4 text-red-500 font-semibold hover:underline"
-          >
-            Fermer
-          </button>
+            {/* Age */}
+            <select
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              style={{
+                position: "absolute",
+                top: "165px",
+                left: "540px",
+                width: "50px",
+                border: "none",
+                background: "transparent",
+                fontSize: "14px",
+                color: "#000",
+              }}
+            >
+              {Array.from({ length: 99 }, (_, i) => i + 1).map((val) => (
+                <option key={val} value={val}>
+                  {val}
+                </option>
+              ))}
+            </select>
+
+            {/* Date */}
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              style={{
+                position: "absolute",
+                top: "229px",
+                left: "300px",
+                width: "80px",
+                border: "none",
+                background: "transparent",
+                fontSize: "14px",
+                color: "#000",
+              }}
+            />
+
+            {/* Time */}
+            <input
+              type="time"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              style={{
+                position: "absolute",
+                top: "227px",
+                left: "450px",
+                width: "30px",
+                border: "none",
+                background: "transparent",
+                fontSize: "14px",
+                color: "#000",
+              }}
+            />
+
+            {/* Seat */}
+            <select
+              value={seat}
+              onChange={(e) => setSeat(e.target.value)}
+              style={{
+                position: "absolute",
+                top: "229px",
+                left: "540px",
+                width: "40px",
+                border: "none",
+                background: "transparent",
+                fontSize: "14px",
+                color: "#000",
+              }}
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="14B">14B</option>
+              {/* ... */}
+            </select>
+
+            {/* Gate */}
+            <select
+              value={gate}
+              onChange={(e) => setGate(e.target.value)}
+              style={{
+                position: "absolute",
+                top: "229px",
+                left: "620px",
+                width: "30px",
+                border: "none",
+                background: "transparent",
+                fontSize: "14px",
+                color: "#000",
+              }}
+            >
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+            </select>
+          </div>
+
+          {/* Boutons */}
+          <div className="flex flex-col gap-3 mt-4">
+            <button
+              onClick={generateAndSendPDF}
+              className="bg-green-500 text-white p-2 rounded-md"
+            >
+              Générer & Envoyer le PDF par Email
+            </button>
+          </div>
         </div>
       </div>
     </div>

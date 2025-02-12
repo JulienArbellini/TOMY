@@ -101,7 +101,7 @@ export const items = [
     name: "Hermes",
     type: "Hermes",
     playerConfig: {
-      type: "interactive",
+      type: "Hermes",
       action: "ticketForm",
       frameType: "bois",
       // Formulaire avec placeholders et envoi d'email
