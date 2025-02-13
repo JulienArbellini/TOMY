@@ -39,7 +39,7 @@ const Menu = () => {
   const allImageUrls = items.flatMap((item) => [
     `/OPTIMIZED_ICONES/${item.type}-hover.avif`,
     `/OPTIMIZED_ICONES/${item.type}.avif`,
-    `/OPTIMIZED_ICONES/${item.type}-clic.avif`,
+    // `/OPTIMIZED_ICONES/${item.type}-clic.avif`,
   ]);
 
   // Précharger les images
@@ -149,70 +149,88 @@ const Menu = () => {
   }, [selectedItem]);
 
   return (
-    <div className="relative h-full min-h-screen w-screen flex justify-center items-center">
-      {/* Ajout du fond dynamique */}
-      <Background />
-  
-      {/* Contenu principal avec le hublot transparent */}
-      <div className="relative h-full min-h-screen w-screen bg-[url('/vectors/ELEMENTS/fond.avif')] bg-cover p-5 flex justify-center items-center">
-        <div className="absolute grid grid-cols-3 gap-4 top-[560px] right-[500px] w-[960px] h-[660px] bg-blue-600 p-5 place-items-center object-contain">         
-          {items.map((item, index) => (
-            <DynamicButton
-              key={index}
-              defaultIcon={`/OPTIMIZED_ICONES/${item.type}-hover.avif`}
-              hoverIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
-              clickedIcon={`/OPTIMIZED_ICONES/${item.type}-clic.avif`}
-              releasedIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
-              onClick={(e) => handleItemClick(item.type, e)}
-              onMouseEnter={() => handleMouseEnter(item.type)}
-              onMouseLeave={() => handleMouseLeave(item.type)}
-              buttonState={
-                hoveredIcons.includes(item.type) ? "hover" : "default"
-              }
-              style={{
-                width: `210px`,
-                height: `160px`,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                objectFit: "contain",
-                // backgroundColor: "red",
-              }}
-            />
-          ))}
-          {showTicketPlayer && <TicketPlayer onClose={() => setShowTicketPlayer(false)} />}
-      </div>
+<div className="relative min-h-screen w-screen flex justify-center items-center bg-blue-200">
+  {/* Ajout du fond dynamique */}
+  {/* <Background /> */}
 
-      {/* Affichage conditionnel du lecteur */}
-      {selectedItem && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">          <div className="relative">
-            {/* Rendu du UniversalPlayer avec la configuration sélectionnée */}
-            <UniversalPlayer {...selectedItem} onClose={handleCloseModal} />
-          </div>
-        </div>
-      )}
+  <video 
+    className="absolute top-0 left-0 w-full h-full object-cover"
+    autoPlay
+    loop
+    muted
+    playsInline
+  >
+    <source src="/vectors/ELEMENTS/ciel.mp4" type="video/mp4" />
+    {/* Alternative pour d'autres formats */}
+    {/* <source src="/videos/fond_avion.webm" type="video/webm" /> */}
+    Votre navigateur ne supporte pas la vidéo.
+  </video>
 
-      {isMessageVisible && message && (
-        <div
-          className="popup-message"
+  <div className="relative top-0 left-0 w-screen h-screen overflow-hidden">
+    <div
+      className="absolute w-full h-full bg-cover bg-no-repeat bg-center"
+      style={{
+        backgroundImage: `url('/vectors/ELEMENTS/FondCabine.png')`,
+        backgroundSize: "auto 150vh", // Ajuste pour correspondre à la taille de l'écran
+        backgroundPosition: "center left", // Bloque la position
+      }}
+    />
+
+    <div className="relative top-0 left-0 w-full h-full">
+      <div className="absolute right-0 bottom-0 h-[1200px] w-[1300px] bg-[url('/vectors/ELEMENTS/siege.png')] bg-cover ">
+        <div 
+          className="absolute"
           style={{
-            position: "fixed",
-            left: cursorPosition.x + 15,
-            top: cursorPosition.y - 50,
-            textAlign: "center",
-            background: "rgba(0, 0, 0, 0.8)",
-            color: "white",
-            padding: "1px",
-            borderRadius: "5px",
-            pointerEvents: "none",
-            zIndex: 1000,
+            left: "270px",   // Centre horizontalement
+            top: "220px",    // Ajustement fin pour coller à l'écran
+            width: "750px", // Taille ajustée pour correspondre à l'écran du siège
+            height: "470px", // Hauteur ajustée
+            // transform: "translate(-50%, -50%)", // Centre exactement
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)", // Grille de 3 colonnes
+            gap: "20px", // Espacement entre les icônes
+            padding: "10px",
+            placeItems: "center",
+            // backgroundColor: "blue", // Supprime le fond coloré
           }}
-        >
-          {message}
+        >            
+            {items.map((item, index) => (
+              <DynamicButton
+                key={index}
+                defaultIcon={`/OPTIMIZED_ICONES/${item.type}-hover.avif`}
+                hoverIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
+                clickedIcon={`/OPTIMIZED_ICONES/${item.type}-hover.avif`}
+                releasedIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
+                onClick={(e) => handleItemClick(item.type, e)}
+                onMouseEnter={() => handleMouseEnter(item.type)}
+                onMouseLeave={() => handleMouseLeave(item.type)}
+                buttonState={
+                  hoveredIcons.includes(item.type) ? "hover" : "default"
+                }
+                style={{
+                  width: `210px`,
+                  height: `160px`,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  objectFit: "contain",
+                }}
+              />
+            ))}
+        </div>
       </div>
-      )}
     </div>
+    
+  {selectedItem && (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">          
+      <div className="relative">
+        {/* Rendu du UniversalPlayer avec la configuration sélectionnée */}
+        <UniversalPlayer {...selectedItem} onClose={handleCloseModal} />
+      </div>
+    </div>
+  )}
   </div>
+</div>
   );
 };
 

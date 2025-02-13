@@ -34,7 +34,7 @@ const Background = () => {
     };
   }, [vantaEffect]);
 
-  return <div ref={vantaRef} className="w-full h-screen fixed top-0 left-0 -z-10"></div>;
+  return <div ref={vantaRef} className="w-full h-screen fixed top-0 left-0 -z-10 opacity-0"></div>;
 };
 
 export default Background;
