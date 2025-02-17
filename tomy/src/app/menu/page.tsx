@@ -180,7 +180,7 @@ const Menu = () => {
     muted
     playsInline
   >
-    <source src="/vectors/ELEMENTS/ciel.mp4" type="video/mp4" />
+    <source src="https://res.cloudinary.com/dm0cuvnzt/video/upload/v1739815215/ciel.mp4" type="video/mp4" />
     {/* Alternative pour d'autres formats */}
     {/* <source src="/videos/fond_avion.webm" type="video/webm" /> */}
     Votre navigateur ne supporte pas la vidéo.
