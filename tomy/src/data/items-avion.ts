@@ -1,6 +1,27 @@
 // items.ts
 
 export const items = [
+  {
+    name: "PiscineSimple",
+    type: "PiscineSimple",
+    x: 423,
+    y: 507,
+    width: 296,
+    playerConfig: {
+      type: "mixed",
+      images: [
+        "/images/content/Crew1.avif",
+        "/images/content/Crew2.avif",
+        "/images/content/Crew3.avif",
+        "/images/content/Crew4.avif",
+      ],
+      frameType: "simple",
+      videoSrc: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+      videoAutoplay: true,
+      videoControls: false,
+      // Affichage conditionnel entre images et vidéo
+    },
+  },
     {
       name: "Terrasse",
       type: "Terrasse",
@@ -436,4 +457,5 @@ export const items = [
         // Affichage conditionnel entre images et vidéo
       },
     },
+
   ];
