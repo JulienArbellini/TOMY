@@ -59,123 +59,374 @@ const handleExitClick = () => {
   const containerWidth = 590; // Largeur du conteneur en px
   const containerHeight = 437; // Hauteur du conteneur en px
 
-  return (
-    <div
-      className="relative flex justify-center items-center"
-      style={{
-        height: `${scaledValue(550)}px`,
-        width: `${scaledValue(640)}px`,
-      }}
-    >
-      {/* Cadre Principal */}
-      <img
-        src={frameSrc}
-        alt="Cadre décoratif autour du contenu"
-        style={{
-          height: `${scaledValue(538)}px`,
-          width: `${scaledValue(638)}px`,
-        }}
-      />
 
-      {/* Écran Noir pour la Pause ou la Fin (uniquement pour la vidéo) */}
-      {(isPlayingAndDelay || isVideoEnded) && (
+  if(frameSrc == '/vectors/ELEMENTS/Cadres/Cadre1.avif' ||  
+    frameSrc == '/vectors/ELEMENTS/Cadres/CadreBleu.avif' ||
+    frameSrc == '/vectors/ELEMENTS/Cadres/CadreBois.avif' ||
+    frameSrc == '/vectors/ELEMENTS/Cadres/CadrePlante.avif' ||
+    frameSrc == '/vectors/ELEMENTS/Cadres/CadreSimple.avif' ||
+    frameSrc == '/vectors/ELEMENTS/Cadres/CadreUltrasimple.avif'
+  ){
+    return (
+      <div
+        className="relative flex justify-center items-center"
+        style={{
+          height: `${scaledValue(550)}px`,
+          width: `${scaledValue(640)}px`,
+        }}
+      >
+        {/* Cadre Principal */}
         <img
-          src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
-          alt="Écran noir lorsque la vidéo est en pause ou terminée"
-          className="absolute"
+          src={frameSrc}
+          alt="Cadre décoratif autour du contenu"
+          style={{
+            height: `${scaledValue(538)}px`,
+            width: `${scaledValue(638)}px`,
+          }}
+        />
+  
+        {/* Écran Noir pour la Pause ou la Fin (uniquement pour la vidéo) */}
+        {(isPlayingAndDelay || isVideoEnded) && (
+          <img
+            src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
+            alt="Écran noir lorsque la vidéo est en pause ou terminée"
+            className="absolute"
+  
+            style={{
+              top: `${scaledValue(47)}px`,
+              left: `${scaledValue(29)}px`,
+              height: `${scaledValue(containerHeight)}px`,
+              width: `${scaledValue(containerWidth)}px`,
+              zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
+            }}
+          />
+        )}
+              <ControlButton
+          defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif"
+          hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
+          clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif"
+          onClick={handleExitClick}
+          style={{
+            position: "absolute",
+            top: `${scaledValue(24)}px`,
+            left: `${scaledValue(24)}px`,
+            height: `${scaledValue(16)}px`,
+            width: `${scaledValue(16)}px`,
+            zIndex: 50,
+          }}
+        />
+  
+  
+        {/* Conteneur du contenu */}
+        <div
+          className="absolute overflow-hidden"
           style={{
             top: `${scaledValue(47)}px`,
             left: `${scaledValue(29)}px`,
             height: `${scaledValue(containerHeight)}px`,
             width: `${scaledValue(containerWidth)}px`,
-            zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
           }}
-        />
-      )}
-            <ControlButton
-        defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif"
-        hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
-        clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif"
-        onClick={handleExitClick}
-        style={{
-          position: "absolute",
-          top: `${scaledValue(24)}px`,
-          left: `${scaledValue(24)}px`,
-          height: `${scaledValue(16)}px`,
-          width: `${scaledValue(16)}px`,
-          zIndex: 50,
-        }}
-      />
-
-
-      {/* Conteneur du contenu */}
+        >
+          {/* Vitre alignée avec le conteneur */}
+  
+          {vitre && ( // Ajoutez cette ligne
+            <img
+              src="/vectors/ELEMENTS/Cadres/vitre.avif"
+              alt="Vitre transparente"
+              className="absolute z-10 opacity-0"
+              style={{
+                height: `${scaledValue(containerHeight)}px`,
+                width: `${scaledValue(containerWidth)}px`,
+              }}
+            />
+          )}
+  
+  
+          {/* Affichage du contenu */}
+          {src && playerRef ? (
+            // Afficher l'iframe pour la vidéo
+            <div
+              className="absolute"
+              style={{
+                top: `${scaledValue(-653)}px`,
+                left: 0,
+                height: `${scaledValue(containerHeight)}px`,
+                width: `${scaledValue(containerWidth)}px`,
+              }}
+            >
+              <iframe
+                ref={playerRef}
+                width="100%"
+                height="400%"
+                src={`${src}?enablejsapi=1`}
+                title="Lecteur vidéo YouTube"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{
+                  objectFit: 'cover',
+                }}
+              ></iframe>
+            </div>
+          ) : (
+            // Afficher les enfants pour les autres types de contenu
+            <div
+              className="absolute"
+              style={{
+                top: 0,
+                left: 0,
+                height: `${scaledValue(containerHeight)}px`,
+                width: `${scaledValue(containerWidth)}px`,
+              }}
+            >
+              {children}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+  else if(frameSrc == '/vectors/ELEMENTS/Cadres/CadreSurfy.avif'){
+    return (
       <div
-        className="absolute overflow-hidden"
+        className="relative flex justify-center items-center"
         style={{
-          top: `${scaledValue(47)}px`,
-          left: `${scaledValue(29)}px`,
-          height: `${scaledValue(containerHeight)}px`,
-          width: `${scaledValue(containerWidth)}px`,
+          height: `${scaledValue(590)}px`,
+          width: `${scaledValue(660)}px`,
         }}
       >
-        {/* Vitre alignée avec le conteneur */}
-
-        {vitre && ( // Ajoutez cette ligne
+        {/* Cadre Principal */}
+        <img
+          src={frameSrc}
+          alt="Cadre décoratif autour du contenu"
+          style={{
+            height: `${scaledValue(569)}px`,
+            width: `${scaledValue(640)}px`,
+          }}
+        />
+  
+        {/* Écran Noir pour la Pause ou la Fin (uniquement pour la vidéo) */}
+        {(isPlayingAndDelay || isVideoEnded) && (
           <img
-            src="/vectors/ELEMENTS/Cadres/vitre.avif"
-            alt="Vitre transparente"
-            className="absolute z-10 opacity-0"
+            src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
+            alt="Écran noir lorsque la vidéo est en pause ou terminée"
+            className="absolute"
+  
             style={{
+              top: `${scaledValue(47)}px`,
+              left: `${scaledValue(59)}px`,
               height: `${scaledValue(containerHeight)}px`,
               width: `${scaledValue(containerWidth)}px`,
+              zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
             }}
           />
         )}
-
-
-        {/* Affichage du contenu */}
-        {src && playerRef ? (
-          // Afficher l'iframe pour la vidéo
-          <div
-            className="absolute"
-            style={{
-              top: `${scaledValue(-653)}px`,
-              left: 0,
-              height: `${scaledValue(containerHeight)}px`,
-              width: `${scaledValue(containerWidth)}px`,
-            }}
-          >
-            <iframe
-              ref={playerRef}
-              width="100%"
-              height="400%"
-              src={`${src}?enablejsapi=1`}
-              title="Lecteur vidéo YouTube"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+              <ControlButton
+          defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif"
+          hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
+          clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif"
+          onClick={handleExitClick}
+          style={{
+            position: "absolute",
+            top: `${scaledValue(54)}px`,
+            left: `${scaledValue(34)}px`,
+            height: `${scaledValue(16)}px`,
+            width: `${scaledValue(16)}px`,
+            zIndex: 50,
+          }}
+        />
+  
+  
+        {/* Conteneur du contenu */}
+        <div
+          className="absolute overflow-hidden"
+          style={{
+            top: `${scaledValue(77)}px`,
+            left: `${scaledValue(36)}px`,
+            height: `${scaledValue(containerHeight)}px`,
+            width: `${scaledValue(containerWidth)}px`,
+          }}
+        >
+          {/* Vitre alignée avec le conteneur */}
+  
+          {vitre && ( // Ajoutez cette ligne
+            <img
+              src="/vectors/ELEMENTS/Cadres/vitre.avif"
+              alt="Vitre transparente"
+              className="absolute z-10 opacity-0"
               style={{
-                objectFit: 'cover',
+                height: `${scaledValue(containerHeight)}px`,
+                width: `${scaledValue(containerWidth)}px`,
               }}
-            ></iframe>
-          </div>
-        ) : (
-          // Afficher les enfants pour les autres types de contenu
-          <div
+            />
+          )}
+  
+  
+          {/* Affichage du contenu */}
+          {src && playerRef ? (
+            // Afficher l'iframe pour la vidéo
+            <div
+              className="absolute"
+              style={{
+                top: `${scaledValue(-653)}px`,
+                left: 0,
+                height: `${scaledValue(containerHeight)}px`,
+                width: `${scaledValue(containerWidth)}px`,
+              }}
+            >
+              <iframe
+                ref={playerRef}
+                width="100%"
+                height="400%"
+                src={`${src}?enablejsapi=1`}
+                title="Lecteur vidéo YouTube"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{
+                  objectFit: 'cover',
+                }}
+              ></iframe>
+            </div>
+          ) : (
+            // Afficher les enfants pour les autres types de contenu
+            <div
+              className="absolute"
+              style={{
+                top: 0,
+                left: 0,
+                height: `${scaledValue(containerHeight)}px`,
+                width: `${scaledValue(containerWidth)}px`,
+              }}
+            >
+              {children}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+  else if(frameSrc == '/vectors/ELEMENTS/Cadres/CadreEdgy.avif'){
+    return (
+      <div
+        className="relative flex justify-center items-center"
+        style={{
+          height: `${scaledValue(590)}px`,
+          width: `${scaledValue(690)}px`,
+        }}
+      >
+        {/* Cadre Principal */}
+        <img
+          src={frameSrc}
+          alt="Cadre décoratif autour du contenu"
+          style={{
+            height: `${scaledValue(570)}px`,
+            width: `${scaledValue(675)}px`,
+          }}
+        />
+  
+        {/* Écran Noir pour la Pause ou la Fin (uniquement pour la vidéo) */}
+        {(isPlayingAndDelay || isVideoEnded) && (
+          <img
+            src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
+            alt="Écran noir lorsque la vidéo est en pause ou terminée"
             className="absolute"
+  
             style={{
-              top: 0,
-              left: 0,
+              top: `${scaledValue(47)}px`,
+              left: `${scaledValue(59)}px`,
               height: `${scaledValue(containerHeight)}px`,
               width: `${scaledValue(containerWidth)}px`,
+              zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
             }}
-          >
-            {children}
-          </div>
+          />
         )}
+              <ControlButton
+          defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif"
+          hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
+          clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif"
+          onClick={handleExitClick}
+          style={{
+            position: "absolute",
+            top: `${scaledValue(47)}px`,
+            left: `${scaledValue(48)}px`,
+            height: `${scaledValue(16)}px`,
+            width: `${scaledValue(16)}px`,
+            zIndex: 50,
+          }}
+        />
+  
+  
+        {/* Conteneur du contenu */}
+        <div
+          className="absolute overflow-hidden"
+          style={{
+            top: `${scaledValue(70)}px`,
+            left: `${scaledValue(50)}px`,
+            height: `${scaledValue(containerHeight)}px`,
+            width: `${scaledValue(containerWidth)}px`,
+          }}
+        >
+          {/* Vitre alignée avec le conteneur */}
+  
+          {vitre && ( // Ajoutez cette ligne
+            <img
+              src="/vectors/ELEMENTS/Cadres/vitre.avif"
+              alt="Vitre transparente"
+              className="absolute z-10 opacity-0"
+              style={{
+                height: `${scaledValue(containerHeight)}px`,
+                width: `${scaledValue(containerWidth)}px`,
+              }}
+            />
+          )}
+  
+  
+          {/* Affichage du contenu */}
+          {src && playerRef ? (
+            // Afficher l'iframe pour la vidéo
+            <div
+              className="absolute"
+              style={{
+                top: `${scaledValue(-653)}px`,
+                left: 0,
+                height: `${scaledValue(containerHeight)}px`,
+                width: `${scaledValue(containerWidth)}px`,
+              }}
+            >
+              <iframe
+                ref={playerRef}
+                width="100%"
+                height="400%"
+                src={`${src}?enablejsapi=1`}
+                title="Lecteur vidéo YouTube"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{
+                  objectFit: 'cover',
+                }}
+              ></iframe>
+            </div>
+          ) : (
+            // Afficher les enfants pour les autres types de contenu
+            <div
+              className="absolute"
+              style={{
+                top: 0,
+                left: 0,
+                height: `${scaledValue(containerHeight)}px`,
+                width: `${scaledValue(containerWidth)}px`,
+              }}
+            >
+              {children}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
 };
 
 export default PlayerFrame;
