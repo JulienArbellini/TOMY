@@ -90,7 +90,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
   // Gestion des types de contenu
   if (type === "video" && src) {
     return (
-      <Player src="https://www.youtube.com/embed/RS2jNCqCjPs" onClose={onClose} frameSrc={frameSrc}>
+      <Player src={src} onClose={onClose} frameSrc={frameSrc}>
       {/* <Player src="https://www.youtube.com/embed/Qi1krsuYN1M"> */}
       </Player>
  

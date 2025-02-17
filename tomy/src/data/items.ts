@@ -90,7 +90,7 @@ export const items = [
     type: "MAP",
     playerConfig: {
       type: "video",
-      src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+      src: "https://www.youtube.com/embed/8Weh3T-fVoU?enablejsapi=1&autoplay=1&mute=1",
       frameType: "edgy",
       autoplay: false,
       loop: false,

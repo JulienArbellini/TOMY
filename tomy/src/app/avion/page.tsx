@@ -73,7 +73,19 @@ const Menu = () => {
   return (
     <div>
     <div className="relative w-screen h-screen flex justify-center items-center overflow-hidden">
-    <Background />
+    {/* <Background /> */}
+    <video 
+    className="absolute top-0 left-0 w-full h-full object-cover"
+    autoPlay
+    loop
+    muted
+    playsInline
+  >
+    <source src="/vectors/ELEMENTS/ciel.mp4" type="video/mp4" />
+    {/* Alternative pour d'autres formats */}
+    {/* <source src="/videos/fond_avion.webm" type="video/webm" /> */}
+    Votre navigateur ne supporte pas la vidéo.
+  </video>
       {/* Conteneur principal qui garde les proportions */}
       <div
         ref={avionContainerRef}

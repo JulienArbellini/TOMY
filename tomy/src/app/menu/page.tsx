@@ -27,8 +27,28 @@ const Menu = () => {
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const router = useRouter(); // Initialisation du routeur
   const [showTicketPlayer, setShowTicketPlayer] = useState(false);
+  const [scale, setScale] = useState(1);
 
   // Map pour associer chaque icône à son groupe (si nécessaire)
+  const scaledValue = (value: number) => value * scale;
+
+
+  useEffect(() => {
+      const handleResize = () => {
+          const windowHeight = window.innerHeight;
+          const originalHeight = 555;
+          const desiredHeight = windowHeight * 0.8;
+          const newScale = desiredHeight / originalHeight;
+          setScale(newScale);
+        };
+    
+        handleResize();
+        window.addEventListener('resize', handleResize);
+    
+        return () => window.removeEventListener('resize', handleResize);
+  
+  }, []);
+
   const iconGroups = [
     ["Game", "GAMEr-Manette"],
     ["Music", "Music-boy"],
@@ -177,18 +197,24 @@ const Menu = () => {
     />
 
     <div className="relative top-0 left-0 w-full h-full">
-      <div className="absolute right-0 bottom-0 h-[1200px] w-[1300px] bg-[url('/vectors/ELEMENTS/siege.png')] bg-cover ">
+      <div 
+      className="absolute right-0 bottom-0 bg-[url('/vectors/ELEMENTS/siege.png')] bg-cover"
+      style={{
+        height: `${scaledValue(650)}px`,
+        width: `${scaledValue(690)}px`,
+      }}
+      >
         <div 
           className="absolute"
           style={{
-            left: "270px",   // Centre horizontalement
-            top: "220px",    // Ajustement fin pour coller à l'écran
-            width: "750px", // Taille ajustée pour correspondre à l'écran du siège
-            height: "470px", // Hauteur ajustée
+            left: `${scaledValue(135)}px`,   // Centre horizontalement
+            top: `${scaledValue(105)}px`,   // Ajustement fin pour coller à l'écran
+            width: `${scaledValue(440)}px`, // Taille ajustée pour correspondre à l'écran du siège
+            height: `${scaledValue(340)}px`, // Hauteur ajustée
             // transform: "translate(-50%, -50%)", // Centre exactement
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)", // Grille de 3 colonnes
-            gap: "20px", // Espacement entre les icônes
+            gap:`${scaledValue(10)}px`, // Espacement entre les icônes
             padding: "10px",
             placeItems: "center",
             // backgroundColor: "blue", // Supprime le fond coloré
@@ -208,8 +234,8 @@ const Menu = () => {
                   hoveredIcons.includes(item.type) ? "hover" : "default"
                 }
                 style={{
-                  width: `210px`,
-                  height: `160px`,
+                  height: `${scaledValue(90)}px`,
+                  width: `${scaledValue(100)}px`,
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
