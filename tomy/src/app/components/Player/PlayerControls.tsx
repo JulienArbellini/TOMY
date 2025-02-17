@@ -8,6 +8,7 @@ interface PlayerControlsProps {
   handleVolumeUpClick: () => void;
   handleRewindClick: () => void;
   handleForwardClick: () => void;
+  frameSrc?: string;
   isPlaying: boolean;
   isMuted: boolean;
   scale: number;
@@ -23,6 +24,7 @@ const PlayerControls: React.FC<PlayerControlsProps> = ({
   handleForwardClick,
   onClose,
   isPlaying,
+  frameSrc,
   isMuted,
   scale,
 }) => {

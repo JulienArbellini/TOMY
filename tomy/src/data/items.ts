@@ -89,7 +89,7 @@ export const items = [
     name: "MAP",
     type: "MAP",
     playerConfig: {
-      type: "video",
+      type: "video-automatique",
       src: "https://www.youtube.com/embed/8Weh3T-fVoU?enablejsapi=1&autoplay=1&mute=1",
       frameType: "edgy",
       autoplay: false,

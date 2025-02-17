@@ -122,7 +122,7 @@ export const items = [
       width: 150,
       playerConfig: {
         type: "video-automatique",
-        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+        src: "https://www.youtube.com/embed/2kUbVBY25iU?enablejsapi=1&autoplay=1&mute=1",
         frameType: "edgy",
         autoplay: true,
         loop: true,
@@ -224,7 +224,7 @@ export const items = [
       width: 105,
       playerConfig: {
         type: "video-automatique",
-        src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+        src: "https://www.youtube.com/embed/NdNvqv-O6no?enablejsapi=1&autoplay=1&mute=1",
         frameType: "ultrasimple",
         autoplay: false,
         loop: false,
