@@ -5,6 +5,7 @@ import DynamicButton from "../components/DynamicButton/DynamicButton";
 import { items } from "../../data/items-avion";
 import dynamic from "next/dynamic";
 import Background from "../components/Background";
+import InteractiveButton from "../components/GenericPlayer/InteractiveButton";
 
 const UniversalPlayer = dynamic(
   () => import("../components/GenericPlayer/UniversalPlayer"),
@@ -144,19 +145,38 @@ const Menu = () => {
         </div>
       )}
     </div>
-    <div className="fixed top-5 right-5 flex gap-2 z-50">
-    <button
-      onClick={() => setZoomLevel((prev) => Math.min(prev + 0.1, 2))}
-      className="p-2 bg-white shadow-lg rounded-md text-black font-bold"
-    >
-      ➕ Zoom In
-    </button>
-    <button
-      onClick={() => setZoomLevel((prev) => Math.max(prev - 0.1, 0.5))}
-      className="p-2 bg-white shadow-lg rounded-md text-black font-bold"
-    >
-      ➖ Zoom Out
-    </button>
+    <div className="fixed top-[10px] right-[155px] flex gap-2 z-50">
+      <DynamicButton
+        defaultIcon={`/OPTIMIZED_ICONES/ZoomPlus.avif`}
+        hoverIcon={`/OPTIMIZED_ICONES/ZoomPlus-hover.avif`}
+        clickedIcon={`/OPTIMIZED_ICONES/ZoomPlus-clic.avif`}
+        releasedIcon={`/OPTIMIZED_ICONES/ZoomPlus.avif`}
+        onClick={() => setZoomLevel((prev) => Math.min(prev + 0.1, 2))}
+        style={{
+          position: "absolute",
+          top: `5px`,
+          left: `75px`,
+          width: `50px`,
+          height: `50px`
+        } as React.CSSProperties}
+        >
+      </DynamicButton>
+      <DynamicButton
+        defaultIcon={`/OPTIMIZED_ICONES/ZoomMoins.avif`}
+        hoverIcon={`/OPTIMIZED_ICONES/ZoomMoins-hover.avif`}
+        clickedIcon={`/OPTIMIZED_ICONES/ZoomMoins-clic.avif`}
+        releasedIcon={`/OPTIMIZED_ICONES/ZoomMoins.avif`}
+        onClick={() => setZoomLevel((prev) => Math.min(prev - 0.1, 2))}
+        style={{
+          position: "absolute",
+          top: `5px`,
+          left: `5px`,
+          width: `50px`,
+          height: `50px`
+        } as React.CSSProperties}
+        >
+      </DynamicButton>
+
   </div>
   </div>
   );
