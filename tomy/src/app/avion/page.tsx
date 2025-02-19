@@ -19,7 +19,10 @@ const Menu = () => {
   const [containerSize, setContainerSize] = useState({ width: 1, height: 1 });
   const [zoomLevel, setZoomLevel] = useState(1);
   const [isPhoneShaking, setIsPhoneShaking] = useState(false);
-
+  const [gourouMessage, setGourouMessage] = useState<{ message: string; x: number; y: number } | null>(null);
+  const gourouTimeout = useRef<NodeJS.Timeout | null>(null);
+  // Déclaration d'une variable pour suivre le dernier moment où un son a été joué
+  const lastSoundTime = useRef<number>(0);
 
   useEffect(() => {
     const updateSize = () => {
@@ -39,22 +42,36 @@ const Menu = () => {
   const floatingIcons = ["AirLounge", "Serre", "Terrasse"];
   
   const handleMouseEnter = (type: string) => {
+    const audio = new Audio("/sounds/Icone-hover.mp3");
+    audio.volume = 0.05;
+    audio.play().catch((err) => console.error("Erreur de lecture audio :", err));
     setHoveredIcons((prev) => [...prev, type]);
+    if(type === "OIseaux"){
+      const Oizaudio = new Audio("/sounds/Oiseaux.mp3");
+      Oizaudio.volume = 0.15;
+      Oizaudio.play().catch((err) => console.error("Erreur de lecture audio :", err));
+    }
   };
 
   const handleMouseLeave = (type: string) => {
     setHoveredIcons((prev) => prev.filter((icon) => icon !== type));
   };
 
-  const handleItemClick = (type: string) => {
+  const handleItemClick = (type: string , event?: React.MouseEvent) => {
+
     
     const item = items.find((item) => item.type === type);
-    if (item && item.type === "Telephone" && item.playerConfig?.action === "playSound") {
+    if (!item) return;
+
+
+    if (item.type === "Telephone" || item.type === "Cuisine" || item.type === "PiscineSimple"  && item.playerConfig?.action === "playSound") {
       const audio = new Audio(item.playerConfig.soundSrc);
       
       // Active l'animation
-      setIsPhoneShaking(true);
-  
+      if(item.type === "Telephone"){
+        setIsPhoneShaking(true);
+      }
+      audio.volume = 0.1;
       // Joue le son
       audio.play().catch((err) => console.error("Erreur de lecture audio :", err));
   
@@ -65,8 +82,65 @@ const Menu = () => {
   
       return;
     }
+    if(item.type != "Telephone" && item.type != "Cuisine" && item.type != "PiscineSimple" && item.type !="Gourou" ){
+      const audio2 = new Audio("/sounds/Icone-clic.mp3");
+      
+      audio2.play().catch((err) => console.error("Erreur de lecture audio :", err));
+    }
+
+
+if (item.type === "Gourou" && item.advice) {
+  const randomIndex = Math.floor(Math.random() * item.advice.length);
+  const randomAdvice = item.advice[randomIndex];
+
+  // Vérification du délai minimum de 5 secondes
+  const now = Date.now();
+  if (now - lastSoundTime.current >= 5000) {
+    // Tirage aléatoire pour déterminer si le son doit être joué (50% de chance)
+    if (Math.random() < 0.5) {
+      // Sélection aléatoire entre les deux sons
+      const soundSrc = Math.random() < 0.5 ? "/sounds/GourouSound1.wav" : "/sounds/GourouSound2.wav";
+      const audio = new Audio(soundSrc);
+      
+      audio.play().catch((err) => console.error("Erreur de lecture audio :", err));
+      
+      // Mise à jour du dernier moment où un son a été joué
+      lastSoundTime.current = now;
+    }
+  }
+
+  if (event) {
+    setGourouMessage({
+      message: randomAdvice,
+      x: item.x + 110, // Décalage pour ne pas chevaucher l'icône
+      y: item.y + 200,  // Position légèrement au-dessus
+    });
+
+    // Supprime le précédent timer et redémarre un nouveau
+    if (gourouTimeout.current) {
+      clearTimeout(gourouTimeout.current);
+    }
+
+    gourouTimeout.current = setTimeout(() => {
+      setGourouMessage(null);
+    }, 5000); // Disparaît après 5 secondes
+  }
+
+  return;
+}
+  
     setSelectedItem(item?.playerConfig || null);
   };
+
+  useEffect(() => {
+    if (gourouMessage) {
+      const timer = setTimeout(() => {
+        setGourouMessage(null);
+      }, 5000); // Disparaît après 5 secondes
+  
+      return () => clearTimeout(timer); // Nettoyage du timeout si le composant se démonte ou si un nouveau message apparaît
+    }
+  }, [gourouMessage]);
 
 
 
@@ -103,7 +177,7 @@ const Menu = () => {
         <img
           src="/vectors/ELEMENTS/AVION_MODELE.png"
           alt="Avion"
-          className="w-full h-auto opacity-1"
+          className="w-full h-auto city-[1]"
         />
 
 {/* Icônes positionnées en fonction du conteneur parent */}
@@ -119,7 +193,7 @@ const Menu = () => {
               hoverIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
               clickedIcon={`/OPTIMIZED_ICONES/${item.type}-clic.avif`}
               releasedIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
-              onClick={() => handleItemClick(item.type)}
+              onClick={(e) => handleItemClick(item.type, e)} // Ajout de `event`
               onMouseEnter={() => handleMouseEnter(item.type)}
               onMouseLeave={() => handleMouseLeave(item.type)}
               buttonState={isHovered ? "hover" : "default"}
@@ -146,11 +220,10 @@ const Menu = () => {
       )}
     </div>
     <div className="fixed top-[10px] right-[155px] flex gap-2 z-50">
-      <DynamicButton
+      <InteractiveButton
         defaultIcon={`/OPTIMIZED_ICONES/ZoomPlus.avif`}
         hoverIcon={`/OPTIMIZED_ICONES/ZoomPlus-hover.avif`}
         clickedIcon={`/OPTIMIZED_ICONES/ZoomPlus-clic.avif`}
-        releasedIcon={`/OPTIMIZED_ICONES/ZoomPlus.avif`}
         onClick={() => setZoomLevel((prev) => Math.min(prev + 0.1, 2))}
         style={{
           position: "absolute",
@@ -160,23 +233,35 @@ const Menu = () => {
           height: `50px`
         } as React.CSSProperties}
         >
-      </DynamicButton>
-      <DynamicButton
+      </InteractiveButton>
+      <InteractiveButton
         defaultIcon={`/OPTIMIZED_ICONES/ZoomMoins.avif`}
         hoverIcon={`/OPTIMIZED_ICONES/ZoomMoins-hover.avif`}
         clickedIcon={`/OPTIMIZED_ICONES/ZoomMoins-clic.avif`}
-        releasedIcon={`/OPTIMIZED_ICONES/ZoomMoins.avif`}
         onClick={() => setZoomLevel((prev) => Math.min(prev - 0.1, 2))}
         style={{
           position: "absolute",
           top: `5px`,
           left: `5px`,
           width: `50px`,
-          height: `50px`
+          height: `50px`,
         } as React.CSSProperties}
         >
-      </DynamicButton>
-
+      </InteractiveButton>
+      {gourouMessage && (
+  <div
+    className="fixed bg-white text-black border border-black rounded-lg p-3 shadow-lg z-50"
+    style={{
+      left: `${gourouMessage.x}px`,
+      top: `${gourouMessage.y}px`,
+      maxWidth: "250px",
+      display: "inline-block",
+      fontFamily: "'Comic Sans MS', 'Chalkboard SE', sans-serif",
+    }}
+  >
+    <p className="text-center"dangerouslySetInnerHTML={{ __html: gourouMessage.message }}></p>
+  </div>
+)}
   </div>
   </div>
   );

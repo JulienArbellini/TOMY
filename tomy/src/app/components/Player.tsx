@@ -315,7 +315,7 @@ const Player: React.FC<PlayerProps> = ({
           ref={playerRef}
           width="100%"
           height="400%"
-          src={`${src}?enablejsapi=1`}
+          src={`https://www.youtube.com/embed/${src}?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=${src}`}
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

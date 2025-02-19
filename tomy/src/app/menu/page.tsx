@@ -200,8 +200,8 @@ const Menu = () => {
       <div 
       className="absolute right-0 bottom-0 bg-[url('/vectors/ELEMENTS/Siege.png')] bg-cover"
       style={{
-        height: `${scaledValue(650)}px`,
-        width: `${scaledValue(690)}px`,
+        height: `${scaledValue(700)}px`,
+        width: `${scaledValue(790)}px`,
       }}
       >
         <div 

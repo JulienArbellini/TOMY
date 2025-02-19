@@ -58,7 +58,7 @@ const MixedDiaporama: React.FC<MixedDiaporamaProps> = ({
           console.log("🎬 Initialisation du lecteur YouTube...");
           
           const newPlayer = new window.YT.Player(playerRef.current, {
-            videoId: extractYouTubeVideoId(currentItem.src),
+            videoId: currentItem.src,
             events: {
               onReady: (event: any) => {
                 setPlayer(event.target);
@@ -71,6 +71,7 @@ const MixedDiaporama: React.FC<MixedDiaporamaProps> = ({
               controls: 0,
               modestbranding: 1,
               rel: 0,
+              loop: 1,
               showinfo: 0,
             },
           });
@@ -126,54 +127,106 @@ const MixedDiaporama: React.FC<MixedDiaporamaProps> = ({
   const containerHeight = 437;
   const containerWidth = 590;
 
-  return (
-    <div
-      className="relative flex justify-center items-center"
-      style={{
-        height: `${scaledValue(550)}px`,
-        width: `${scaledValue(640)}px`,
-      }}
-    >
-      {/* Cadre principal */}
-      <img
-        src={frameSrc}
-        alt="Cadre décoratif autour du contenu"
+  if(frameSrc == '/vectors/ELEMENTS/Cadres/CadreEdgy.avif'){
+    return (
+      <div
+        className="relative flex justify-center items-center"
         style={{
-          height: `${scaledValue(538)}px`,
-          width: `${scaledValue(638)}px`,
+          height: `${scaledValue(590)}px`,
+          width: `${scaledValue(690)}px`,
         }}
-      />
-
-      {/* Boutons de fermeture et navigation */}
-      <InteractiveButton defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif" hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif" clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif" onClick={onClose} style={{ position: "absolute", top: `${scaledValue(24)}px`, left: `${scaledValue(24)}px`, height: `${scaledValue(16)}px`, width: `${scaledValue(16)}px`, zIndex: 50 }} />
-      <InteractiveButton defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Backwards.avif" hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.avif" clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.avif" onClick={handlePrev} style={{ position: "absolute", left: `${scaledValue(26)}px`, bottom: `${scaledValue(30)}px`, width: `${scaledValue(27)}px`, height: `${scaledValue(27)}px`, zIndex: 100 }} />
-      <InteractiveButton defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Forward.avif" hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.avif" clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.avif" onClick={handleNext} style={{ position: "absolute", right: `${scaledValue(21)}px`, bottom: `${scaledValue(30)}px`, width: `${scaledValue(27)}px`, height: `${scaledValue(27)}px`, zIndex: 100 }} />
-
-      {/* Conteneur des médias */}
-      <div className="absolute overflow-hidden" style={{ top: `${scaledValue(47)}px`, left: `${scaledValue(29)}px`, height: `${scaledValue(containerHeight)}px`, width: `${scaledValue(containerWidth)}px` }}>
-        {/* Vitre transparente */}
-        <img src="/vectors/ELEMENTS/Cadres/vitre.avif" alt="Vitre transparente" className="absolute z-10 opacity-[.01]" style={{ height: `${scaledValue(containerHeight)}px`, width: `${scaledValue(containerWidth)}px` }} />
-        {currentItem.type === "image" ? (
-          <img src={currentItem.src} alt={`Image ${currentIndex + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-        ) : (
-          <div className="relative" style={{ width: "100%", height: "100%" }}>
-            <div className="absolute" style={{ top: 0, left: 0, height: "100%", width: "100%", backgroundColor: "black", opacity: !isPlaying || isVideoEnded ? 1 : 0, zIndex: 20, transition: "opacity 0.3s ease-in-out" }} />
-            <div className="absolute" 
-            style=
-            {{
-              top: `${scaledValue(-653)}px`,
-              left: 0,
-              height: `${scaledValue(containerHeight)}px`,
-              width: `${scaledValue(containerWidth)}px`,
-            }}
-            >
-              <div ref={playerRef} style={{ width: "100%", height: "400%" }}></div>
+      >
+        {/* Cadre principal */}
+        <img
+          src={frameSrc}
+          alt="Cadre décoratif autour du contenu"
+          style={{
+            height: `${scaledValue(570)}px`,
+            width: `${scaledValue(675)}px`,
+          }}
+        />
+  
+        {/* Boutons de fermeture et navigation */}
+        <InteractiveButton defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif" hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif" clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif" onClick={onClose} style={{ position: "absolute", top: `${scaledValue(44)}px`, left: `${scaledValue(50)}px`, height: `${scaledValue(16)}px`, width: `${scaledValue(16)}px`, zIndex: 50 }} />
+        <InteractiveButton defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Backwards.avif" hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.avif" clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.avif" onClick={handlePrev} style={{ position: "absolute", left: `${scaledValue(50)}px`, bottom: `${scaledValue(50)}px`, width: `${scaledValue(27)}px`, height: `${scaledValue(27)}px`, zIndex: 100 }} />
+        <InteractiveButton defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Forward.avif" hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.avif" clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.avif" onClick={handleNext} style={{ position: "absolute", right: `${scaledValue(35)}px`, bottom: `${scaledValue(50)}px`, width: `${scaledValue(27)}px`, height: `${scaledValue(27)}px`, zIndex: 100 }} />
+  
+        {/* Conteneur des médias */}
+        <div className="absolute overflow-hidden" style={{ top: `${scaledValue(70)}px`, left: `${scaledValue(50)}px`, height: `${scaledValue(containerHeight)}px`, width: `${scaledValue(containerWidth)}px` }}>
+          {/* Vitre transparente */}
+          <img src="/vectors/ELEMENTS/Cadres/vitre.avif" alt="Vitre transparente" className="absolute z-10 opacity-[.01]" style={{ height: `${scaledValue(containerHeight)}px`, width: `${scaledValue(containerWidth)}px` }} />
+          {currentItem.type === "image" ? (
+            <img src={currentItem.src} alt={`Image ${currentIndex + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          ) : (
+            <div className="relative" style={{ width: "100%", height: "100%" }}>
+              <div className="absolute" style={{ top: 0, left: 0, height: "100%", width: "100%", backgroundColor: "black", opacity: !isPlaying || isVideoEnded ? 1 : 0, zIndex: 20, transition: "opacity 0.3s ease-in-out" }} />
+              <div className="absolute" 
+              style=
+              {{
+                top: `${scaledValue(-653)}px`,
+                left: 0,
+                height: `${scaledValue(containerHeight)}px`,
+                width: `${scaledValue(containerWidth)}px`,
+              }}
+              >
+                <div ref={playerRef} style={{ width: "100%", height: "400%" }}></div>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+  else{
+    return (
+      <div
+        className="relative flex justify-center items-center"
+        style={{
+          height: `${scaledValue(550)}px`,
+          width: `${scaledValue(640)}px`,
+        }}
+      >
+        {/* Cadre principal */}
+        <img
+          src={frameSrc}
+          alt="Cadre décoratif autour du contenu"
+          style={{
+            height: `${scaledValue(538)}px`,
+            width: `${scaledValue(638)}px`,
+          }}
+        />
+  
+        {/* Boutons de fermeture et navigation */}
+        <InteractiveButton defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif" hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif" clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif" onClick={onClose} style={{ position: "absolute", top: `${scaledValue(24)}px`, left: `${scaledValue(24)}px`, height: `${scaledValue(16)}px`, width: `${scaledValue(16)}px`, zIndex: 50 }} />
+        <InteractiveButton defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Backwards.avif" hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.avif" clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.avif" onClick={handlePrev} style={{ position: "absolute", left: `${scaledValue(26)}px`, bottom: `${scaledValue(30)}px`, width: `${scaledValue(27)}px`, height: `${scaledValue(27)}px`, zIndex: 100 }} />
+        <InteractiveButton defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Forward.avif" hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.avif" clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.avif" onClick={handleNext} style={{ position: "absolute", right: `${scaledValue(21)}px`, bottom: `${scaledValue(30)}px`, width: `${scaledValue(27)}px`, height: `${scaledValue(27)}px`, zIndex: 100 }} />
+  
+        {/* Conteneur des médias */}
+        <div className="absolute overflow-hidden" style={{ top: `${scaledValue(47)}px`, left: `${scaledValue(29)}px`, height: `${scaledValue(containerHeight)}px`, width: `${scaledValue(containerWidth)}px` }}>
+          {/* Vitre transparente */}
+          <img src="/vectors/ELEMENTS/Cadres/vitre.avif" alt="Vitre transparente" className="absolute z-10 opacity-[.01]" style={{ height: `${scaledValue(containerHeight)}px`, width: `${scaledValue(containerWidth)}px` }} />
+          {currentItem.type === "image" ? (
+            <img src={currentItem.src} alt={`Image ${currentIndex + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          ) : (
+            <div className="relative" style={{ width: "100%", height: "100%" }}>
+              <div className="absolute" style={{ top: 0, left: 0, height: "100%", width: "100%", backgroundColor: "black", opacity: !isPlaying || isVideoEnded ? 1 : 0, zIndex: 20, transition: "opacity 0.3s ease-in-out" }} />
+              <div className="absolute" 
+              style=
+              {{
+                top: `${scaledValue(-653)}px`,
+                left: 0,
+                height: `${scaledValue(containerHeight)}px`,
+                width: `${scaledValue(containerWidth)}px`,
+              }}
+              >
+                <div ref={playerRef} style={{ width: "100%", height: "400%" }}></div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
 };
 
 export default MixedDiaporama;
