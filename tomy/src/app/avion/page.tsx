@@ -12,6 +12,13 @@ const UniversalPlayer = dynamic(
   { ssr: false }
 );
 
+interface GourouMessage {
+  message: string;
+  x: number;
+  y: number;
+  followCursor?: boolean; // <-- Ajout de la propriété
+}
+
 const Menu = () => {
   const [selectedItem, setSelectedItem] = useState<any | null>(null);
   const [hoveredIcons, setHoveredIcons] = useState<string[]>([]);
@@ -19,10 +26,17 @@ const Menu = () => {
   const [containerSize, setContainerSize] = useState({ width: 1, height: 1 });
   const [zoomLevel, setZoomLevel] = useState(1);
   const [isPhoneShaking, setIsPhoneShaking] = useState(false);
-  const [gourouMessage, setGourouMessage] = useState<{ message: string; x: number; y: number } | null>(null);
+  const [gourouMessage, setGourouMessage] = useState<GourouMessage | null>(null);
   const gourouTimeout = useRef<NodeJS.Timeout | null>(null);
   // Déclaration d'une variable pour suivre le dernier moment où un son a été joué
   const lastSoundTime = useRef<number>(0);
+  const [tooltip, setTooltip] = useState<{ visible: boolean; x: number; y: number }>({
+    visible: false,
+    x: 0,
+    y: 0,
+  });
+  const mouseMoveRef = useRef<(e: MouseEvent) => void>();
+
 
   useEffect(() => {
     const updateSize = () => {
@@ -40,21 +54,61 @@ const Menu = () => {
   }, []);
   
   const floatingIcons = ["AirLounge", "Serre", "Terrasse"];
+
+
+  // *** CHANGEMENT : Fonction pour activer le suivi global de la souris
+  const startGlobalMouseMove = () => {
+    // On définit la fonction que l'on va passer à addEventListener
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      setTooltip((prev) => ({
+        ...prev,
+        x: e.clientX,
+        y: e.clientY,
+      }));
+    };
+    // On la stocke pour pouvoir la retirer plus tard
+    mouseMoveRef.current = handleGlobalMouseMove;
+
+    // On écoute le mouvement de la souris sur toute la fenêtre
+    window.addEventListener("mousemove", handleGlobalMouseMove);
+  };
+
+  // *** CHANGEMENT : Fonction pour stopper le suivi global de la souris
+  const stopGlobalMouseMove = () => {
+    if (mouseMoveRef.current) {
+      window.removeEventListener("mousemove", mouseMoveRef.current);
+      mouseMoveRef.current = undefined;
+    }
+  };
   
-  const handleMouseEnter = (type: string) => {
+  const handleMouseEnter = (type: string, event: React.MouseEvent) => {
+    setHoveredIcons((prev) => [...prev, type]);
     const audio = new Audio("/sounds/Icone-hover.mp3");
     audio.volume = 0.05;
     audio.play().catch((err) => console.error("Erreur de lecture audio :", err));
-    setHoveredIcons((prev) => [...prev, type]);
     if(type === "OIseaux"){
       const Oizaudio = new Audio("/sounds/Oiseaux.mp3");
       Oizaudio.volume = 0.15;
       Oizaudio.play().catch((err) => console.error("Erreur de lecture audio :", err));
     }
+    if (type === "Brace") {
+      setTooltip({
+        visible: true,
+        x: event.clientX,
+        y: event.clientY,
+      });
+      startGlobalMouseMove();
+    }
   };
 
+  
   const handleMouseLeave = (type: string) => {
     setHoveredIcons((prev) => prev.filter((icon) => icon !== type));
+
+    if (type === "Brace") {
+      setTooltip({ visible: false, x: 0, y: 0 });
+      stopGlobalMouseMove();
+    }
   };
 
   const handleItemClick = (type: string , event?: React.MouseEvent) => {
@@ -82,53 +136,52 @@ const Menu = () => {
   
       return;
     }
-    if(item.type != "Telephone" && item.type != "Cuisine" && item.type != "PiscineSimple" && item.type !="Gourou" ){
+    if(item.type != "Telephone" && item.type != "Cuisine" && item.type != "PiscineSimple" && item.type !="Gourou" && item.type !="Gourou" ){
       const audio2 = new Audio("/sounds/Icone-clic.mp3");
       
       audio2.play().catch((err) => console.error("Erreur de lecture audio :", err));
     }
 
 
-if (item.type === "Gourou" && item.advice) {
-  const randomIndex = Math.floor(Math.random() * item.advice.length);
-  const randomAdvice = item.advice[randomIndex];
+    if (item.type === "Gourou" && item.advice) {
+      const randomIndex = Math.floor(Math.random() * item.advice.length);
+      const randomAdvice = item.advice[randomIndex];
 
-  // Vérification du délai minimum de 5 secondes
-  const now = Date.now();
-  if (now - lastSoundTime.current >= 5000) {
-    // Tirage aléatoire pour déterminer si le son doit être joué (50% de chance)
-    if (Math.random() < 0.5) {
-      // Sélection aléatoire entre les deux sons
-      const soundSrc = Math.random() < 0.5 ? "/sounds/GourouSound1.wav" : "/sounds/GourouSound2.wav";
-      const audio = new Audio(soundSrc);
-      
-      audio.play().catch((err) => console.error("Erreur de lecture audio :", err));
-      
-      // Mise à jour du dernier moment où un son a été joué
-      lastSoundTime.current = now;
-    }
-  }
+      // Vérification du délai minimum de 5 secondes
+      const now = Date.now();
+      if (now - lastSoundTime.current >= 5000) {
+        // Tirage aléatoire pour déterminer si le son doit être joué (50% de chance)
+        if (Math.random() < 0.5) {
+          // Sélection aléatoire entre les deux sons
+          const soundSrc = Math.random() < 0.5 ? "/sounds/GourouSound1.wav" : "/sounds/GourouSound2.wav";
+          const audio = new Audio(soundSrc);
+          
+          audio.play().catch((err) => console.error("Erreur de lecture audio :", err));
+          
+          // Mise à jour du dernier moment où un son a été joué
+          lastSoundTime.current = now;
+        }
+      }
 
-  if (event) {
-    setGourouMessage({
-      message: randomAdvice,
-      x: item.x + 110, // Décalage pour ne pas chevaucher l'icône
-      y: item.y + 200,  // Position légèrement au-dessus
-    });
+      if (event) {
+        setGourouMessage({
+          message: randomAdvice,
+          x: item.x  , // Décalage pour ne pas chevaucher l'icône
+          y: item.y + 150 ,  // Position légèrement au-dessus
+        });
 
-    // Supprime le précédent timer et redémarre un nouveau
-    if (gourouTimeout.current) {
-      clearTimeout(gourouTimeout.current);
-    }
+        // Supprime le précédent timer et redémarre un nouveau
+        if (gourouTimeout.current) {
+          clearTimeout(gourouTimeout.current);
+        }
 
-    gourouTimeout.current = setTimeout(() => {
-      setGourouMessage(null);
-    }, 5000); // Disparaît après 5 secondes
-  }
+        gourouTimeout.current = setTimeout(() => {
+          setGourouMessage(null);
+        }, 5000); // Disparaît après 5 secondes
+      }
 
-  return;
-}
-  
+      return;
+    } 
     setSelectedItem(item?.playerConfig || null);
   };
 
@@ -136,7 +189,7 @@ if (item.type === "Gourou" && item.advice) {
     if (gourouMessage) {
       const timer = setTimeout(() => {
         setGourouMessage(null);
-      }, 5000); // Disparaît après 5 secondes
+      }, 10000); // Disparaît après 5 secondes
   
       return () => clearTimeout(timer); // Nettoyage du timeout si le composant se démonte ou si un nouveau message apparaît
     }
@@ -177,8 +230,28 @@ if (item.type === "Gourou" && item.advice) {
         <img
           src="/vectors/ELEMENTS/AVION_MODELE.png"
           alt="Avion"
-          className="w-full h-auto city-[1]"
+          className="w-full h-auto opacity-[1]"
         />
+                  {gourouMessage && (
+            <div
+              className="absolute bg-white text-black border border-black rounded-lg p-3 shadow-lg z-50"
+              style={{
+                left: gourouMessage.followCursor
+                ? `${(gourouMessage.x / containerSize.width) * 100}%`
+                : `${(gourouMessage.x / 1440) * 100}%`,
+              top: gourouMessage.followCursor
+                ? `${(gourouMessage.y / containerSize.height) * 100}%`
+                : `${(gourouMessage.y / 900) * 100}%`,
+                maxWidth: "250px",
+                transform: 'translate(-50%, -50%)', // Pour centrer le message sur l'icône
+
+                display: "inline-block",
+                fontFamily: "'Comic Sans MS', 'Chalkboard SE', sans-serif",
+              }}
+            >
+              <p className="text-center"dangerouslySetInnerHTML={{ __html: gourouMessage.message }}></p>
+            </div>
+          )}
 
 {/* Icônes positionnées en fonction du conteneur parent */}
 
@@ -194,7 +267,7 @@ if (item.type === "Gourou" && item.advice) {
               clickedIcon={`/OPTIMIZED_ICONES/${item.type}-clic.avif`}
               releasedIcon={`/OPTIMIZED_ICONES/${item.type}.avif`}
               onClick={(e) => handleItemClick(item.type, e)} // Ajout de `event`
-              onMouseEnter={() => handleMouseEnter(item.type)}
+              onMouseEnter={(e) => handleMouseEnter(item.type, e)}
               onMouseLeave={() => handleMouseLeave(item.type)}
               buttonState={isHovered ? "hover" : "default"}
               style={{
@@ -218,6 +291,7 @@ if (item.type === "Gourou" && item.advice) {
           <UniversalPlayer {...selectedItem} onClose={() => setSelectedItem(null)} />
         </div>
       )}
+
     </div>
     <div className="fixed top-[10px] right-[155px] flex gap-2 z-50">
       <InteractiveButton
@@ -248,21 +322,23 @@ if (item.type === "Gourou" && item.advice) {
         } as React.CSSProperties}
         >
       </InteractiveButton>
-      {gourouMessage && (
-  <div
-    className="fixed bg-white text-black border border-black rounded-lg p-3 shadow-lg z-50"
-    style={{
-      left: `${gourouMessage.x}px`,
-      top: `${gourouMessage.y}px`,
-      maxWidth: "250px",
-      display: "inline-block",
-      fontFamily: "'Comic Sans MS', 'Chalkboard SE', sans-serif",
-    }}
-  >
-    <p className="text-center"dangerouslySetInnerHTML={{ __html: gourouMessage.message }}></p>
+
   </div>
-)}
-  </div>
+  {tooltip.visible && (
+              <div
+                className="absolute bg-white text-black border text-center border-black rounded-lg p-2 shadow-lg z-50"
+                style={{
+                  position: "fixed",
+                  left: tooltip.x, // Décalage léger à droite
+                  top: tooltip.y+25,  // Décalage léger en bas
+                  pointerEvents: "none", // Empêche le tooltip d'intercepter les événements
+                  fontFamily: "monospace', sans-serif",
+                  fontSize: "14px",
+                }}
+              >
+                En cas de crash <br /> attrapez  le nuage <br />situé sous votre <br /> siège et serrez le <br /> de toutes vos forces
+              </div>
+            )}
   </div>
   );
   

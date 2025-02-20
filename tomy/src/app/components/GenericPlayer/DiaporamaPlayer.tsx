@@ -200,8 +200,9 @@ const DiaporamaPlayer: React.FC<DiaporamaPlayerProps> = ({
         />
   
         {/* Conteneur des images */}
+        <img src="" alt="" />
         <div
-          className="absolute overflow-hidden"
+          className="absolute overflow-hidden bg-black"
           style={{
             top: `${scaledValue(47)}px`,
             left: `${scaledValue(29)}px`,

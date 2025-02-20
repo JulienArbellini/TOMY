@@ -9,7 +9,8 @@ interface DynamicButtonProps {
   releasedIcon?: string;
   onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
   buttonState?: 'default' | 'hover' | 'clicked' | 'released';
-  onMouseEnter?: () => void;
+  onMouseEnter?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onMouseMove?: (e: React.MouseEvent<HTMLDivElement>) => void;
   onMouseLeave?: () => void;
   className?: React.HTMLAttributes<HTMLDivElement>['className'];
   style?: React.CSSProperties; // Ajout de style ici
