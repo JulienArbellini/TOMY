@@ -5,7 +5,7 @@ export const items = [
     name: "PiscineSimple",
     type: "PiscineSimple",
     x: 423,
-    y: 507,
+    y: 507-28,
     width: 296,
     playerConfig: {
       type: "mixed",
@@ -28,7 +28,7 @@ export const items = [
       name: "Terrasse",
       type: "Terrasse",
       x: 1058,
-      y: 276,
+      y: 276+27,
       width:178,
       playerConfig: {
         type: "diaporama",
@@ -47,7 +47,7 @@ export const items = [
       name: "Serre",
       type: "Serre",
       x: 744,
-      y: 274,
+      y: 274+27,
       width:185,
       playerConfig: {
         type: "video-automatique",
@@ -62,7 +62,7 @@ export const items = [
       name: "Machines",
       type: "Machines",
       x: 1076,
-      y: 568,
+      y: 568-40,
       width:115,
       playerConfig: {
         type: "mixed",
@@ -83,7 +83,7 @@ export const items = [
       name: "AirLounge",
       type: "AirLounge",
       x: 902,
-      y: 275,
+      y: 275+26,
       width: 175,
       playerConfig: {
         type: "video-automatique",
@@ -99,7 +99,7 @@ export const items = [
       name: "Brace",
       type: "Brace",
       x: 175,
-      y: 436,
+      y: 436-20,
       width: 212,
       playerConfig: {
         type: "interactive",
@@ -126,7 +126,7 @@ export const items = [
       name: "Cigarette",
       type: "Cigarette",
       x: 251,
-      y: 390,
+      y: 390-10,
       width: 62,
       playerConfig: {
         type: "video-automatique",
@@ -141,7 +141,7 @@ export const items = [
       name: "Cockpit",
       type: "Cockpit",
       x: 1335,
-      y: 320,
+      y: 320+20,
       width: 150,
       playerConfig: {
         type: "video-automatique",
@@ -156,9 +156,9 @@ export const items = [
     {
       name: "Crew",
       type: "Crew",
-      x: 1149,
-      y: 580,
-      width: 105,
+      x: 1149+3,
+      y: 580-52,
+      width: 102,
       playerConfig: {
         type: "diaporama",
         images: [
@@ -176,7 +176,7 @@ export const items = [
       name: "Cuisine",
       type: "Cuisine",
       x: 1045,
-      y: 379,
+      y: 379+5,
       width: 145,
       playerConfig: {
         type: "interactive",
@@ -190,7 +190,7 @@ export const items = [
       name: "DJ",
       type: "DJ",
       x: 863,
-      y: 574,
+      y: 574-44,
       width:49,
       playerConfig: {
         type: "video-automatique",
@@ -205,7 +205,7 @@ export const items = [
       name: "Game",
       type: "Game",
       x: 572,
-      y: 247,
+      y: 247+38,
       width:270,
       playerConfig: {
         type: "game",
@@ -219,9 +219,9 @@ export const items = [
     {
       name: "Gourou",
       type: "Gourou",
-      x: 707,
-      y: 645,
-      width:125,
+      x: 707-20,
+      y: 645-70,
+      width:150,
       playerConfig: {
         type: "interactive",
         action: "randomAdvice",
@@ -270,9 +270,9 @@ export const items = [
     {
       name: "Hotesse",
       type: "Hotesse",
-      x: 1258,
-      y: 582,
-      width: 105,
+      x: 1258+2,
+      y: 582 -53,
+      width: 103,
       playerConfig: {
         type: "video-automatique",
         src: "NdNvqv-O6no",
@@ -286,7 +286,7 @@ export const items = [
       name: "Hublot",
       type: "Hublot",
       x: 871,
-      y: 425,
+      y: 425-10,
       width:120,
       playerConfig: {
         type: "video-automatique",
@@ -301,7 +301,7 @@ export const items = [
       name: "Kiss",
       type: "Kiss",
       x: 1092,
-      y: 470,
+      y: 470-25,
       width: 216,
       playerConfig: {
         type: "video-automatique",
@@ -331,7 +331,7 @@ export const items = [
       name: "Magazine",
       type: "Magazine",
       x: 643,
-      y: 436,
+      y: 436-10,
       width:264,
       playerConfig: {
         type: "diaporama",
@@ -350,8 +350,23 @@ export const items = [
       name: "Movie-watching",
       type: "Movie-watching",
       x: 1071,
-      y: 470,
+      y: 470-24,
       width:64,
+      playerConfig: {
+        type: "video",
+        src: "RS2jNCqCjPs",
+        frameType: "cadre1",
+        autoplay: false,
+        loop: false,
+        controls: true,
+      },
+    },
+    {
+      name: "Siegevide",
+      type: "Siegevide",
+      x: 771+15,
+      y: 470-20,
+      width:49,
       playerConfig: {
         type: "video",
         src: "RS2jNCqCjPs",
@@ -365,7 +380,7 @@ export const items = [
       name: "Music-boy",
       type: "Music-boy",
       x: 969,
-      y: 471,
+      y: 471-25,
       width:73,
       playerConfig: {
         type: "audio",
@@ -415,7 +430,7 @@ export const items = [
       name: "Relax",
       type: "Relax",
       x: 443,
-      y: 446,
+      y: 446-15,
       width:140,
       playerConfig: {
         type: "mixed",
@@ -436,7 +451,7 @@ export const items = [
       name: "Shop",
       type: "Shop",
       x: 1258,
-      y: 483,
+      y: 483-28,
       width: 105,
       playerConfig: {
         type: "mixed",
@@ -471,7 +486,7 @@ export const items = [
       name: "Valise",
       type: "Valise",
       x: 976,
-      y: 595,
+      y: 595-52,
       width: 41,
       playerConfig: {
         type: "mixed",

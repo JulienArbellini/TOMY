@@ -200,7 +200,18 @@ const DiaporamaPlayer: React.FC<DiaporamaPlayerProps> = ({
         />
   
         {/* Conteneur des images */}
-        <img src="" alt="" />
+        <img
+            src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
+            alt="Écran noir lorsque la vidéo est en pause ou terminée"
+            className="absolute"
+  
+            style={{
+              top: `${scaledValue(43)}px`,
+              left: `${scaledValue(25)}px`,
+              height: `${scaledValue(447)}px`,
+              width: `${scaledValue(600)}px`,
+            }}
+          />
         <div
           className="absolute overflow-hidden bg-black"
           style={{
