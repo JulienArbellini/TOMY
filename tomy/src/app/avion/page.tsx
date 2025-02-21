@@ -26,7 +26,7 @@ const Menu = () => {
   const [hoveredIcons, setHoveredIcons] = useState<string[]>([]);
   const avionContainerRef = useRef<HTMLDivElement | null>(null);
   const [containerSize, setContainerSize] = useState({ width: 1, height: 1 });
-  const [zoomLevel, setZoomLevel] = useState(0.1);
+  const [zoomLevel, setZoomLevel] = useState(0.01);
   const [isPhoneShaking, setIsPhoneShaking] = useState(false);
   const [gourouMessage, setGourouMessage] = useState<GourouMessage | null>(null);
   const gourouTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -39,14 +39,20 @@ const Menu = () => {
     y: 0,
   });
   const mouseMoveRef = useRef<(e: MouseEvent) => void>();
+  const [initialZoomIn, setInitialZoomIn] = useState(true);
+
 
   // 2) Un second état pour déclencher l’animation
 
   useEffect(() => {
-    // Au montage, on déclenche l'animation après un petit délai (ex: 50ms)
+    // On passe de 0.01 à 1 immédiatement après le montage
+    // sur 1 seconde, par exemple
+    setZoomLevel(1);
+  
+    // Au bout de 1 seconde (durée de transition), on désactive l’animation
     const timer = setTimeout(() => {
-      setZoomLevel(1.2);
-    }, 50);
+      setInitialZoomIn(false);
+    }, 5000); // 1 seconde
   
     return () => clearTimeout(timer);
   }, []);
@@ -227,7 +233,7 @@ const Menu = () => {
       muted
       playsInline
     >
-    <source src="https://res.cloudinary.com/dh3nxjopm/video/upload/so_10,fl_splice/v1740102278/Free_2D_Cloud_Animation_l_Cartoon_Background_For_Free_l_No_Copyright_etu2me.mp4" type="video/mp4" />
+    <source src="https://res.cloudinary.com/dm0cuvnzt/video/upload/v1739815215/ciel.mp4" type="video/mp4" />
 
     Votre navigateur ne supporte pas la vidéo.
     </video>
@@ -237,7 +243,7 @@ const Menu = () => {
           className="relative"
           style={{
             width: `${90 * zoomLevel}vw`,
-            transition: "transform 0.5s ease-out", // 1 seconde
+            transition: initialZoomIn ? "transform 4s ease-in-out" : "none", // 1 seconde
             height: "auto",
             maxWidth: `${1440 * zoomLevel}px`,
             transform: `scale(${zoomLevel})`,
@@ -316,7 +322,7 @@ const Menu = () => {
         defaultIcon={`/OPTIMIZED_ICONES/ZoomPlus.avif`}
         hoverIcon={`/OPTIMIZED_ICONES/ZoomPlus-hover.avif`}
         clickedIcon={`/OPTIMIZED_ICONES/ZoomPlus-clic.avif`}
-        onClick={() => setZoomLevel((prev) => Math.min(prev + 0.1, 2))}
+        onClick={() => setZoomLevel((prev) => Math.min(prev + 0.5, 10))}
         style={{
           position: "absolute",
           top: `5px`,

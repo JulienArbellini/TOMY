@@ -4,8 +4,8 @@ export const items = [
   {
     name: "PiscineSimple",
     type: "PiscineSimple",
-    x: 423,
-    y: 507-28,
+    x: 423+4,
+    y: 507-30,
     width: 296,
     playerConfig: {
       type: "mixed",
@@ -315,9 +315,9 @@ export const items = [
     {
       name: "Lit",
       type: "Lit",
-      x: 429,
-      y: 389,
-      width:96,
+      x: 429-15,
+      y: 389+2,
+      width:80,
       playerConfig: {
         type: "video-automatique",
         src: "RS2jNCqCjPs",
@@ -431,7 +431,7 @@ export const items = [
       type: "Relax",
       x: 443,
       y: 446-15,
-      width:140,
+      width:143,
       playerConfig: {
         type: "mixed",
         images: [
