@@ -110,7 +110,7 @@ export default function Home() {
     //   setCurrentStep(currentStep + 1);
     //   nextStep(currentStep + 1);
     // }
-    window.location.href = '/menu';
+    window.location.href = '/avion';
   };
 
   return (

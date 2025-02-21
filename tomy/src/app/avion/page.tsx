@@ -5,6 +5,7 @@ import DynamicButton from "../components/DynamicButton/DynamicButton";
 import { items } from "../../data/items-avion";
 import dynamic from "next/dynamic";
 import Background from "../components/Background";
+import { useRouter } from "next/navigation"; // Import du router
 import InteractiveButton from "../components/GenericPlayer/InteractiveButton";
 
 const UniversalPlayer = dynamic(
@@ -24,10 +25,11 @@ const Menu = () => {
   const [hoveredIcons, setHoveredIcons] = useState<string[]>([]);
   const avionContainerRef = useRef<HTMLDivElement | null>(null);
   const [containerSize, setContainerSize] = useState({ width: 1, height: 1 });
-  const [zoomLevel, setZoomLevel] = useState(1);
+  const [zoomLevel, setZoomLevel] = useState(0.1);
   const [isPhoneShaking, setIsPhoneShaking] = useState(false);
   const [gourouMessage, setGourouMessage] = useState<GourouMessage | null>(null);
   const gourouTimeout = useRef<NodeJS.Timeout | null>(null);
+    const router = useRouter(); // Initialisation du routeur
   // Déclaration d'une variable pour suivre le dernier moment où un son a été joué
   const lastSoundTime = useRef<number>(0);
   const [tooltip, setTooltip] = useState<{ visible: boolean; x: number; y: number }>({
@@ -37,6 +39,16 @@ const Menu = () => {
   });
   const mouseMoveRef = useRef<(e: MouseEvent) => void>();
 
+  // 2) Un second état pour déclencher l’animation
+
+  useEffect(() => {
+    // Au montage, on déclenche l'animation après un petit délai (ex: 50ms)
+    const timer = setTimeout(() => {
+      setZoomLevel(1);
+    }, 50);
+  
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const updateSize = () => {
@@ -116,6 +128,11 @@ const Menu = () => {
     
     const item = items.find((item) => item.type === type);
     if (!item) return;
+
+    if (item.type === "Siegevide") {
+      router.push("/menu"); // Redirection vers la page map
+      return;
+    }
 
 
     if (item.type === "Telephone" || item.type === "Cuisine" || item.type === "PiscineSimple"  && item.playerConfig?.action === "playSound") {
@@ -216,15 +233,16 @@ const Menu = () => {
   </video>
       {/* Conteneur principal qui garde les proportions */}
       <div
-        ref={avionContainerRef}
-        className="relative transition-transform duration-300"
-        style={{
-          width: `${90 * zoomLevel}vw`,
-          height: "auto",
-          maxWidth: `${1440 * zoomLevel}px`,
-          transform: `scale(${zoomLevel})`,
-          transformOrigin: "center",
-        }}
+          ref={avionContainerRef}
+          className="relative"
+          style={{
+            width: `${90 * zoomLevel}vw`,
+            transition: "transform 1s linear", // 1 seconde
+            height: "auto",
+            maxWidth: `${1440 * zoomLevel}px`,
+            transform: `scale(${zoomLevel})`,
+            transformOrigin: "center",
+          }}
       >
         {/* Image de l'avion */}
         <img
