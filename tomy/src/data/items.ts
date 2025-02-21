@@ -6,7 +6,7 @@ export const items = [
     type: "MOVIES",
     playerConfig: {
       type: "video",
-      src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+      src: "RS2jNCqCjPs",
       frameType: "cadre1",
       autoplay: false,
       loop: false,
@@ -51,7 +51,7 @@ export const items = [
     type: "TomyIsland",
     playerConfig: {
       type: "video",
-      src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+      src: "RS2jNCqCjPs",
       frameType: "bleu",
       autoplay: false,
       loop: false,
@@ -98,7 +98,7 @@ export const items = [
     type: "PlaneMap",
     playerConfig: {
       type: "video",
-      src: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+      src: "RS2jNCqCjPs",
       frameType: "bleu",
       autoplay: false,
       loop: false,
@@ -110,7 +110,7 @@ export const items = [
     type: "MAP",
     playerConfig: {
       type: "video-automatique",
-      src: "https://www.youtube.com/embed/8Weh3T-fVoU?enablejsapi=1&autoplay=1&mute=1",
+      src: "8Weh3T-fVoU",
       frameType: "edgy",
       autoplay: false,
       loop: false,
@@ -139,7 +139,7 @@ export const items = [
         "/images/content/Crew4.avif",
       ],
       frameType: "plante",
-      videoSrc: "https://www.youtube.com/embed/RS2jNCqCjPs?enablejsapi=1&autoplay=1&mute=1",
+      videoSrc: "RS2jNCqCjPs",
       videoAutoplay: true,
       videoControls: false,
       // Affichage conditionnel entre images et vidéo

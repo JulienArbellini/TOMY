@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import Background from "../components/Background";
 import { useRouter } from "next/navigation"; // Import du router
 import InteractiveButton from "../components/GenericPlayer/InteractiveButton";
+import BackgroundYoutube from "../components/BackgroundYoutube";
 
 const UniversalPlayer = dynamic(
   () => import("../components/GenericPlayer/UniversalPlayer"),
@@ -219,18 +220,18 @@ const Menu = () => {
     <div>
     <div className="relative w-screen h-screen flex justify-center items-center overflow-hidden">
     {/* <Background /> */}
-    <video 
-    className="absolute top-0 left-0 w-full h-full object-cover"
-    autoPlay
-    loop
-    muted
-    playsInline
-  >
-    <source src="https://res.cloudinary.com/dm0cuvnzt/video/upload/v1739815215/ciel.mp4" type="video/mp4" />
-    {/* Alternative pour d'autres formats */}
-    {/* <source src="/videos/fond_avion.webm" type="video/webm" /> */}
+    {/* <video 
+      className="absolute top-0 left-0 w-full h-full object-cover"
+      autoPlay
+      loop
+      muted
+      playsInline
+    >
+    <source src="https://www.youtube.com/watch?v=cYvTHYMb-Zk" type="video/mp4" />
+
     Votre navigateur ne supporte pas la vidéo.
-  </video>
+    </video> */}
+    <BackgroundYoutube src={"4FPKnxl4e3g"} />
       {/* Conteneur principal qui garde les proportions */}
       <div
           ref={avionContainerRef}

@@ -130,7 +130,7 @@ export const items = [
       width: 62,
       playerConfig: {
         type: "video-automatique",
-        src: "hRS2jNCqCjPs",
+        src: "RS2jNCqCjPs",
         frameType: "ultrasimple",
         autoplay: false,
         loop: false,

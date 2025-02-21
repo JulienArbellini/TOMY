@@ -61,7 +61,7 @@ const VideoPlayer: React.FC = () => {
 
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
+alert("ici");
   return (
     <div>
       <PlayerFrame
