@@ -415,7 +415,7 @@ export const items = [
       name: "OIseaux",
       type: "OIseaux",
       x: 827,
-      y: 60,
+      y: 60+100,
       width:160,
       playerConfig: {
         type: "video-automatique",

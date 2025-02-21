@@ -44,7 +44,7 @@ const Menu = () => {
   useEffect(() => {
     // Au montage, on déclenche l'animation après un petit délai (ex: 50ms)
     const timer = setTimeout(() => {
-      setZoomLevel(1);
+      setZoomLevel(1.2);
     }, 50);
   
     return () => clearTimeout(timer);
@@ -237,7 +237,7 @@ const Menu = () => {
           className="relative"
           style={{
             width: `${90 * zoomLevel}vw`,
-            transition: "transform 1s linear", // 1 seconde
+            transition: "transform 0.5s ease-out", // 1 seconde
             height: "auto",
             maxWidth: `${1440 * zoomLevel}px`,
             transform: `scale(${zoomLevel})`,
