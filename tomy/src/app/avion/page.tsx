@@ -220,18 +220,17 @@ const Menu = () => {
     <div>
     <div className="relative w-screen h-screen flex justify-center items-center overflow-hidden">
     {/* <Background /> */}
-    {/* <video 
+    <video 
       className="absolute top-0 left-0 w-full h-full object-cover"
       autoPlay
       loop
       muted
       playsInline
     >
-    <source src="https://www.youtube.com/watch?v=cYvTHYMb-Zk" type="video/mp4" />
+    <source src="https://res.cloudinary.com/dh3nxjopm/video/upload/so_10,fl_splice/v1740102278/Free_2D_Cloud_Animation_l_Cartoon_Background_For_Free_l_No_Copyright_etu2me.mp4" type="video/mp4" />
 
     Votre navigateur ne supporte pas la vidéo.
-    </video> */}
-    <BackgroundYoutube src={"4FPKnxl4e3g"} />
+    </video>
       {/* Conteneur principal qui garde les proportions */}
       <div
           ref={avionContainerRef}

@@ -35,7 +35,7 @@ const BackgroundYoutube: React.FC<BackgroundYoutubeProps> = ({
         
         {/* Votre contenu par-dessus */}
         <div style={{ position: "relative", zIndex: 1 }}>
-          <h1>Mon contenu au premier plan</h1>
+
         </div>
       </div>
     );
