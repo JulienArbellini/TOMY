@@ -233,7 +233,7 @@ const Menu = () => {
       muted
       playsInline
     >
-    <source src="https://res.cloudinary.com/dm0cuvnzt/video/upload/v1739815215/ciel.mp4" type="video/mp4" />
+    <source src="https://res.cloudinary.com/dh3nxjopm/video/upload/v1740102278/Free_2D_Cloud_Animation_l_Cartoon_Background_For_Free_l_No_Copyright_etu2me.mp4" type="video/mp4" />
 
     Votre navigateur ne supporte pas la vidéo.
     </video>

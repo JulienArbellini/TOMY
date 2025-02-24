@@ -298,21 +298,6 @@ export const items = [
       },
     },
     {
-      name: "Kiss",
-      type: "Kiss",
-      x: 1092,
-      y: 470-25,
-      width: 216,
-      playerConfig: {
-        type: "video-automatique",
-        src: "RS2jNCqCjPs",
-        frameType: "ultrasimple",
-        autoplay: true,
-        loop: true,
-        controls: false,
-      },
-    },
-    {
       name: "Lit",
       type: "Lit",
       x: 429-15,
@@ -347,21 +332,6 @@ export const items = [
       //gérer un peu mieux l'affichage des images
     },
     {
-      name: "Movie-watching",
-      type: "Movie-watching",
-      x: 1071,
-      y: 470-24,
-      width:64,
-      playerConfig: {
-        type: "video",
-        src: "RS2jNCqCjPs",
-        frameType: "cadre1",
-        autoplay: false,
-        loop: false,
-        controls: true,
-      },
-    },
-    {
       name: "Siegevide",
       type: "Siegevide",
       x: 771+15,
@@ -380,8 +350,8 @@ export const items = [
       name: "Music-boy",
       type: "Music-boy",
       x: 969,
-      y: 471-25,
-      width:73,
+      y: 471-24,
+      width:75,
       playerConfig: {
         type: "audio",
         tracks: [
@@ -409,6 +379,36 @@ export const items = [
           text: "Titre de la musique",
           image: "/images/album-cover.jpg",
         },
+      },
+    },
+    {
+      name: "Kiss",
+      type: "Kiss",
+      x: 1092,
+      y: 470-25,
+      width: 216,
+      playerConfig: {
+        type: "video-automatique",
+        src: "RS2jNCqCjPs",
+        frameType: "ultrasimple",
+        autoplay: true,
+        loop: true,
+        controls: false,
+      },
+    },
+    {
+      name: "Movie-watching",
+      type: "Movie-watching",
+      x: 1071-5,
+      y: 470-24,
+      width:55,
+      playerConfig: {
+        type: "video",
+        src: "RS2jNCqCjPs",
+        frameType: "cadre1",
+        autoplay: false,
+        loop: false,
+        controls: true,
       },
     },
     {
