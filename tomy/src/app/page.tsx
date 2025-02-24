@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ThreeDButton from "./components/Start/ThreeDButton";
 import Announcement from "./components/Start/Announcement";
@@ -8,11 +8,14 @@ import VideoPlayer from "./components/Start/VideoPlayer";
 import DynamicButton from "./components/DynamicButton/DynamicButton";
 import { AvionMenu } from "./avion/Menu";
 import BackgroundYoutube from "./components/BackgroundYoutube";
+import PlayerFrame from "./components/GenericPlayer/PlayerFrame";
+import UniversalPlayer from "./components/GenericPlayer/UniversalPlayer";
 
 /**
  * Composant principal "Home".
  * Gère trois étapes (step1, step2, step3) + changement de background + sons audio.
  */
+
 export default function Home() {
   // État pour gérer quelle étape est en cours
   const [currentStep, setCurrentStep] = useState(0);
@@ -21,11 +24,21 @@ export default function Home() {
   const [showAnnouncement, setShowAnnouncement] = useState(false);
   // État pour afficher/masquer la vidéo finale
   const [showAvion, setShowAvion] = useState(false);
+  // État pour afficher/masquer la vidéo finale
+  const [showHotesse, setHotesse] = useState(false);
   // Bouton principal (ThreeDButton) visible ou non
   const [showButton, setShowButton] = useState(true);
 
+    const [isPlayingAndDelay, setIsPlayingAndDelay] = useState<boolean>(false);
+    const [isVideoEnded, setIsVideoEnded] = useState<boolean>(false);
+     const playerRef = useRef<HTMLIFrameElement>(null);
+
   // Index du background : 0 => vidéo (bg1), 1 => image (bg2)
   const [activeBackgroundIndex, setActiveBackgroundIndex] = useState(0);
+
+
+    // --- AJOUT : état isMuted
+    const [isMuted, setIsMuted] = useState(true);
 
   /**
    * Passe au background 2 (bg2)
@@ -40,6 +53,16 @@ export default function Home() {
   const changeBackgroundToBg1 = () => {
     setActiveBackgroundIndex(0);
   };
+
+    // Toggle mute
+    const handleMuteToggle = () => {
+      if (currentStep === 0) {
+        setCurrentStep(1);
+        nextStep(1); // Lance le son1
+      }
+      setIsMuted((prev) => !prev);
+      // Appliquer à un audio en cours si besoin
+    };
 
   /**
    * Gère la progression dans les 3 étapes
@@ -79,6 +102,9 @@ export default function Home() {
       case 3: {
         // Afficher la vidéo finale
         setShowAvion(true);
+        setTimeout(() => {
+          setHotesse(true);
+        }, 3000);
         break;
       }
 
@@ -96,6 +122,10 @@ export default function Home() {
     setCurrentStep(1);
     nextStep(3);
   };
+
+  const onClose = () => {
+
+  }
 
   /**
    * Bouton "Skip" : redirige vers /menu immédiatement
@@ -136,7 +166,7 @@ export default function Home() {
 
               Votre navigateur ne supporte pas la vidéo.
             </video> */}
-            <BackgroundYoutube src="EI93utK6QYI"/>
+            <BackgroundYoutube src="FyGPfMOF9zA"/>
 
           </motion.div>
         )}
@@ -187,9 +217,42 @@ export default function Home() {
         <AnimatePresence>
           {showAvion && <AvionMenu />}
         </AnimatePresence>
+        
+        {showHotesse &&
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">             
+          <PlayerFrame
+          playerRef={playerRef}
+          isPlayingAndDelay={isPlayingAndDelay}
+          isVideoEnded={isVideoEnded}
+          scale={1}
+          src={"NdNvqv-O6no"}
+          onClose={() => setHotesse(false)} // Passer la prop onClose
+          frameSrc={"/vectors/ELEMENTS/Cadres/CadreUltrasimple.avif"}
+          controls={false}
+          />
+        </div>
+        }
+
+
+
+
+
+        <DynamicButton
+          defaultIcon={isMuted ? "/vectors/ELEMENTS/BoutonsPlayer/Play.avif" : "/vectors/ELEMENTS/BoutonsPlayer/Pause.avif"}
+          hoverIcon={isMuted ? "/vectors/ELEMENTS/BoutonsPlayer/PlayHover.avif" : "/vectors/ELEMENTS/BoutonsPlayer/PauseHover.avif"}
+          onClick={handleMuteToggle}
+          style={{
+            position: "absolute",
+            bottom: "10px",
+            left: "10px",
+            zIndex: 9999,
+          }}
+        />
 
         
       </div>
+
     </div>
+    
   );
 }

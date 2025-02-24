@@ -45,6 +45,8 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
   // Référence pour l'iframe vidéo
   const playerRef = useRef<HTMLIFrameElement>(null);
 
+  console.log(props)
+
   // États pour gérer la lecture et la fin de la vidéo
   const [isPlayingAndDelay, setIsPlayingAndDelay] = useState<boolean>(false);
   const [isVideoEnded, setIsVideoEnded] = useState<boolean>(false);
@@ -95,6 +97,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
  
     );
   } else if (type === "video-automatique" && src){
+    alert("video-automatique");
     return (
             <PlayerFrame
         playerRef={playerRef}

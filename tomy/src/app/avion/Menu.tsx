@@ -207,6 +207,7 @@ export function AvionMenu() {
           }}
         >
           <img
+            // src="/vectors/ELEMENTS/AVION_MODELE2.png"
             src="/vectors/ELEMENTS/FondAvion.avif"
             alt="Avion"
             className="w-full h-auto opacity-100"
