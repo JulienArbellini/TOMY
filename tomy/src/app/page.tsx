@@ -101,7 +101,9 @@ export default function Home() {
 
       case 3: {
 
-        setHotesse(true);
+        setTimeout(() => {
+          setHotesse(true);
+        }, 2000);
 
       }
 
