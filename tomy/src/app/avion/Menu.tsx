@@ -330,7 +330,7 @@ export function AvionMenu() {
           }}
         >
           En cas de crash <br /> attrapez le nuage <br /> sous votre siège <br /> 
-          et serrez-le <br /> de toutes vos forces
+          et serrez-le <br /> de toutes vos forces.
         </div>
       )}
     </div>

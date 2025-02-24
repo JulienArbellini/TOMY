@@ -84,6 +84,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
     simple: "/vectors/ELEMENTS/Cadres/CadreSimple.avif",
     plante: "/vectors/ELEMENTS/Cadres/CadrePlante.avif",
     bleu: "/vectors/ELEMENTS/Cadres/CadreBleu.avif",
+    ticket: "/vectors/ELEMENTS/Cadres/FondTicket.avif",
     // Assurez-vous que les chemins correspondent à vos fichiers
   };
 
@@ -97,7 +98,6 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
  
     );
   } else if (type === "video-automatique" && src){
-    alert("video-automatique");
     return (
             <PlayerFrame
         playerRef={playerRef}

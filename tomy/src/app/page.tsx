@@ -100,13 +100,19 @@ export default function Home() {
       }
 
       case 3: {
-        // Afficher la vidéo finale
-        setShowAvion(true);
-        setTimeout(() => {
-          setHotesse(true);
-        }, 3000);
-        break;
+
+        setHotesse(true);
+
       }
+
+      // case 4: {
+      //   // Afficher la vidéo finale
+      //   setShowAvion(true);
+      //   // setTimeout(() => {
+      //   //   setHotesse(true);
+      //   // }, 3000);
+      //   break;
+      // }
 
       default:
         break;
@@ -151,7 +157,7 @@ export default function Home() {
             transition={{ duration: 1.5 }}
             className="absolute inset-0 -z-10"
           >
-            {/* <video
+            <video
               className="absolute top-0 left-0 w-full h-full object-cover"
               autoPlay
               loop
@@ -165,8 +171,8 @@ export default function Home() {
               />
 
               Votre navigateur ne supporte pas la vidéo.
-            </video> */}
-            <BackgroundYoutube src="FyGPfMOF9zA"/>
+            </video>
+            {/* <BackgroundYoutube src="FyGPfMOF9zA"/> */}
 
           </motion.div>
         )}
@@ -226,7 +232,10 @@ export default function Home() {
           isVideoEnded={isVideoEnded}
           scale={1}
           src={"NdNvqv-O6no"}
-          onClose={() => setHotesse(false)} // Passer la prop onClose
+          onClose={() => {
+            setHotesse(false);
+            setShowAvion(true);
+          }} 
           frameSrc={"/vectors/ELEMENTS/Cadres/CadreUltrasimple.avif"}
           controls={false}
           />

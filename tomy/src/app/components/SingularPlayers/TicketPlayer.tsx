@@ -200,7 +200,7 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
       >
         {/* Cadre décoratif inspiré du DiaporamaPlayer */}
         <img
-          src="/vectors/ELEMENTS/Cadres/CadreBois.avif"
+          src="/vectors/ELEMENTS/Cadres/SendaTicket-Blue.avif"
           alt="Cadre décoratif"
           style={{
             height: `${scaledValue(550)}px`,
@@ -226,14 +226,14 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
 
         {/* Contenu principal (Formulaire et Prévisualisation) */}
         <div
-          className="absolute"
+          className="absolute bg-[url('/vectors/ELEMENTS/Cadres/TicketFond.avif')] bg-cover"
           style={{
             top: `${scaledValue(47)}px`,
             left: `${scaledValue(33)}px`,
             height: `${scaledValue(437)}px`,
             width: `${scaledValue(580)}px`,
             overflow: "auto",
-            // backgroundColor: "red",
+            // backgroundImage: "red",
             zIndex: 10,
           }}
         >
@@ -293,10 +293,41 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
                 color: "#000",
               }}
             >
-              <option value="PARIS">PARIS</option>
+              <option value="BANGKOK">BANGKOK</option>
+              <option value="BEIJING">BEIJING</option>
+              <option value="BERLIN">BERLIN</option>
+              <option value="DUBAI">DUBAI</option>
+              <option value="GOTHAM CITY">GOTHAM CITY</option>
+              <option value="HANOI">HANOI</option>
+              <option value="HOBBIT TOWN">HOBBIT TOWN</option>
+              <option value="HOGSMEADE">HOGSMEADE</option>
+              <option value="KNEIPFALL">KNEIPFALL</option>
+              <option value="KUALA-LUMPUR">KUALA-LUMPUR</option>
+              <option value="LACANAU">LACANAU</option>
+              <option value="LONDON">LONDON</option>
+              <option value="LYON">LYON</option>
+              <option value="MADRID">MADRID</option>
+              <option value="MAROCO">MAROCO</option>
+              <option value="MAUBEUGE">MAUBEUGE</option>
+              <option value="MEXICO">MEXICO</option>
+              <option value="MOSCOU">MOSCOU</option>
+              <option value="MONTREAL">MONTREAL</option>
+              <option value="MUMBAI">MUMBAI</option>
+              <option value="NELSON">NELSON</option>
               <option value="NEW YORK">NEW YORK</option>
+              <option value="OULAN-BATOR">OULAN-BATOR</option>
+              <option value="PARIS">PARIS</option>
+              <option value="ROMA">ROMA</option>
+              <option value="SCRANTON">SCRANTON</option>
+              <option value="SEOUL">SEOUL</option>
+              <option value="SPRINGFIELD">SPRINGFIELD</option>
+              <option value="ST-JACK">ST-JACK</option>
+              <option value="SYDNEY">SYDNEY</option>
+              <option value="TAIPEI">TAIPEI</option>
               <option value="TOKYO">TOKYO</option>
-              {/* ... */}
+              <option value="TOURS">TOURS</option>
+              <option value="VILLE D'AVRAY">VILLE D'AVRAY</option>
+              <option value="WELLINGTON">WELLINGTON</option>
             </select>
 
 

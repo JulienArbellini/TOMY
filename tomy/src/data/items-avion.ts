@@ -31,16 +31,12 @@ export const items = [
       y: 276+27,
       width:178,
       playerConfig: {
-        type: "diaporama",
-        images: [
-          "/images/content/Crew1.avif",
-          "/images/content/Crew2.avif",
-          "/images/content/Crew3.avif",
-          "/images/content/Crew4.avif",
-        ],
-        frameType: "simple",
-        controls: true,
-        extraButton: "orderButton",
+        type: "video-automatique",
+        src: "8Weh3T-fVoU",
+        frameType: "ultrasimple",
+        autoplay: true,
+        loop: true,
+        controls: false,
       },
     },
     {
@@ -87,7 +83,7 @@ export const items = [
       width: 175,
       playerConfig: {
         type: "video-automatique",
-        src: "RS2jNCqCjPs",
+        src: "1fq43PojxVc",
         frameType: "ultrasimple",
         autoplay: true,
         loop: false,
@@ -102,7 +98,8 @@ export const items = [
       y: 436-20,
       width: 212,
       playerConfig: {
-        type: "interactive",
+        type: "video-automatique",
+        src: "RS2jNCqCjPs",
         action: "randomAdvice",
         frameType: "simple",
         //comme Gourou maus garder icone de Brace
@@ -135,6 +132,19 @@ export const items = [
         autoplay: false,
         loop: false,
         controls: true,
+      },
+    },
+    {
+      name: "Hermes",
+      type: "Hermes",
+      x: 161,
+      y: 300,
+      width: 80 ,
+      playerConfig: {
+        type: "Hermes",
+        action: "ticketForm",
+        frameType: "ticket",
+        // Formulaire avec placeholders et envoi d'email
       },
     },
     {
@@ -239,7 +249,6 @@ export const items = [
         "What a great day.",
         "You have no idea <br /> how big this world is.",
         "I have searched <br /> the sky for god, <br /> but apparently he’s <br /> gone on vacation.",
-        "This could very well <br /> be your last flight.",
         "You are right where <br /> you should be.",
         "Don’t trust no guru !",
         "You can always fly away <br /> from sad thoughts.",
@@ -389,7 +398,7 @@ export const items = [
       width: 216,
       playerConfig: {
         type: "video-automatique",
-        src: "RS2jNCqCjPs",
+        src: "PsQthA38E4s",
         frameType: "ultrasimple",
         autoplay: true,
         loop: true,
