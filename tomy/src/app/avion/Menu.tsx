@@ -17,12 +17,12 @@ interface GourouMessage {
 }
 
 interface AvionMenuProps{
-  siegeClicked? : (clicked: boolean) => void;
+  onSiegeClick? : () => void;
 }
 
 // Le composant
 const AvionMenu: React.FC<AvionMenuProps> = ({
-  siegeClicked,
+  onSiegeClick,
 }) => {
   const [selectedItem, setSelectedItem] = useState<any | null>(null);
   const [hoveredIcons, setHoveredIcons] = useState<string[]>([]);
@@ -37,7 +37,7 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
   const [tooltip, setTooltip] = useState({ visible: false, x: 0, y: 0 });
   const mouseMoveRef = useRef<(e: MouseEvent) => void>();
   const [initialZoomIn, setInitialZoomIn] = useState(true);
-  const [siege, setSiege] = useState(false)
+
 
   // Effet : zoom initial
   useEffect(() => {
@@ -81,12 +81,6 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
   };
 
 
-  const handleSiegeClick = () => {
-    if (siegeClicked) {
-      siegeClicked(true); // Mettre à jour l'état du parent
-    }
-  };
-
 
   // Hover icônes
   const handleMouseEnter = (type: string, event: React.MouseEvent) => {
@@ -119,8 +113,8 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
     if (!item) return;
 
     // Redirection
-    if (item.type === "Siegevide") {
-      handleSiegeClick()
+    if (item.type === "Siegevide" && onSiegeClick) {
+      onSiegeClick()
       return;
     }
 

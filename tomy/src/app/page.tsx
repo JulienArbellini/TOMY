@@ -10,7 +10,7 @@ import AvionMenu from "./avion/Menu";
 import BackgroundYoutube from "./components/BackgroundYoutube";
 import PlayerFrame from "./components/GenericPlayer/PlayerFrame";
 import UniversalPlayer from "./components/GenericPlayer/UniversalPlayer";
-import { Siege } from "./menu/Siege";
+import Siege from "./menu/Siege";
 
 /**
  * Composant principal "Home".
@@ -31,7 +31,7 @@ export default function Home() {
   const [showButton, setShowButton] = useState(true);
 
 
-  const [showSiege, setShowSiege] = useState(true);
+  const [showSiege, setShowSiege] = useState(false);
 
     const [isPlayingAndDelay, setIsPlayingAndDelay] = useState<boolean>(false);
     const [isVideoEnded, setIsVideoEnded] = useState<boolean>(false);
@@ -227,10 +227,10 @@ export default function Home() {
           Affichée si showVideo === true 
         */}
         <AnimatePresence>
-          {showAvion && <AvionMenu />}
+          {showAvion && !showSiege && <AvionMenu onSiegeClick={() => setShowSiege(true)} />}
         </AnimatePresence>
 
-        {/* {showSiege && <Siege />} */}
+        {showSiege && <Siege onPlaneClick={() => setShowSiege(false)} />}
 
         
         {showHotesse &&
