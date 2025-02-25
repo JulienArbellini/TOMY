@@ -145,6 +145,19 @@ const MixedDiaporama: React.FC<MixedDiaporamaProps> = ({
             width: `${scaledValue(675)}px`,
           }}
         />
+                  <img
+            src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
+            alt="Écran noir lorsque la vidéo est en pause ou terminée"
+            className="absolute"
+  
+            style={{
+              top: `${scaledValue(65)}px`,
+              left: `${scaledValue(47)}px`,
+              height: `${scaledValue(containerHeight)+18}px`,
+              width: `${scaledValue(containerWidth)+13}px`,
+              // zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
+            }}
+          />
   
         {/* Boutons de fermeture et navigation */}
         <InteractiveButton defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif" hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif" clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif" onClick={onClose} style={{ position: "absolute", top: `${scaledValue(44)}px`, left: `${scaledValue(50)}px`, height: `${scaledValue(16)}px`, width: `${scaledValue(16)}px`, zIndex: 50 }} />
@@ -195,6 +208,20 @@ const MixedDiaporama: React.FC<MixedDiaporamaProps> = ({
             width: `${scaledValue(638)}px`,
           }}
         />
+
+          <img
+            src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
+            alt="Écran noir lorsque la vidéo est en pause ou terminée"
+            className="absolute"
+  
+            style={{
+              top: `${scaledValue(43)}px`,
+              left: `${scaledValue(26)}px`,
+              height: `${scaledValue(containerHeight)+15}px`,
+              width: `${scaledValue(containerWidth)+12}px`,
+              // zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
+            }}
+          />
   
         {/* Boutons de fermeture et navigation */}
         <InteractiveButton defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif" hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif" clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif" onClick={onClose} style={{ position: "absolute", top: `${scaledValue(24)}px`, left: `${scaledValue(24)}px`, height: `${scaledValue(16)}px`, width: `${scaledValue(16)}px`, zIndex: 50 }} />

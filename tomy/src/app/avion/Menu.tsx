@@ -16,8 +16,14 @@ interface GourouMessage {
   followCursor?: boolean;
 }
 
+interface AvionMenuProps{
+  siegeClicked? : (clicked: boolean) => void;
+}
+
 // Le composant
-export function AvionMenu() {
+const AvionMenu: React.FC<AvionMenuProps> = ({
+  siegeClicked,
+}) => {
   const [selectedItem, setSelectedItem] = useState<any | null>(null);
   const [hoveredIcons, setHoveredIcons] = useState<string[]>([]);
   const avionContainerRef = useRef<HTMLDivElement | null>(null);
@@ -31,6 +37,7 @@ export function AvionMenu() {
   const [tooltip, setTooltip] = useState({ visible: false, x: 0, y: 0 });
   const mouseMoveRef = useRef<(e: MouseEvent) => void>();
   const [initialZoomIn, setInitialZoomIn] = useState(true);
+  const [siege, setSiege] = useState(false)
 
   // Effet : zoom initial
   useEffect(() => {
@@ -40,6 +47,8 @@ export function AvionMenu() {
     }, 5000); 
     return () => clearTimeout(timer);
   }, []);
+
+
 
   // MàJ taille conteneur
   useEffect(() => {
@@ -70,6 +79,14 @@ export function AvionMenu() {
       mouseMoveRef.current = undefined;
     }
   };
+
+
+  const handleSiegeClick = () => {
+    if (siegeClicked) {
+      siegeClicked(true); // Mettre à jour l'état du parent
+    }
+  };
+
 
   // Hover icônes
   const handleMouseEnter = (type: string, event: React.MouseEvent) => {
@@ -103,7 +120,7 @@ export function AvionMenu() {
 
     // Redirection
     if (item.type === "Siegevide") {
-      router.push("/menu");
+      handleSiegeClick()
       return;
     }
 
@@ -336,3 +353,5 @@ export function AvionMenu() {
     </div>
   );
 }
+
+export default AvionMenu

@@ -6,10 +6,11 @@ import ThreeDButton from "./components/Start/ThreeDButton";
 import Announcement from "./components/Start/Announcement";
 import VideoPlayer from "./components/Start/VideoPlayer";
 import DynamicButton from "./components/DynamicButton/DynamicButton";
-import { AvionMenu } from "./avion/Menu";
+import AvionMenu from "./avion/Menu";
 import BackgroundYoutube from "./components/BackgroundYoutube";
 import PlayerFrame from "./components/GenericPlayer/PlayerFrame";
 import UniversalPlayer from "./components/GenericPlayer/UniversalPlayer";
+import { Siege } from "./menu/Siege";
 
 /**
  * Composant principal "Home".
@@ -28,6 +29,9 @@ export default function Home() {
   const [showHotesse, setHotesse] = useState(false);
   // Bouton principal (ThreeDButton) visible ou non
   const [showButton, setShowButton] = useState(true);
+
+
+  const [showSiege, setShowSiege] = useState(true);
 
     const [isPlayingAndDelay, setIsPlayingAndDelay] = useState<boolean>(false);
     const [isVideoEnded, setIsVideoEnded] = useState<boolean>(false);
@@ -159,7 +163,7 @@ export default function Home() {
             transition={{ duration: 1.5 }}
             className="absolute inset-0 -z-10"
           >
-            {/* <video
+            <video
               className="absolute top-0 left-0 w-full h-full object-cover"
               autoPlay
               loop
@@ -173,8 +177,8 @@ export default function Home() {
               />
 
               Votre navigateur ne supporte pas la vidéo.
-            </video> */}
-            <BackgroundYoutube src="s4wpzE_eUOE"/>
+            </video>
+            {/* <BackgroundYoutube src="s4wpzE_eUOE"/> */}
 
           </motion.div>
         )}
@@ -225,6 +229,9 @@ export default function Home() {
         <AnimatePresence>
           {showAvion && <AvionMenu />}
         </AnimatePresence>
+
+        {/* {showSiege && <Siege />} */}
+
         
         {showHotesse &&
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">             

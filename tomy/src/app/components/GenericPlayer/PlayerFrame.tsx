@@ -95,9 +95,9 @@ const handleExitClick = () => {
   
             style={{
               top: `${scaledValue(43)}px`,
-              left: `${scaledValue(22)}px`,
-              height: `${scaledValue(containerHeight)+17}px`,
-              width: `${scaledValue(containerWidth)+20}px`,
+              left: `${scaledValue(24)}px`,
+              height: `${scaledValue(containerHeight+7)}px`,
+              width: `${scaledValue(containerWidth+6)}px`,
               zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
             }}
           />
@@ -216,7 +216,7 @@ const handleExitClick = () => {
           style={{
             top: `${scaledValue(72)}px`,
             left: `${scaledValue(32)}px`,
-            height: `${scaledValue(containerHeight)+22}px`,
+            height: `${scaledValue(containerHeight+8)}px`,
             width: `${scaledValue(containerWidth)+15}px`,
             zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
           }}
