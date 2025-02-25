@@ -159,7 +159,7 @@ export default function Home() {
             transition={{ duration: 1.5 }}
             className="absolute inset-0 -z-10"
           >
-            <video
+            {/* <video
               className="absolute top-0 left-0 w-full h-full object-cover"
               autoPlay
               loop
@@ -173,8 +173,8 @@ export default function Home() {
               />
 
               Votre navigateur ne supporte pas la vidéo.
-            </video>
-            {/* <BackgroundYoutube src="FyGPfMOF9zA"/> */}
+            </video> */}
+            <BackgroundYoutube src="s4wpzE_eUOE"/>
 
           </motion.div>
         )}

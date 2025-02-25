@@ -67,6 +67,7 @@ const handleExitClick = () => {
     frameSrc == '/vectors/ELEMENTS/Cadres/CadreSimple.avif' ||
     frameSrc == '/vectors/ELEMENTS/Cadres/CadreUltrasimple.avif'
   ){
+
     return (
       <div
         className="relative flex justify-center items-center"
@@ -86,21 +87,21 @@ const handleExitClick = () => {
         />
   
         {/* Écran Noir pour la Pause ou la Fin (uniquement pour la vidéo) */}
-        {(isPlayingAndDelay || isVideoEnded) && (
+        
           <img
             src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
             alt="Écran noir lorsque la vidéo est en pause ou terminée"
             className="absolute"
   
             style={{
-              top: `${scaledValue(47)}px`,
-              left: `${scaledValue(29)}px`,
-              height: `${scaledValue(containerHeight)}px`,
-              width: `${scaledValue(containerWidth)}px`,
+              top: `${scaledValue(43)}px`,
+              left: `${scaledValue(22)}px`,
+              height: `${scaledValue(containerHeight)+17}px`,
+              width: `${scaledValue(containerWidth)+20}px`,
               zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
             }}
           />
-        )}
+        
               <ControlButton
           defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif"
           hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
@@ -122,7 +123,7 @@ const handleExitClick = () => {
           className="absolute overflow-hidden"
           style={{
             top: `${scaledValue(47)}px`,
-            left: `${scaledValue(29)}px`,
+            left: `${scaledValue(27)}px`,
             height: `${scaledValue(containerHeight)}px`,
             width: `${scaledValue(containerWidth)}px`,
           }}
@@ -206,21 +207,21 @@ const handleExitClick = () => {
         />
   
         {/* Écran Noir pour la Pause ou la Fin (uniquement pour la vidéo) */}
-        {(isPlayingAndDelay || isVideoEnded) && (
-          <img
-            src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
-            alt="Écran noir lorsque la vidéo est en pause ou terminée"
-            className="absolute"
-  
-            style={{
-              top: `${scaledValue(47)}px`,
-              left: `${scaledValue(59)}px`,
-              height: `${scaledValue(containerHeight)}px`,
-              width: `${scaledValue(containerWidth)}px`,
-              zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
-            }}
-          />
-        )}
+        
+        <img
+          src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
+          alt="Écran noir lorsque la vidéo est en pause ou terminée"
+          className="absolute"
+
+          style={{
+            top: `${scaledValue(72)}px`,
+            left: `${scaledValue(32)}px`,
+            height: `${scaledValue(containerHeight)+22}px`,
+            width: `${scaledValue(containerWidth)+15}px`,
+            zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
+          }}
+        />
+
               <ControlButton
           defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif"
           hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
@@ -326,21 +327,21 @@ const handleExitClick = () => {
         />
   
         {/* Écran Noir pour la Pause ou la Fin (uniquement pour la vidéo) */}
-        {(isPlayingAndDelay || isVideoEnded) && (
+        
           <img
             src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
             alt="Écran noir lorsque la vidéo est en pause ou terminée"
             className="absolute"
   
             style={{
-              top: `${scaledValue(47)}px`,
-              left: `${scaledValue(59)}px`,
-              height: `${scaledValue(containerHeight)}px`,
-              width: `${scaledValue(containerWidth)}px`,
+              top: `${scaledValue(65)}px`,
+              left: `${scaledValue(48)}px`,
+              height: `${scaledValue(containerHeight)+18}px`,
+              width: `${scaledValue(containerWidth)+10}px`,
               zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
             }}
           />
-        )}
+
               <ControlButton
           defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif"
           hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
