@@ -254,7 +254,7 @@ const Menu = () => {
         <img
           src="/vectors/ELEMENTS/AVION_MODELE.png"
           alt="Avion"
-          className="w-full h-auto opacity-[1]"
+          className="w-full h-auto opacity-[1] bg-red-200"
         />
                   {gourouMessage && (
             <div

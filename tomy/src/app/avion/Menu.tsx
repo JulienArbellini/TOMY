@@ -65,7 +65,7 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
       const heightZoom = screenHeight / 900; // 900 est la hauteur "idéale"
   
       // 🔥 Facteur d'ajustement si besoin
-      const baseZoom = 1.2;
+      const baseZoom = 1.4;
       const optimalZoom = heightZoom * baseZoom;
   
       setZoomLevel(optimalZoom);
