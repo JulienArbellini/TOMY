@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useRef, useEffect } from "react";
 import InteractiveButton from "./InteractiveButton"; // Boutons personnalisés
 /// <reference path="../../../types/youtube.d.ts" />

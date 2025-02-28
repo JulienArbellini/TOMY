@@ -43,7 +43,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
         />
   
         {/* Écran Noir pour la Pause ou la Fin */}
-        {(isPlayingAndDelay || isVideoEnded) && (
+
           <img
             src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
             alt="Écran noir lorsque la vidéo est en pause ou terminée"
@@ -56,7 +56,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
               zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
             }}
           />
-        )}
+
   
         {/* Conteneur de la Vidéo */}
         <div
@@ -124,7 +124,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
         />
   
         {/* Écran Noir pour la Pause ou la Fin */}
-        {(isPlayingAndDelay || isVideoEnded) && (
+
           <img
             src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
             alt="Écran noir lorsque la vidéo est en pause ou terminée"
@@ -137,7 +137,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
               zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
             }}
           />
-        )}
+
   
         {/* Conteneur de la Vidéo */}
         <div

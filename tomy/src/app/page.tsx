@@ -104,10 +104,11 @@ export default function Home() {
       }
 
       case 3: {
+        setShowAvion(true);
 
-        setTimeout(() => {
-          setHotesse(true);
-        }, 2000);
+        // setTimeout(() => {
+        //   setHotesse(true);
+        // }, 2000);
 
       }
 
@@ -233,7 +234,7 @@ export default function Home() {
         {showSiege && <Siege onPlaneClick={() => setShowSiege(false)} />}
 
         
-        {showHotesse &&
+        {/* {showHotesse &&
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">             
           <PlayerFrame
           playerRef={playerRef}
@@ -249,7 +250,7 @@ export default function Home() {
           controls={false}
           />
         </div>
-        }
+        } */}
 
 
 

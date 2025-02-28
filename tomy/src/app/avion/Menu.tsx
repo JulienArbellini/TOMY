@@ -38,32 +38,65 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
   const mouseMoveRef = useRef<(e: MouseEvent) => void>();
   const [initialZoomIn, setInitialZoomIn] = useState(true);
 
+  const [zoom, setZoom] = useState(1);
+  // Pour « scroller » au centre quand on change de zoom
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Effet : zoom initial
+  // Dimensions "de base" de l'avion (largeur × hauteur)
+  const IMAGE_WIDTH = 7016;
+  const IMAGE_HEIGHT = 6560;
+
   useEffect(() => {
-    setZoomLevel(1);
-    const timer = setTimeout(() => {
-      setInitialZoomIn(false);
-    }, 5000); 
-    return () => clearTimeout(timer);
+    function initZoom() {
+      const screenHeight = window.innerHeight;
+      const baseZoom = (screenHeight * 1.25) / IMAGE_HEIGHT;
+      setZoom(baseZoom);
+    }
+    initZoom();
+    window.addEventListener("resize", initZoom);
+    return () => window.removeEventListener("resize", initZoom);
   }, []);
 
 
-
-  // MàJ taille conteneur
+  // Quand le zoom change, on veut recadrer la vue pour rester « centré » 
+  // (facultatif, mais souvent pratique)
   useEffect(() => {
-    const updateSize = () => {
-      if (avionContainerRef.current) {
-        setContainerSize({
-          width: avionContainerRef.current.clientWidth,
-          height: avionContainerRef.current.clientHeight,
-        });
-      }
-    };
-    updateSize();
-    window.addEventListener("resize", updateSize);
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
+    if (!scrollContainerRef.current) return;
+
+    const container = scrollContainerRef.current;
+    const scaledWidth = IMAGE_WIDTH * zoom;
+    const scaledHeight = IMAGE_HEIGHT * zoom;
+
+    // On centre dans le scroll (optionnel, à ajuster selon ta préférence).
+    // Le "centre" de l'image doit se retrouver au centre du conteneur visible.
+    const scrollX = (scaledWidth - container.clientWidth) / 2;
+    const scrollY = (scaledHeight - container.clientHeight) / 2;
+
+    container.scrollLeft = Math.max(scrollX, 0);
+    container.scrollTop = Math.max(scrollY, 0);
+  }, [zoom]);
+
+  // Quelques handlers pour zoomer/dézoomer
+  const handleZoomIn = () => setZoom((z) => z * 1.1);  // zoom +10%
+  const handleZoomOut = () => setZoom((z) => z * 0.9); // zoom -10%
+
+
+
+
+
+useEffect(() => {
+  function handleResize() {
+    // On veut que l’avion fasse 125% de la fenêtre en hauteur,
+    // pour n’en voir réellement que 80%.
+    // Taille « réelle » avion = 900 px → scale = (H * 1.25) / 900
+    // Simplifié : scale = H / 720
+    const H = window.innerHeight;
+    setZoomLevel(H / 720); // => 720 = 900 * 0.8
+  }
+  handleResize();
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
   // Fonctions de souris
   const startGlobalMouseMove = () => {
@@ -193,7 +226,16 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
   // Rendu
   return (
     <div>
-      <div className="relative w-screen h-screen flex justify-center items-center overflow-hidden">
+      <div
+        ref={scrollContainerRef}
+        style={{
+          width: "100vw",
+          height: "100vh",
+          overflow: "auto",
+          position: "relative",
+        }}
+        
+        >
         {/* <video 
           className="absolute top-0 left-0 w-full h-full object-cover"
           autoPlay
@@ -205,24 +247,30 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
           Votre navigateur ne supporte pas la vidéo.
         </video> */}
 
-        <div
-          ref={avionContainerRef}
-          className="relative"
+
+      {/* Conteneur "centré" */}
+      <div
+        style={{
+          width: IMAGE_WIDTH * zoom,
+          height: IMAGE_HEIGHT * zoom,
+          position: "relative",
+          margin: "0 auto", 
+          transition: initialZoomIn ? "transform 4s ease-in-out" : "none",
+          // margin "auto" pour centrer horizontalement 
+          // si la largeur totale est < la fenêtre 
+        }}
+      >
+
+<img
+          src="/vectors/ELEMENTS/FondAvion.avif"
+          alt="Avion"
           style={{
-            width: `${90 * zoomLevel}vw`,
-            height: "auto",
-            maxWidth: `${1440 * zoomLevel}px`,
-            transform: `scale(${zoomLevel})`,
-            transformOrigin: "center",
-            transition: initialZoomIn ? "transform 4s ease-in-out" : "none",
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block", // évite l’espace blanc sous l’image en inline
           }}
-        >
-          <img
-            // src="/vectors/ELEMENTS/AVION_MODELE2.png"
-            src="/vectors/ELEMENTS/FondAvion.avif"
-            alt="Avion"
-            className="w-full h-auto opacity-100"
-          />
+        />
 
           {/* Message Gourou */}
           {gourouMessage && (
@@ -303,7 +351,7 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
           defaultIcon="/OPTIMIZED_ICONES/ZoomPlus.avif"
           hoverIcon="/OPTIMIZED_ICONES/ZoomPlus-hover.avif"
           clickedIcon="/OPTIMIZED_ICONES/ZoomPlus-clic.avif"
-          onClick={() => setZoomLevel((prev) => Math.min(prev + 0.5, 10))}
+          onClick={handleZoomIn}
           style={{
             position: "absolute",
             top: "5px",
@@ -316,7 +364,7 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
           defaultIcon="/OPTIMIZED_ICONES/ZoomMoins.avif"
           hoverIcon="/OPTIMIZED_ICONES/ZoomMoins-hover.avif"
           clickedIcon="/OPTIMIZED_ICONES/ZoomMoins-clic.avif"
-          onClick={() => setZoomLevel((prev) => Math.min(prev - 0.1, 2))}
+          onClick={handleZoomOut}
           style={{
             position: "absolute",
             top: "5px",
