@@ -65,7 +65,7 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
       const heightZoom = screenHeight / 900; // 900 est la hauteur "idéale"
   
       // 🔥 Facteur d'ajustement si besoin
-      const baseZoom = 1.4;
+      const baseZoom = 1.5;
       const optimalZoom = heightZoom * baseZoom;
   
       setZoomLevel(optimalZoom);
@@ -322,7 +322,7 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
           hoverIcon="/OPTIMIZED_ICONES/ZoomPlus-hover.avif"
           clickedIcon="/OPTIMIZED_ICONES/ZoomPlus-clic.avif"
           onClick={() => {
-            setZoomLevel((prev) => Math.min(prev + 0.1, 10));
+            setZoomLevel((prev) => Math.min(prev + 0.3, 10));
             setTest(true);
           }}
           style={{
@@ -338,7 +338,7 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
           hoverIcon="/OPTIMIZED_ICONES/ZoomMoins-hover.avif"
           clickedIcon="/OPTIMIZED_ICONES/ZoomMoins-clic.avif"
           onClick={() => {
-            setZoomLevel((prev) => Math.min(prev - 0.1, 2))
+            setZoomLevel((prev) => Math.min(prev - 0.3, 2))
             setTest(true);
           }
           }

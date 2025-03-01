@@ -225,272 +225,300 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
         />
 
         {/* Contenu principal (Formulaire et Prévisualisation) */}
-        <div
-          className="absolute bg-[url('/vectors/ELEMENTS/Cadres/TicketFond.avif')] bg-cover"
+          <div className="absolute shadow-xl"
           style={{
-            top: `${scaledValue(47)}px`,
-            left: `${scaledValue(33)}px`,
-            height: `${scaledValue(437)}px`,
-            width: `${scaledValue(580)}px`,
-            overflow: "auto",
-            // backgroundImage: "red",
-            zIndex: 10,
-          }}
-        >
+            top: `${scaledValue(147)}px`,
+            left: `${scaledValue(23)}px`,
+            height: `${scaledValue(287)}px`,
+            width: `${scaledValue(600)}px`,
+            backgroundColor: "white",
+            borderRadius: "8px",
+            backgroundSize: "cover", // ou "contain" selon le besoin
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+          }}>
 
-
-          {/* Champ Email */}
-          <label className="block font-semibold mb-2">Email :</label>
-          <input
-            type="email"
-            value={recipientEmail}
-            onChange={(e) => setRecipientEmail(e.target.value)}
-            className="border p-2 mb-4"
-            placeholder="ex: user@example.com"
-          />
-
-            <img
-              src="BILLET/Billet_Vierge.jpg"
-              alt="Billet"
+            <div
+              className="absolute"
               style={{
-                position: "absolute",
-                top: `${scaledValue(90)}px`,
+                top: `${scaledValue(0)}px`,
+                left: `${scaledValue(10)}px`,
+                height: `${scaledValue(287)}px`,
                 width: `${scaledValue(580)}px`,
-                height: "auto",
+                zIndex: 10,
               }}
-            />
-
-            {/* Champ Name */}
-            <input
-              type="text"
-              placeholder="Name"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              style={{
-                position: "absolute",
-                top: `${scaledValue(171)}px`,
-                left: `${scaledValue(60)}px`,
-                width: "23vh",
-                border: "none",
-                background: "transparent",
-                fontSize: "1.7vh",
-                color: "#000",
-              }}
-            />
-
-            {/* Depart */}
-            <select
-              value={depart}
-              onChange={(e) => setDepart(e.target.value)}
-              style={{
-                position: "absolute",
-                top: `${scaledValue(234)}px`,
-                left: `${scaledValue(60)}px`,
-                width: "23vh",
-                border: "none",
-                background: "transparent",
-                fontSize: "1.7vh",
-                color: "#000",
-              }}
-            >
-              <option value="BANGKOK">BANGKOK</option>
-              <option value="BEIJING">BEIJING</option>
-              <option value="BERLIN">BERLIN</option>
-              <option value="DUBAI">DUBAI</option>
-              <option value="GOTHAM CITY">GOTHAM CITY</option>
-              <option value="HANOI">HANOI</option>
-              <option value="HOBBIT TOWN">HOBBIT TOWN</option>
-              <option value="HOGSMEADE">HOGSMEADE</option>
-              <option value="KNEIPFALL">KNEIPFALL</option>
-              <option value="KUALA-LUMPUR">KUALA-LUMPUR</option>
-              <option value="LACANAU">LACANAU</option>
-              <option value="LONDON">LONDON</option>
-              <option value="LYON">LYON</option>
-              <option value="MADRID">MADRID</option>
-              <option value="MAROCO">MAROCO</option>
-              <option value="MAUBEUGE">MAUBEUGE</option>
-              <option value="MEXICO">MEXICO</option>
-              <option value="MOSCOU">MOSCOU</option>
-              <option value="MONTREAL">MONTREAL</option>
-              <option value="MUMBAI">MUMBAI</option>
-              <option value="NELSON">NELSON</option>
-              <option value="NEW YORK">NEW YORK</option>
-              <option value="OULAN-BATOR">OULAN-BATOR</option>
-              <option value="PARIS">PARIS</option>
-              <option value="ROMA">ROMA</option>
-              <option value="SCRANTON">SCRANTON</option>
-              <option value="SEOUL">SEOUL</option>
-              <option value="SPRINGFIELD">SPRINGFIELD</option>
-              <option value="ST-JACK">ST-JACK</option>
-              <option value="SYDNEY">SYDNEY</option>
-              <option value="TAIPEI">TAIPEI</option>
-              <option value="TOKYO">TOKYO</option>
-              <option value="TOURS">TOURS</option>
-              <option value="VILLE D'AVRAY">VILLE D'AVRAY</option>
-              <option value="WELLINGTON">WELLINGTON</option>
-            </select>
+              >
 
 
-            {/* Classe */}
-            <select
-              value={classe}
-              onChange={(e) => setClasse(e.target.value)}
-              style={{
-                position: "absolute",
-                top: `${scaledValue(140)}px`,
-                left: `${scaledValue(60)}px`,
-                width: "27vh",
-                border: "none",
-                background: "transparent",
-                fontSize: "1.7vh",
-                color: "#000",
-              }}
-            >
-              <option value="SPECIAL ECONOMY">SPECIAL ECONOMY</option>
-              <option value="BUSINESS CLASS">BUSINESS CLASS</option>
-              <option value="FIRST CLASS">FIRST CLASS</option>
-              <option value="GENIUS CLASS">GENIUS CLASS</option>
-              <option value="CHEESE LOVERS CLASS">CHEESE LOVERS CLASS</option>
-              <option value="POPSTAR CLASS">POPSTAR CLASS</option>
-              <option value="GOONER CLASS">FIRST CLASS</option>
-              <option value="FASHION IDOL CLASS">FASHION IDOL CLASS</option>
-              <option value="NON DUAL LOUNGE">NON DUAL LOUNGE</option>
-              <option value="ANIMAL SECTION">ANIMAL SECTION</option>
-              <option value="ALIEN CLASS">ALIEN CLASS</option>
-              <option value="TORTURED ARTIST CLASS">TORTURED ARTIST CLASS</option>
-              <option value="NINJA CLASS">NINJA CLASS</option>
-              <option value="KIWI CLASS">KIWI CLASS</option>
-              <option value="SURFER’S CLASS">SURFER’S CLASS</option>
-              <option value="CREW">CREW</option>
-              {/* ... */}
-            </select>
+              {/* Champ Email */}
 
-            {/* Sex */}
-            <select
-              value={sex}
-              onChange={(e) => setSex(e.target.value)}
-              style={{
-                position: "absolute",
-                top: `${scaledValue(171)}px`,
-                left: `${scaledValue(230)}px`,
-                width: "5vh",
-                border: "none",
-                background: "transparent",
-                fontSize: "1.7vh",
-                color: "#000",
-              }}
-            >
-              <option value="M">M</option>
-              <option value="F">F</option>
-              <option value="NB">NB</option>
-            </select>
+                <img
+                  src="BILLET/Billet_Vierge.jpg"
+                  alt="Billet"
+                  style={{
+                    position: "absolute",
+                    top: `${scaledValue(10)}px`,
+                    width: `${scaledValue(580)}px`,
+                    height: "auto",
+                  }}
+                  />
 
-            {/* Age */}
-            <select
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-              style={{
-                position: "absolute",
-                top: `${scaledValue(171)}px`,
-                left: `${scaledValue(273)}px`,
-                width: "5.5vh",
-                border: "none",
-                background: "transparent",
-                fontSize: "1.7vh",
-                color: "#000",
-              }}
-            >
-              {Array.from({ length: 99 }, (_, i) => i + 1).map((val) => (
-                <option key={val} value={val}>
-                  {val}
-                </option>
-              ))}
-            </select>
+                {/* Champ Name */}
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  style={{
+                    position: "absolute",
+                    top: `${scaledValue(171-80)}px`,
+                    left: `${scaledValue(60)}px`,
+                    width: "23vh",
+                    border: "none",
+                    background: "transparent",
+                    fontSize: "1.7vh",
+                    color: "#000",
+                  }}
+                  />
 
-            {/* Date */}
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              style={{
-                position: "absolute",
-                top: `${scaledValue(202)}px`,
-                left:`${scaledValue(144)}px`,
-                width: "10vh",
-                border: "none",
-                background: "transparent",
-                fontSize: "1.7vh",
-                color: "#000",
-              }}
-            />
+                {/* Depart */}
+                <select
+                  value={depart}
+                  onChange={(e) => setDepart(e.target.value)}
+                  style={{
+                    position: "absolute",
+                    top: `${scaledValue(234-80)}px`,
+                    left: `${scaledValue(60)}px`,
+                    width: "23vh",
+                    border: "none",
+                    background: "transparent",
+                    fontSize: "1.7vh",
+                    color: "#000",
+                  }}
+                  >
+                  <option value="BANGKOK">BANGKOK</option>
+                  <option value="BEIJING">BEIJING</option>
+                  <option value="BERLIN">BERLIN</option>
+                  <option value="DUBAI">DUBAI</option>
+                  <option value="GOTHAM CITY">GOTHAM CITY</option>
+                  <option value="HANOI">HANOI</option>
+                  <option value="HOBBIT TOWN">HOBBIT TOWN</option>
+                  <option value="HOGSMEADE">HOGSMEADE</option>
+                  <option value="KNEIPFALL">KNEIPFALL</option>
+                  <option value="KUALA-LUMPUR">KUALA-LUMPUR</option>
+                  <option value="LACANAU">LACANAU</option>
+                  <option value="LONDON">LONDON</option>
+                  <option value="LYON">LYON</option>
+                  <option value="MADRID">MADRID</option>
+                  <option value="MAROCO">MAROCO</option>
+                  <option value="MAUBEUGE">MAUBEUGE</option>
+                  <option value="MEXICO">MEXICO</option>
+                  <option value="MOSCOU">MOSCOU</option>
+                  <option value="MONTREAL">MONTREAL</option>
+                  <option value="MUMBAI">MUMBAI</option>
+                  <option value="NELSON">NELSON</option>
+                  <option value="NEW YORK">NEW YORK</option>
+                  <option value="OULAN-BATOR">OULAN-BATOR</option>
+                  <option value="PARIS">PARIS</option>
+                  <option value="ROMA">ROMA</option>
+                  <option value="SCRANTON">SCRANTON</option>
+                  <option value="SEOUL">SEOUL</option>
+                  <option value="SPRINGFIELD">SPRINGFIELD</option>
+                  <option value="ST-JACK">ST-JACK</option>
+                  <option value="SYDNEY">SYDNEY</option>
+                  <option value="TAIPEI">TAIPEI</option>
+                  <option value="TOKYO">TOKYO</option>
+                  <option value="TOURS">TOURS</option>
+                  <option value="VILLE D'AVRAY">VILLE D'AVRAY</option>
+                  <option value="WELLINGTON">WELLINGTON</option>
+                </select>
 
-            {/* Time */}
-            <input
-              type="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              style={{
-                position: "absolute",
-                top: `${scaledValue(202)}px`,
-                left: `${scaledValue(225)}px`,
-                width: "4vh",
-                border: "none",
-                background: "transparent",
-                fontSize: "1.7vh",
-                color: "#000",
-              }}
-            />
 
-            {/* Seat */}
-            <select
-              value={seat}
-              onChange={(e) => setSeat(e.target.value)}
-              style={{
-                position: "absolute",
-                top: `${scaledValue(203)}px`,
-                left: `${scaledValue(270)}px`,
-                width: "5.5vh",
-                border: "none",
-                background: "transparent",
-                fontSize: "1.7vh",
-                color: "#000",
-              }}
-            >
-              <option value="99A">99A</option>
-              <option value="28C">28C</option>
-              <option value="14B">14B</option>
-              {/* ... */}
-            </select>
+                {/* Classe */}
+                <select
+                  value={classe}
+                  onChange={(e) => setClasse(e.target.value)}
+                  style={{
+                    position: "absolute",
+                    top: `${scaledValue(140-80)}px`,
+                    left: `${scaledValue(60)}px`,
+                    width: "27vh",
+                    border: "none",
+                    background: "transparent",
+                    fontSize: "1.7vh",
+                    color: "#000",
+                  }}
+                  >
+                  <option value="SPECIAL ECONOMY">SPECIAL ECONOMY</option>
+                  <option value="BUSINESS CLASS">BUSINESS CLASS</option>
+                  <option value="FIRST CLASS">FIRST CLASS</option>
+                  <option value="GENIUS CLASS">GENIUS CLASS</option>
+                  <option value="CHEESE LOVERS CLASS">CHEESE LOVERS CLASS</option>
+                  <option value="POPSTAR CLASS">POPSTAR CLASS</option>
+                  <option value="GOONER CLASS">FIRST CLASS</option>
+                  <option value="FASHION IDOL CLASS">FASHION IDOL CLASS</option>
+                  <option value="NON DUAL LOUNGE">NON DUAL LOUNGE</option>
+                  <option value="ANIMAL SECTION">ANIMAL SECTION</option>
+                  <option value="ALIEN CLASS">ALIEN CLASS</option>
+                  <option value="TORTURED ARTIST CLASS">TORTURED ARTIST CLASS</option>
+                  <option value="NINJA CLASS">NINJA CLASS</option>
+                  <option value="KIWI CLASS">KIWI CLASS</option>
+                  <option value="SURFER’S CLASS">SURFER’S CLASS</option>
+                  <option value="CREW">CREW</option>
+                  {/* ... */}
+                </select>
 
-            {/* Gate */}
-            <select
-              value={gate}
-              onChange={(e) => setGate(e.target.value)}
-              style={{
-                position: "absolute",
-                top: `${scaledValue(203)}px`,
-                left: `${scaledValue(316)}px`,
-                width: "5vh",
-                border: "none",
-                background: "transparent",
-                fontSize: "1.7vh",
-                color: "#000",
-              }}
-            >
-              <option value="A">A</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-            </select>
+                {/* Sex */}
+                <select
+                  value={sex}
+                  onChange={(e) => setSex(e.target.value)}
+                  style={{
+                    position: "absolute",
+                    top: `${scaledValue(171-80)}px`,
+                    left: `${scaledValue(230)}px`,
+                    width: "5vh",
+                    border: "none",
+                    background: "transparent",
+                    fontSize: "1.7vh",
+                    color: "#000",
+                  }}
+                  >
+                  <option value="M">M</option>
+                  <option value="F">F</option>
+                  <option value="NB">NB</option>
+                </select>
+
+                {/* Age */}
+                <select
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                  style={{
+                    position: "absolute",
+                    top: `${scaledValue(171-80)}px`,
+                    left: `${scaledValue(273)}px`,
+                    width: "5.5vh",
+                    border: "none",
+                    background: "transparent",
+                    fontSize: "1.7vh",
+                    color: "#000",
+                  }}
+                  >
+                  {Array.from({ length: 99 }, (_, i) => i + 1).map((val) => (
+                    <option key={val} value={val}>
+                      {val}
+                    </option>
+                  ))}
+                </select>
+
+                {/* Date */}
+                <input
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  style={{
+                    position: "absolute",
+                    top: `${scaledValue(202-80)}px`,
+                    left:`${scaledValue(144)}px`,
+                    width: "10vh",
+                    border: "none",
+                    background: "transparent",
+                    fontSize: "1.7vh",
+                    color: "#000",
+                  }}
+                  />
+
+                {/* Time */}
+                <input
+                  type="time"
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
+                  style={{
+                    position: "absolute",
+                    top: `${scaledValue(202-80)}px`,
+                    left: `${scaledValue(225)}px`,
+                    width: "4vh",
+                    border: "none",
+                    background: "transparent",
+                    fontSize: "1.7vh",
+                    color: "#000",
+                  }}
+                  />
+
+                {/* Seat */}
+                <select
+                  value={seat}
+                  onChange={(e) => setSeat(e.target.value)}
+                  style={{
+                    position: "absolute",
+                    top: `${scaledValue(203-80)}px`,
+                    left: `${scaledValue(270)}px`,
+                    width: "5.5vh",
+                    border: "none",
+                    background: "transparent",
+                    fontSize: "1.7vh",
+                    color: "#000",
+                  }}
+                  >
+                  <option value="99A">99A</option>
+                  <option value="28C">28C</option>
+                  <option value="14B">14B</option>
+                  {/* ... */}
+                </select>
+
+                {/* Gate */}
+                <select
+                  value={gate}
+                  onChange={(e) => setGate(e.target.value)}
+                  style={{
+                    position: "absolute",
+                    top: `${scaledValue(203-80)}px`,
+                    left: `${scaledValue(316)}px`,
+                    width: "5vh",
+                    border: "none",
+                    background: "transparent",
+                    fontSize: "1.7vh",
+                    color: "#000",
+                  }}
+                  >
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                </select>
+              </div>
           </div>
 
           {/* Boutons */}
-          <div className="flex flex-col gap-3 mt-4">
-            <button
+          <div className="absolute flex items-center justify-center gap-3 mt-4 text-black"
+          style={{
+            bottom: `${scaledValue(70)}px`,
+            left: `50%`,
+            transform:'translateX(-50%)',
+            width:"100%",
+          }}>
+            <input
+              type="email"
+              value={recipientEmail}
+              onChange={(e) => setRecipientEmail(e.target.value)}
+              className="border h-full"
+              placeholder="ex: jeanjean@claude.com"
+              style={{
+                width: `${scaledValue(180)}px`,
+              }}
+            />
+            <InteractiveButton
+              defaultIcon="/vectors/ELEMENTS/BoutonsDivers/Send-hover.avif"
+              hoverIcon="/vectors/ELEMENTS/BoutonsDivers/Send.avif"
+              clickedIcon="/vectors/ELEMENTS/BoutonsDivers/Send-clic.avif"
               onClick={generateAndSendPDF}
-              className="bg-green-500 text-white p-2 rounded-md"
-            >
-              Générer & Envoyer le PDF par Email
-            </button>
+              style={{
+                // position: "absolute",
+                // bottom: `${scaledValue(0)}px`,
+                // left: `${scaledValue(0)}px`,
+                height: `${scaledValue(26)}px`,
+                width: `${scaledValue(136)}px`,
+                zIndex: 50,
+              }}
+            />
           </div>
         </div>
       </div>
