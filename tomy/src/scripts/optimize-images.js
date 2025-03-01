@@ -4,7 +4,7 @@ const path = require('path');
 
 // Chemin des images source et optimisées
 const inputDir = path.join(__dirname, '../../public/TELECHARGEMENT'); // Répertoire source des images
-const outputDir = path.join(__dirname, '../../public/TELECHARGEMENT'); // Répertoire cible
+const outputDir = path.join(__dirname, '../../public/TELECHARGEMENT/RENDU'); // Répertoire cible
 
 // Créer le dossier cible si nécessaire
 if (!fs.existsSync(outputDir)) {

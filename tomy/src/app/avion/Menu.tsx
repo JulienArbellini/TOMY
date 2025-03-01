@@ -110,6 +110,13 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
       setTooltip({ visible: true, x: event.clientX, y: event.clientY });
       startGlobalMouseMove();
     }
+    if (type === "PiscineSimple") {
+      const audio = new Audio("/sounds/Yipii.mp3");
+      audio.volume = 0.1;
+      audio.play().catch((err) => console.error("Erreur audio :", err));
+      return;
+
+    }
   };
   const handleMouseLeave = (type: string) => {
     setHoveredIcons((prev) => prev.filter((icon) => icon !== type));
@@ -133,8 +140,7 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
     // Sons divers
     if (
       (item.type === "Telephone" ||
-        item.type === "Cuisine" ||
-        item.type === "PiscineSimple") &&
+        item.type === "Cuisine") &&
       item.playerConfig?.action === "playSound"
     ) {
       const audio = new Audio(item.playerConfig.soundSrc);

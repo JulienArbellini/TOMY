@@ -15,8 +15,10 @@ export const items = [
         "/images/content/Crew3.avif",
         "/images/content/Crew4.avif",
       ],
+      videos:[
+        "RS2jNCqCjPs",
+      ],
       frameType: "simple",
-      videoSrc: "RS2jNCqCjPs",
       videoAutoplay: true,
       videoControls: false,
       action: "playSound",
@@ -68,8 +70,10 @@ export const items = [
           "/images/content/Crew3.avif",
           "/images/content/Crew4.avif",
         ],
+        videos:[
+          "RS2jNCqCjPs",
+        ],
         frameType: "bois",
-        videoSrc: "RS2jNCqCjPs",
         videoAutoplay: true,
         videoControls: false,
         // Affichage conditionnel entre images et vidéo
@@ -83,7 +87,7 @@ export const items = [
       width: 175-48,
       playerConfig: {
         type: "video-automatique",
-        src: "1fq43PojxVc",
+        src: "iSqn03p7wDM",
         frameType: "ultrasimple",
         autoplay: true,
         loop: false,
@@ -126,12 +130,18 @@ export const items = [
       y: 390-10,
       width: 62-15,
       playerConfig: {
-        type: "video-automatique",
-        src: "RS2jNCqCjPs",
-        frameType: "ultrasimple",
-        autoplay: false,
-        loop: false,
-        controls: true,
+        type: "mixed",
+        images: [
+          "/images/content/Cigarette/Smoking.avif",
+        ],
+        videos: [
+          "ZL0xeOWVOcY",
+          "v_yCZ442xuk"
+        ],
+        frameType: "edgy",
+        videoAutoplay: true,
+        videoControls: false,
+        // Affichage conditionnel entre images et vidéo
       },
     },
     {
@@ -284,7 +294,7 @@ export const items = [
       width: 104-30,
       playerConfig: {
         type: "video-automatique",
-        src: "NdNvqv-O6no",
+        src: "XTBMfk-jP_Y",
         frameType: "ultrasimple",
         autoplay: false,
         loop: false,
@@ -314,7 +324,7 @@ export const items = [
       width:80-30,
       playerConfig: {
         type: "video-automatique",
-        src: "RS2jNCqCjPs",
+        src: "MVqZpSwBuhg",
         frameType: "ultrasimple",
         autoplay: false,
         loop: false,
@@ -330,10 +340,31 @@ export const items = [
       playerConfig: {
         type: "diaporama",
         images: [
-          "/images/content/Crew1.avif",
-          "/images/content/Crew2.avif",
-          "/images/content/Crew3.avif",
-          "/images/content/Crew4.avif",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/01_TomyMagOpening.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage1.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage2.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage3.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage4.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage5.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage6.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage7.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage8.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage9.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage10.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage12.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage13.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage14.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage15.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/02_02SmithPage16.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/03_TomyCan.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/04_Souvenirs1.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/04_Souvenirs2.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/04_Souvenirs3.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/04_Souvenirs4.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/04_Souvenirs5.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/05_LesFugitifsduCiel.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/06_LifeAd.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1740851327/07_LesVitesses_pk21xj.avif"
         ],
         frameType: "magazine",
         controls: true,
@@ -444,13 +475,14 @@ export const items = [
       playerConfig: {
         type: "mixed",
         images: [
-          "/images/content/Crew1.avif",
-          "/images/content/Crew2.avif",
-          "/images/content/Crew3.avif",
-          "/images/content/Crew4.avif",
+          "/images/content/Relax/NowRelaxBlanc.avif",
+          "/images/content/Relax/Haiku.avif",
+        ],
+        videos:[
+          "O27u1vVE0SQ",
+          "PDy9SqFSHq4",
         ],
         frameType: "edgy",
-        videoSrc: "RS2jNCqCjPs",
         videoAutoplay: true,
         videoControls: false,
         // Affichage conditionnel entre images et vidéo
@@ -465,13 +497,13 @@ export const items = [
       playerConfig: {
         type: "mixed",
         images: [
-          "/images/content/Crew1.avif",
-          "/images/content/Crew2.avif",
-          "/images/content/Crew3.avif",
-          "/images/content/Crew4.avif",
+          "/images/content/Shop/CoucherDeSoleil.avif",
+          "/images/content/Shop/Tomilkshake.avif",
+        ],
+        videos:[
+          "VlG7InE4VvU",
         ],
         frameType: "edgy",
-        videoSrc: "VlG7InE4VvU",
         videoAutoplay: true,
         videoControls: false,
       },
@@ -498,18 +530,12 @@ export const items = [
       y: 595-52,
       width: 31,
       playerConfig: {
-        type: "mixed",
-        images: [
-          "/images/content/Crew1.avif",
-          "/images/content/Crew2.avif",
-          "/images/content/Crew3.avif",
-          "/images/content/Crew4.avif",
-        ],
-        frameType: "simple",
-        videoSrc: "RS2jNCqCjPs",
-        videoAutoplay: true,
-        videoControls: false,
-        // Affichage conditionnel entre images et vidéo
+        type: "video-automatique",
+        src: "jQZPmkoKuW0",
+        frameType: "ultrasimple",
+        autoplay: true,
+        loop: true,
+        controls: false,
       },
     },
 

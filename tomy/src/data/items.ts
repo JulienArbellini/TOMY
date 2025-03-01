@@ -87,7 +87,8 @@ export const items = [
         "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/04_Souvenirs4.png",
         "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/04_Souvenirs5.png",
         "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/05_LesFugitifsduCiel.png",
-        "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/06_LifeAd.png"
+        "https://res.cloudinary.com/dh3nxjopm/image/upload/v1739898847/06_LifeAd.png",
+        "https://res.cloudinary.com/dh3nxjopm/image/upload/v1740851327/07_LesVitesses_pk21xj.avif"
       ],
       frameType: "magazine",
       controls: true,

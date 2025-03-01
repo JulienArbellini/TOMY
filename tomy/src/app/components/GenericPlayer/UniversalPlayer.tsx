@@ -16,6 +16,7 @@ interface UniversalPlayerProps {
   src?: string;
   tracks?: { src: string; title: string }[];
   images?: string[];
+  videos?: string[];
   frameType: string;
   videoSrc?: string; // Vidéo spécifique pour les types "mixed"
   autoplay?: boolean;
@@ -32,6 +33,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
     type,
     src,
     images,
+    videos,
     frameType,
     videoSrc,
     autoplay = false,
@@ -156,12 +158,14 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
         {/* Votre contenu personnalisé */}
       </PlayerFrame>
     );
-  }else if (type === "mixed" && images && videoSrc) {
+  }else if (type === "mixed" && images && videos) {
     // Conversion explicite en types "image" et "video"
     const items = [
       ...images.map((image) => ({ type: "image" as const, src: image })),
-      { type: "video" as const, src: videoSrc },
+      ...videos.map((video) => ({type:"video" as const, src: video})),
     ];
+    console.log(images);
+    console.log(videos);
   
     return (
       <MixedDiaporama
