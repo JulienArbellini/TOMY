@@ -27,6 +27,8 @@ const MixedDiaporama: React.FC<MixedDiaporamaProps> = ({
   const totalItems = items.length;
   const currentItem = items[currentIndex];
 
+  console.log(items);
+
   // Fonction pour extraire l'ID de la vidéo YouTube
   const extractYouTubeVideoId = (url: string): string => {
     const regex = /(?:youtube\.com\/(?:.*v=|.*\/)|youtu\.be\/)([^&?/]+)/;

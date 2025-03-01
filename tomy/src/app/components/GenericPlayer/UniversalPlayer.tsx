@@ -17,6 +17,9 @@ interface UniversalPlayerProps {
   tracks?: { src: string; title: string }[];
   images?: string[];
   videos?: string[];
+
+  media?: { type: "video" | "image"; src: string; }[];
+
   frameType: string;
   videoSrc?: string; // Vidéo spécifique pour les types "mixed"
   autoplay?: boolean;
@@ -47,7 +50,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
   // Référence pour l'iframe vidéo
   const playerRef = useRef<HTMLIFrameElement>(null);
 
-  console.log(props)
+  // console.log(props)
 
   // États pour gérer la lecture et la fin de la vidéo
   const [isPlayingAndDelay, setIsPlayingAndDelay] = useState<boolean>(false);
@@ -158,18 +161,19 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
         {/* Votre contenu personnalisé */}
       </PlayerFrame>
     );
-  }else if (type === "mixed" && images && videos) {
+  }else if (type === "mixed" && props.media) {
     // Conversion explicite en types "image" et "video"
-    const items = [
-      ...images.map((image) => ({ type: "image" as const, src: image })),
-      ...videos.map((video) => ({type:"video" as const, src: video})),
-    ];
-    console.log(images);
-    console.log(videos);
+    // const items = [
+    //   ...images.map((image) => ({ type: "image" as const, src: image })),
+    //   ...videos.map((video) => ({type:"video" as const, src: video})),
+    // ];
+    // const items = playerConfig.media;
+    console.log(props.media);
+
   
     return (
       <MixedDiaporama
-        items={items}
+        items={props.media}
         frameSrc={frameSrc}
         onClose={onClose}
       />

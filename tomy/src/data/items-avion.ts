@@ -18,6 +18,11 @@ export const items = [
       videos:[
         "RS2jNCqCjPs",
       ],
+      media: [
+        { type: "image", src: "/images/content/Crew1.avif" },
+        { type: "video", src: "RS2jNCqCjPs" },
+        { type: "image", src: "/images/content/Crew2.avif" },
+      ],
       frameType: "simple",
       videoAutoplay: true,
       videoControls: false,
@@ -131,6 +136,11 @@ export const items = [
       width: 62-15,
       playerConfig: {
         type: "mixed",
+        media: [
+          { type: "image", src: "/images/content/Cigarette/Smoking.avif" },
+          { type: "video", src: "ZL0xeOWVOcY" },
+          { type: "video", src: "v_yCZ442xuk" },
+        ],
         images: [
           "/images/content/Cigarette/Smoking.avif",
         ],
@@ -482,6 +492,12 @@ export const items = [
           "O27u1vVE0SQ",
           "PDy9SqFSHq4",
         ],
+        media: [
+          { type: "image", src: "/images/content/Relax/NowRelaxBlanc.avif" },
+          { type: "video", src: "O27u1vVE0SQ" },
+          { type: "image", src: "/images/content/Relax/Haiku.avif" },
+          { type: "video", src: "PDy9SqFSHq4" },
+        ],
         frameType: "edgy",
         videoAutoplay: true,
         videoControls: false,
@@ -502,6 +518,11 @@ export const items = [
         ],
         videos:[
           "VlG7InE4VvU",
+        ],
+        media: [
+          { type: "image", src: "/images/content/Shop/CoucherDeSoleil.avif" },
+          { type: "video", src: "VlG7InE4VvU" },
+          { type: "image", src: "/images/content/Shop/Tomilkshake.avif" },
         ],
         frameType: "edgy",
         videoAutoplay: true,
