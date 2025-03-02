@@ -184,7 +184,7 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
         setGourouMessage({
           message: randomAdvice,
           x: item.x,
-          y: item.y + 150,
+          y: item.y + 120,
         });
         if (gourouTimeout.current) {
           clearTimeout(gourouTimeout.current);
@@ -260,12 +260,12 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
                   ? `${(gourouMessage.y / containerSize.height) * 100}%`
                   : `${(gourouMessage.y / 900) * 100}%`,
                 transform: "translate(-50%, -50%)",
-                maxWidth: "250px",
+                maxWidth: "200px",
                 fontFamily: "'Comic Sans MS', 'Chalkboard SE', sans-serif",
               }}
             >
               <p
-                className="text-center"
+                className="text-center text-[0.7em]"
                 dangerouslySetInnerHTML={{ __html: gourouMessage.message }}
               />
             </div>

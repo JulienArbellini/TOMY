@@ -116,7 +116,7 @@ export default function ThreeDButton({  }: ThreeDButtonProps) {
           rotateX,
           rotateY,
           transformStyle: 'preserve-3d',
-          boxShadow: '0 10px 20px rgba(0, 0, 0, 0.25)',
+          boxShadow: '0 10px 20px rgba(0, 0, 0, 0.1)',
           scale: isPressed ? 0.99 : isHovered ? 1.01 : 1,
         }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
@@ -130,7 +130,7 @@ export default function ThreeDButton({  }: ThreeDButtonProps) {
                 alt="Button Image"
                 width={610}
                 height={150}
-                className="w-full"
+                className="w-full opacity-1"
                 // style={{
                 //   cursor: 'url("/images/cursor-button2.avif"), auto', // Ajouter le curseur personnalisé ici
                 // }}
@@ -138,10 +138,10 @@ export default function ThreeDButton({  }: ThreeDButtonProps) {
 
           {/* Overlay pour l'effet de reflet */}
           <motion.div
-            className="absolute top-0 left-0 w-full h-full pointer-events-none"
+            className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-1"
             style={{
               background,
-              mixBlendMode: 'overlay',
+              mixBlendMode: 'soft-light',
             }}
           />
         </div>
