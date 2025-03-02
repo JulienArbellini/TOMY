@@ -40,6 +40,8 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
   const [initialZoomIn, setInitialZoomIn] = useState(true);
   const [test, setTest] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  // Savoir si on a forcé le mute (pour pouvoir unmute plus tard)
+  const [wasMutedBeforePlayer, setWasMutedBeforePlayer] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // 🔸 1. Au montage du composant, on crée l'audio
@@ -71,6 +73,19 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
         setIsMuted(!isMuted);
       }
     };
+
+    const handleClosePlayer = () => {
+      // Si l'utilisateur n'était pas mute avant d'ouvrir le player,
+      // on rétablit le son
+      if (!wasMutedBeforePlayer && audioRef.current) {
+        audioRef.current.muted = false;
+        setIsMuted(false);
+      }
+    
+      // Fermer le lecteur
+      setSelectedItem(null);
+    };
+    
   
 
 
@@ -157,16 +172,23 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
       stopGlobalMouseMove();
     }
   };
+  const noMuteIcons = ["Machines", "Hermes", "Crew","Cuisine","Gourou","Magazine","Telephone"];
 
   // Clic sur icône
   const handleItemClick = (type: string, event?: React.MouseEvent) => {
     const item = items.find((it) => it.type === type);
     if (!item) return;
-
+    
     // Redirection
     if (item.type === "Siegevide" && onSiegeClick) {
       onSiegeClick()
       return;
+    }
+    setWasMutedBeforePlayer(isMuted);
+
+    if (audioRef.current && !isMuted) {
+      audioRef.current.muted = true;
+      setIsMuted(true);
     }
 
     // Sons divers
@@ -347,7 +369,7 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <UniversalPlayer
               {...selectedItem}
-              onClose={() => setSelectedItem(null)}
+              onClose={handleClosePlayer}
             />
           </div>
         )}
