@@ -34,8 +34,15 @@ export async function POST(request: Request) {
     const info = await transporter.sendMail({
       from: process.env.SENDER_EMAIL,
       to: toEmail || process.env.RECIPIENT_EMAIL,
-      subject: subject || "Votre Billet Personnalisé",
-      text: "Voici votre PDF en pièce jointe.",
+      subject: subject || `Votre Voyage avec Tomy Airlines`
+      ,
+      text: 
+      `Tomy Airlines a le plaisir de vous inviter pour un voyage musical 100% numérique : le premier vol en streaming du monde !
+Veuillez vous munir de votre carte d’embarcation et vous diriger vers le terminal : tomyairlines.com
+
+Bienvenue à bord !
+
+Tomy Stewart ✈️`,
       attachments: [
         {
           filename: "billet.pdf",
