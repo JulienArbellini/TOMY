@@ -148,19 +148,22 @@ const MixedDiaporama: React.FC<MixedDiaporamaProps> = ({
             width: `${scaledValue(675)}px`,
           }}
         />
-                  <img
+        {currentItem.src !== "https://res.cloudinary.com/dh3nxjopm/image/upload/v1740937199/mmck4s2rfckv67alfbpq.png" && (
+          <img
             src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
             alt="Écran noir lorsque la vidéo est en pause ou terminée"
             className="absolute"
   
             style={{
-              top: `${scaledValue(66)}px`,
+              top: `${scaledValue(65)}px`,
               left: `${scaledValue(47)}px`,
-              height: `${scaledValue(containerHeight)+10}px`,
-              width: `${scaledValue(containerWidth)+9}px`,
+              height: `${scaledValue(containerHeight)+16}px`,
+              width: `${scaledValue(containerWidth)+13}px`,
               // zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
             }}
           />
+  )}
+        
   
         {/* Boutons de fermeture et navigation */}
         <InteractiveButton defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif" hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif" clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif" onClick={onClose} style={{ position: "absolute", top: `${scaledValue(44)}px`, left: `${scaledValue(50)}px`, height: `${scaledValue(16)}px`, width: `${scaledValue(16)}px`, zIndex: 50 }} />

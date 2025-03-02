@@ -183,8 +183,8 @@ const Siege: React.FC<SiegeProps> = ({
             <div 
               className="absolute"
               style={{
-                left: `${scaledValue(135)}px`,   // Centre horizontalement
-                top: `${scaledValue(105)}px`,   // Ajustement fin pour coller à l'écran
+                left: `${scaledValue(165)}px`,   // Centre horizontalement
+                top: `${scaledValue(125)}px`,   // Ajustement fin pour coller à l'écran
                 width: `${scaledValue(440)}px`, // Taille ajustée pour correspondre à l'écran du siège
                 height: `${scaledValue(340)}px`, // Hauteur ajustée
                 // transform: "translate(-50%, -50%)", // Centre exactement

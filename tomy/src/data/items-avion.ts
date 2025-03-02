@@ -24,7 +24,7 @@ export const items = [
         { type: "video", src: "RS2jNCqCjPs" },
         { type: "image", src: "/images/content/Crew2.avif" },
       ],
-      frameType: "simple",
+      frameType: "ultrasimple",
       videoAutoplay: true,
       videoControls: false,
       action: "playSound",
@@ -487,7 +487,7 @@ export const items = [
       playerConfig: {
         type: "mixed",
         images: [
-          "/images/content/Relax/NowRelaxBlanc.avif",
+          "/images/content/Relax/NowRelax.avif",
           "/images/content/Relax/Haiku.avif",
         ],
         videos:[
@@ -495,7 +495,7 @@ export const items = [
           "PDy9SqFSHq4",
         ],
         media: [
-          { type: "image", src: "/images/content/Relax/NowRelaxBlanc.avif" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1740937199/mmck4s2rfckv67alfbpq.png" },
           { type: "video", src: "O27u1vVE0SQ" },
           { type: "image", src: "/images/content/Relax/Haiku.avif" },
           { type: "video", src: "PDy9SqFSHq4" },

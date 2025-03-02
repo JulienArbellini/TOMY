@@ -51,7 +51,7 @@ export const items = [
     type: "TomyIsland",
     playerConfig: {
       type: "video",
-      src: "RS2jNCqCjPs",
+      src: "kuWYuD7Phi4",
       frameType: "bleu",
       autoplay: false,
       loop: false,
@@ -134,13 +134,20 @@ export const items = [
     playerConfig: {
       type: "mixed",
       images: [
-        "/images/content/Crew1.avif",
-        "/images/content/Crew2.avif",
-        "/images/content/Crew3.avif",
-        "/images/content/Crew4.avif",
+        "/images/content/Relax/NowRelax.avif",
+        "/images/content/Relax/Haiku.avif",
       ],
-      frameType: "plante",
-      videoSrc: "RS2jNCqCjPs",
+      videos:[
+        "O27u1vVE0SQ",
+        "PDy9SqFSHq4",
+      ],
+      media: [
+        { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1740937199/mmck4s2rfckv67alfbpq.png" },
+        { type: "video", src: "O27u1vVE0SQ" },
+        { type: "image", src: "/images/content/Relax/Haiku.avif" },
+        { type: "video", src: "PDy9SqFSHq4" },
+      ],
+      frameType: "edgy",
       videoAutoplay: true,
       videoControls: false,
       // Affichage conditionnel entre images et vidéo
