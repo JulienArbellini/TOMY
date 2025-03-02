@@ -7,6 +7,7 @@ import DynamicButton from "../components/DynamicButton/DynamicButton";
 import InteractiveButton from "../components/GenericPlayer/InteractiveButton";
 import UniversalPlayer from "../components/GenericPlayer/UniversalPlayer";
 import { items } from "../../data/items-avion";
+import ControlButton from "../components/Player/ControlButton";
 
 // Types, interfaces...
 interface GourouMessage {
@@ -38,7 +39,38 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
   const mouseMoveRef = useRef<(e: MouseEvent) => void>();
   const [initialZoomIn, setInitialZoomIn] = useState(true);
   const [test, setTest] = useState(false);
-  
+  const [isMuted, setIsMuted] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // 🔸 1. Au montage du composant, on crée l'audio
+  useEffect(() => {
+    // S’il n’existe pas déjà, on le crée
+    if (!audioRef.current) {
+      audioRef.current = new Audio("/sounds/TomySoundScape.wav");
+      audioRef.current.loop = true;
+      audioRef.current.muted = isMuted; // on commence en mute pour éviter le blocage autoplay
+      // On lance l’audio
+      audioRef.current.play().catch((err) => {
+        console.warn("Autoplay bloqué, le son se lancera après interaction :", err);
+      });
+    }
+
+    return () => {
+      // Quand on quitte AvionMenu, on coupe le son
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+    // 🔸 2. Bouton mute / unmute
+    const handleMuteToggle = () => {
+      if (audioRef.current) {
+        audioRef.current.muted = !isMuted;
+        setIsMuted(!isMuted);
+      }
+    };
   
 
 
@@ -358,6 +390,21 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
         />
       </div>
 
+      <ControlButton
+          defaultIcon={isMuted ? "/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.avif": "/vectors/ELEMENTS/BoutonsPlayer/Mute.avif" }
+          hoverIcon={isMuted ? "/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.avif": "/vectors/ELEMENTS/BoutonsPlayer/MuteHover.avif"}
+          clickedIcon={isMuted ? "/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.avif": "/vectors/ELEMENTS/BoutonsPlayer/MuteClic.avif"}
+          onClick={handleMuteToggle}
+          style={{
+            position: "absolute",
+            bottom: "10px",
+            left: "10px",
+            zIndex: 9999,
+            height: `40px`,
+            width: `40px`,
+          }}
+          />
+
       {/* Tooltip "Brace" */}
       {tooltip.visible && (
         <div
@@ -376,7 +423,9 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
         </div>
       )}
     </div>
+    
   );
+  
 }
 
 export default AvionMenu

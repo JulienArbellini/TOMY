@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ThreeDButton from "./components/Start/ThreeDButton";
 import Announcement from "./components/Start/Announcement";
@@ -11,6 +11,7 @@ import BackgroundYoutube from "./components/BackgroundYoutube";
 import PlayerFrame from "./components/GenericPlayer/PlayerFrame";
 import UniversalPlayer from "./components/GenericPlayer/UniversalPlayer";
 import Siege from "./menu/Siege";
+import ControlButton from "./components/Player/ControlButton";
 
 /**
  * Composant principal "Home".
@@ -30,6 +31,10 @@ export default function Home() {
   // Bouton principal (ThreeDButton) visible ou non
   const [showButton, setShowButton] = useState(true);
 
+  const [hoveredIcons, setHoveredIcons] = useState<string[]>([]);
+
+  const [showPlay, setShowPlay] = useState(true);
+
 
   const [showSiege, setShowSiege] = useState(false);
 
@@ -39,18 +44,39 @@ export default function Home() {
 
   // Index du background : 0 => vidéo (bg1), 1 => image (bg2)
   const [activeBackgroundIndex, setActiveBackgroundIndex] = useState(0);
+  const handleMouseEnter = (type: string, event: React.MouseEvent) => {
+    setHoveredIcons((prev) => [...prev, type]);
+  }
+
+  const audioRefs = useRef<{ [key: string]: HTMLAudioElement | null }>({
+    playToggle: null,
+    announcement: null,
+    buzzAvion: null,
+  });
+
+  // Fonction pour arrêter tous les sons
+const stopAllAudio = () => {
+  Object.values(audioRefs.current).forEach(audio => {
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0; // Remettre au début pour éviter qu'ils ne reprennent
+    }
+  });
+};
 
 
-    // --- AJOUT : état isMuted
-    const [isMuted, setIsMuted] = useState(true);
-
-    const handleMuteToggle = () => {
+    const handlePlayToggle = () => {
+      const playAudio = audioRefs.current.playToggle;
+    
       if (currentStep === 0) {
         setCurrentStep(1);
+        setShowPlay(false);
         nextStep(1); // Lance le son1
       }
-      setIsMuted((prev) => !prev);
-      // Appliquer à un audio en cours si besoin
+    
+      if (playAudio) {
+        playAudio.play().catch(err => console.error("Erreur audio:", err));
+      }
     };
 
   /**
@@ -59,14 +85,14 @@ export default function Home() {
    * step 2 => lecture audio2 + annonce => fin => step3
    * step 3 => affiche la vidéo
    */
+  // Ton switch
   const nextStep = (step: number) => {
     switch (step) {
       case 1: {
         // Jouer le son 1
-        const audio1 = new Audio("/sounds/1_BuzzAvion.wav");
-        audio1.play();
-        audio1.onended = () => {
-          // Quand c'est fini, on passe à step2
+        audioRefs.current.buzzAvion = new Audio("/sounds/1_BuzzAvion.wav");
+        audioRefs.current.buzzAvion.play();
+        audioRefs.current.buzzAvion.onended = () => {
           setCurrentStep(2);
           nextStep(2);
         };
@@ -74,12 +100,10 @@ export default function Home() {
       }
 
       case 2: {
-        // Afficher l'annonce + jouer le son 2
         setShowAnnouncement(true);
-        const audio2 = new Audio("/sounds/2_Announcement.wav");
-        audio2.play();
-        audio2.onended = () => {
-          // Quand c'est fini, on retire l'annonce et on passe step3
+        audioRefs.current.announcement = new Audio("/sounds/2_Announcement.wav");
+        audioRefs.current.announcement.play();
+        audioRefs.current.announcement.onended = () => {
           setShowAnnouncement(false);
           setShowButton(false);
           setCurrentStep(3);
@@ -89,33 +113,30 @@ export default function Home() {
       }
 
       case 3: {
+        console.log("case 3");
         // setShowAvion(true);
-
+        setShowPlay(false)
+        setShowAnnouncement(false);
         setTimeout(() => {
           setHotesse(true);
         }, 2000);
-
+        break;
       }
-
-      // case 4: {
-      //   // Afficher la vidéo finale
-      //   setShowAvion(true);
-      //   // setTimeout(() => {
-      //   //   setHotesse(true);
-      //   // }, 3000);
-      //   break;
-      // }
 
       default:
         break;
     }
   };
+    
 
-  /**
-   * Au clic du bouton principal.
-   * Lance step1 et cache le bouton.
-   */
   const handleButtonClick = () => {
+    stopAllAudio(); // Stoppe tous les sons actifs
+  
+    // Réinitialisation des états conflictuels
+    setShowAnnouncement(false);
+    setShowPlay(false);
+  
+    // Avancer au step suivant
     setShowButton(false);
     setCurrentStep(1);
     nextStep(3);
@@ -234,18 +255,23 @@ export default function Home() {
 
 
 
+        {showPlay &&
 
-        <DynamicButton
-          defaultIcon={isMuted ? "/vectors/ELEMENTS/BoutonsPlayer/Play.avif" : "/vectors/ELEMENTS/BoutonsPlayer/Pause.avif"}
-          hoverIcon={isMuted ? "/vectors/ELEMENTS/BoutonsPlayer/PlayHover.avif" : "/vectors/ELEMENTS/BoutonsPlayer/PauseHover.avif"}
-          onClick={handleMuteToggle}
+          <ControlButton
+          defaultIcon={"/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.avif"}
+          hoverIcon={"/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.avif"}
+          clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.avif"
+          onClick={handlePlayToggle}
           style={{
             position: "absolute",
             bottom: "10px",
             left: "10px",
             zIndex: 9999,
+            height: `40px`,
+            width: `40px`,
           }}
-        />
+          />
+        }
 
         
       </div>
