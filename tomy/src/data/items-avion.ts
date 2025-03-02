@@ -456,7 +456,7 @@ export const items = [
       width:39,
       playerConfig: {
         type: "video",
-        src: "Hw-zmhtuN9o",
+        src: "DM930C8mnhU",
         frameType: "cadre1",
         autoplay: false,
         loop: false,
