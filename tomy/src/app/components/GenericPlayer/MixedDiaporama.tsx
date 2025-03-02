@@ -154,10 +154,10 @@ const MixedDiaporama: React.FC<MixedDiaporamaProps> = ({
             className="absolute"
   
             style={{
-              top: `${scaledValue(65)}px`,
+              top: `${scaledValue(66)}px`,
               left: `${scaledValue(47)}px`,
-              height: `${scaledValue(containerHeight)+18}px`,
-              width: `${scaledValue(containerWidth)+13}px`,
+              height: `${scaledValue(containerHeight)+10}px`,
+              width: `${scaledValue(containerWidth)+9}px`,
               // zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
             }}
           />

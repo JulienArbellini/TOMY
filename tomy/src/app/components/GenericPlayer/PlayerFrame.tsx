@@ -217,8 +217,8 @@ const handleExitClick = () => {
           style={{
             top: `${scaledValue(72)}px`,
             left: `${scaledValue(32)}px`,
-            height: `${scaledValue(containerHeight+8)}px`,
-            width: `${scaledValue(containerWidth)+15}px`,
+            height: `${scaledValue(containerHeight+10)}px`,
+            width: `${scaledValue(containerWidth)+8}px`,
             zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
           }}
         />
