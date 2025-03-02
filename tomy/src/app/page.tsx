@@ -44,21 +44,6 @@ export default function Home() {
     // --- AJOUT : état isMuted
     const [isMuted, setIsMuted] = useState(true);
 
-  /**
-   * Passe au background 2 (bg2)
-   */
-  const changeBackgroundToBg2 = () => {
-    setActiveBackgroundIndex(1);
-  };
-
-  /**
-   * Reviens au background 1 (bg1) - la vidéo
-   */
-  const changeBackgroundToBg1 = () => {
-    setActiveBackgroundIndex(0);
-  };
-
-    // Toggle mute
     const handleMuteToggle = () => {
       if (currentStep === 0) {
         setCurrentStep(1);
@@ -91,12 +76,12 @@ export default function Home() {
       case 2: {
         // Afficher l'annonce + jouer le son 2
         setShowAnnouncement(true);
-        changeBackgroundToBg1(); // retour à bg1
         const audio2 = new Audio("/sounds/2_Announcement.wav");
         audio2.play();
         audio2.onended = () => {
           // Quand c'est fini, on retire l'annonce et on passe step3
           setShowAnnouncement(false);
+          setShowButton(false);
           setCurrentStep(3);
           nextStep(3);
         };
@@ -104,11 +89,11 @@ export default function Home() {
       }
 
       case 3: {
-        setShowAvion(true);
+        // setShowAvion(true);
 
-        // setTimeout(() => {
-        //   setHotesse(true);
-        // }, 2000);
+        setTimeout(() => {
+          setHotesse(true);
+        }, 2000);
 
       }
 
@@ -215,18 +200,12 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        {/* 
-          Annonce (step2) 
-          Affichée si showAnnouncement === true 
-        */}
+
         <AnimatePresence>
           {showAnnouncement && <Announcement audioUrl="/sounds/2_Announcement.wav" />}
         </AnimatePresence>
 
-        {/* 
-          Vidéo finale (step3) 
-          Affichée si showVideo === true 
-        */}
+
         <AnimatePresence>
           {showAvion && !showSiege && <AvionMenu onSiegeClick={() => setShowSiege(true)} />}
         </AnimatePresence>
@@ -234,7 +213,7 @@ export default function Home() {
         {showSiege && <Siege onPlaneClick={() => setShowSiege(false)} />}
 
         
-        {/* {showHotesse &&
+        {showHotesse &&
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">             
           <PlayerFrame
           playerRef={playerRef}
@@ -250,7 +229,7 @@ export default function Home() {
           controls={false}
           />
         </div>
-        } */}
+        }
 
 
 
