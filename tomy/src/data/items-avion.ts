@@ -69,15 +69,17 @@ export const items = [
       y: 568-40,
       width:115-40,
       playerConfig: {
-        type: "mixed",
+        type: "diaporama",
         images: [
-          "/images/content/Crew1.avif",
-          "/images/content/Crew2.avif",
-          "/images/content/Crew3.avif",
-          "/images/content/Crew4.avif",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1740928584/ofaupiye2nvil614rdtv.png",
         ],
         videos:[
           "RS2jNCqCjPs",
+        ],
+        media: [
+          { type: "image", src: "/images/content/Cigarette/Smoking.avif" },
+          { type: "video", src: "ZL0xeOWVOcY" },
+          { type: "video", src: "v_yCZ442xuk" },
         ],
         frameType: "bois",
         videoAutoplay: true,

@@ -46,7 +46,7 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
   useEffect(() => {
     // S’il n’existe pas déjà, on le crée
     if (!audioRef.current) {
-      audioRef.current = new Audio("/sounds/TomySoundScape.wav");
+      audioRef.current = new Audio("https://res.cloudinary.com/dh3nxjopm/video/upload/v1740928240/kjoi3kdi4o5leogkfipp.wav");
       audioRef.current.loop = true;
       audioRef.current.muted = isMuted; // on commence en mute pour éviter le blocage autoplay
       // On lance l’audio
