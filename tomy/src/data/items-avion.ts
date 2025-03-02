@@ -8,7 +8,7 @@ export const items = [
     y: 507-32,
     width: 296-100,
     playerConfig: {
-      type: "mixed",
+      type: "video-automatique",
       images: [
         "/images/content/Crew1.avif",
         "/images/content/Crew2.avif",
@@ -16,8 +16,9 @@ export const items = [
         "/images/content/Crew4.avif",
       ],
       videos:[
-        "RS2jNCqCjPs",
+        "kuWYuD7Phi4",
       ],
+      src:"kuWYuD7Phi4",
       media: [
         { type: "image", src: "/images/content/Crew1.avif" },
         { type: "video", src: "RS2jNCqCjPs" },
@@ -551,9 +552,14 @@ export const items = [
       y: 595-52,
       width: 31,
       playerConfig: {
-        type: "video-automatique",
+        type: "mixed",
         src: "jQZPmkoKuW0",
         frameType: "ultrasimple",
+        media: [
+          { type: "video", src: "H0K_CDoRDMk" },
+          // { type: "image", src: "/images/content/Shop/CoucherDeSoleil.avif" },
+          { type: "video", src: "h5oPoCPFK20" },
+        ],
         autoplay: true,
         loop: true,
         controls: false,
