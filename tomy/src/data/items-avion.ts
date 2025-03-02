@@ -79,6 +79,7 @@ export const items = [
         media: [
           { type: "image", src: "/images/content/Cigarette/Smoking.avif" },
           { type: "video", src: "ZL0xeOWVOcY" },
+          { type: "image", src: "/images/content/Cigarette/Smoking.avif" },
           { type: "video", src: "v_yCZ442xuk" },
         ],
         frameType: "bois",
@@ -142,6 +143,7 @@ export const items = [
         media: [
           { type: "image", src: "/images/content/Cigarette/Smoking.avif" },
           { type: "video", src: "ZL0xeOWVOcY" },
+          { type: "image", src: "/images/content/Cigarette/Smoking.avif" },
           { type: "video", src: "v_yCZ442xuk" },
         ],
         images: [
@@ -195,10 +197,7 @@ export const items = [
       playerConfig: {
         type: "diaporama",
         images: [
-          "/images/content/Crew1.avif",
-          "/images/content/Crew2.avif",
-          "/images/content/Crew3.avif",
-          "/images/content/Crew4.avif",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1740932692/uv9dqer8j4zybxmrlpld.png",
         ],
         frameType: "simple",
         controls: true,
@@ -457,7 +456,7 @@ export const items = [
       width:39,
       playerConfig: {
         type: "video",
-        src: "RS2jNCqCjPs",
+        src: "Hw-zmhtuN9o",
         frameType: "cadre1",
         autoplay: false,
         loop: false,
@@ -559,7 +558,7 @@ export const items = [
         frameType: "ultrasimple",
         media: [
           { type: "video", src: "H0K_CDoRDMk" },
-          // { type: "image", src: "/images/content/Shop/CoucherDeSoleil.avif" },
+          { type: "image", src: "/images/content/Crew1.avif" },
           { type: "video", src: "h5oPoCPFK20" },
         ],
         autoplay: true,

@@ -186,7 +186,7 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
     }
     setWasMutedBeforePlayer(isMuted);
 
-    if (audioRef.current && !isMuted) {
+    if (audioRef.current && !isMuted && !noMuteIcons.includes(type)) {
       audioRef.current.muted = true;
       setIsMuted(true);
     }

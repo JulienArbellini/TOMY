@@ -6,7 +6,7 @@ export const items = [
     type: "MOVIES",
     playerConfig: {
       type: "video",
-      src: "RS2jNCqCjPs",
+      src: "Hw-zmhtuN9o",
       frameType: "cadre1",
       autoplay: false,
       loop: false,

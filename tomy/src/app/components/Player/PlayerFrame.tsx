@@ -23,6 +23,7 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
   const containerWidth = 590; // Largeur du conteneur en px
   const containerHeight = 437; // Hauteur du conteneur en px
 
+
   if(frameSrc == '/vectors/ELEMENTS/Cadres/CadreEdgy.avif'){
     return (
       <div
@@ -130,10 +131,10 @@ const PlayerFrame: React.FC<PlayerFrameProps> = ({
             alt="Écran noir lorsque la vidéo est en pause ou terminée"
             className="absolute"
             style={{
-              top: `${scaledValue(47)}px`,
-              left: `${scaledValue(29)}px`,
-              height: `${scaledValue(containerHeight)}px`,
-              width: `${scaledValue(containerWidth)}px`,
+              top: `${scaledValue(43)}px`,
+              left: `${scaledValue(26)}px`,
+              height: `${scaledValue(containerHeight+8)}px`,
+              width: `${scaledValue(containerWidth+6)}px`,
               zIndex: isPlayingAndDelay || isVideoEnded ? 20 : 0,
             }}
           />
