@@ -45,26 +45,26 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // 🔸 1. Au montage du composant, on crée l'audio
-  useEffect(() => {
-    // S’il n’existe pas déjà, on le crée
-    if (!audioRef.current) {
-      audioRef.current = new Audio("https://res.cloudinary.com/dh3nxjopm/video/upload/v1740928240/kjoi3kdi4o5leogkfipp.wav");
-      audioRef.current.loop = true;
-      audioRef.current.muted = isMuted; // on commence en mute pour éviter le blocage autoplay
-      // On lance l’audio
-      audioRef.current.play().catch((err) => {
-        console.warn("Autoplay bloqué, le son se lancera après interaction :", err);
-      });
-    }
+  // useEffect(() => {
+  //   // S’il n’existe pas déjà, on le crée
+  //   if (!audioRef.current) {
+  //     audioRef.current = new Audio("https://res.cloudinary.com/dh3nxjopm/video/upload/v1740928240/kjoi3kdi4o5leogkfipp.wav");
+  //     audioRef.current.loop = true;
+  //     audioRef.current.muted = isMuted; // on commence en mute pour éviter le blocage autoplay
+  //     // On lance l’audio
+  //     audioRef.current.play().catch((err) => {
+  //       console.warn("Autoplay bloqué, le son se lancera après interaction :", err);
+  //     });
+  //   }
 
-    return () => {
-      // Quand on quitte AvionMenu, on coupe le son
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-    };
-  }, []);
+  //   return () => {
+  //     // Quand on quitte AvionMenu, on coupe le son
+  //     if (audioRef.current) {
+  //       audioRef.current.pause();
+  //       audioRef.current = null;
+  //     }
+  //   };
+  // }, []);
 
     // 🔸 2. Bouton mute / unmute
     const handleMuteToggle = () => {
@@ -415,7 +415,7 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
         />
       </div>
 
-      <ControlButton
+      {/* <ControlButton
           defaultIcon={isMuted ? "/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.avif": "/vectors/ELEMENTS/BoutonsPlayer/Mute.avif" }
           hoverIcon={isMuted ? "/vectors/ELEMENTS/BoutonsPlayer/VolumeUpHover.avif": "/vectors/ELEMENTS/BoutonsPlayer/MuteHover.avif"}
           clickedIcon={isMuted ? "/vectors/ELEMENTS/BoutonsPlayer/VolumeUpClic.avif": "/vectors/ELEMENTS/BoutonsPlayer/MuteClic.avif"}
@@ -428,7 +428,7 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
             height: `40px`,
             width: `40px`,
           }}
-          />
+          /> */}
 
       {/* Tooltip "Brace" */}
       {tooltip.visible && (
