@@ -44,6 +44,12 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
 
   const scaledValue = (value: number) => value * scale;
 
+  const backgrounds = [
+    "/VERSION_MOBILE/ELEMENTS/Fonds/AvionVertical.png",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/Paysage1.jpeg",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/Paysage2.webp"
+  ];
+
   useEffect(() => {
     const handleResize = () => {
       const windowWidth = window.innerWidth;
@@ -153,6 +159,10 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
       setIsPlaying(!isPlaying);
     }
   };
+
+  const togglePaysage = () => {
+    setBackgroundIndex((prev) => (prev + 1) % backgrounds.length);
+  };
   
 
   const toggleMute = () => {
@@ -236,11 +246,14 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
     );
   };
 
+  const [backgroundIndex, setBackgroundIndex] = useState(0);
+  const currentBackground = backgrounds[backgroundIndex];
+  
   return (
     <div 
     className="h-screen w-full flex justify-center"
     style={{ 
-      backgroundImage: `url(${frameSrc})`,
+      backgroundImage: `url(${currentBackground})`,
       backgroundSize: "cover"
      }}
     >
@@ -259,7 +272,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
           alt="Cadre décoratif autour du contenu"
           style={{
             height: `${scaledValue(17)}px`,
-            width: `${scaledValue(566)}px`,
+            width: `${scaledValue(565)}px`,
           }}
         />
 
@@ -282,9 +295,9 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
           ref={canvasContainerRef}
           className="absolute w-full flex justify-center items-center"
           style={{
-            top: `${scaledValue(18)}px`,
+            top: `${scaledValue(17)}px`,
             left: `${scaledValue(6)}px`,
-            height: `${scaledValue(350)}px`,
+            height: `${scaledValue(410)}px`,
             width: `${scaledValue(564)}px`,
 
             backgroundColor: "black",
@@ -399,6 +412,40 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
               left: `${scaledValue(188)}px`,
               width: `${scaledValue(197)}px`,
               height: `${scaledValue(197)}px`,
+              backgroundSize: "contain",
+              background: "contain",
+              backgroundRepeat: "no-repeat"
+            }}
+          />
+          {/* Changer de fond */}
+          <AudioControlButton
+            defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Paysage/Paysage.png"
+            hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Paysage/PaysageHover.png"
+            clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Paysage/PaysageClic.png"            
+            onClick={togglePaysage}
+            style={{
+              position: "absolute",
+              bottom: `${scaledValue(-305)}px`,
+              left: `${scaledValue(130)}px`,
+              width: `${scaledValue(125)}px`,
+              height: `${scaledValue(125)}px`,
+              backgroundSize: "contain",
+              background: "contain",
+              backgroundRepeat: "no-repeat"
+            }}
+          />
+          {/* Play/Pause */}
+          <AudioControlButton
+            defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Shuffle/Shuffle.png"
+            hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Shuffle/ShuffleHover.png"
+            clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Shuffle/ShuffleClic.png"            
+            onClick={togglePlayPause}
+            style={{
+              position: "absolute",
+              bottom: `${scaledValue(-305)}px`,
+              right: `${scaledValue(132)}px`,
+              width: `${scaledValue(125)}px`,
+              height: `${scaledValue(125)}px`,
               backgroundSize: "contain",
               background: "contain",
               backgroundRepeat: "no-repeat"
