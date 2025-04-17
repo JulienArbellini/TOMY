@@ -45,7 +45,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const scaledValue = (value: number) => value * scale;
 
   const backgrounds = [
-    "/VERSION_MOBILE/ELEMENTS/Fonds/AvionVertical.png",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/AvionVerticalPlein.png",
     "/VERSION_MOBILE/ELEMENTS/Fonds/Paysage1.jpeg",
     "/VERSION_MOBILE/ELEMENTS/Fonds/Paysage2.webp"
   ];
@@ -140,13 +140,40 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   }, [p5Instance, scale]);
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.src = currentTrack.src;
-      if (isPlaying) {
-        audioRef.current.play();
+    const audio = audioRef.current;
+    if (!audio) return;
+  
+    audio.src = currentTrack.src;
+  
+    const playWhenReady = async () => {
+      try {
+        if (isPlaying) {
+          await audio.play();
+        }
+      } catch (err) {
+        console.warn("Impossible de jouer l'audio :", err);
       }
-    }
-  }, [currentTrackIndex]);
+    };
+  
+    // Important : attendre un tick pour que le src soit bien pris en compte
+    setTimeout(playWhenReady, 50);
+  
+  }, [currentTrackIndex, isPlaying, currentTrack.src]);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+  
+    const handleEnded = () => {
+      setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % trackList.length);
+    };
+  
+    audio.addEventListener("ended", handleEnded);
+  
+    return () => {
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, [trackList.length]);
 
   // **Actions des contrôles personnalisés**
   const togglePlayPause = () => {
@@ -182,6 +209,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
 
   const decreaseVolume = () => {
     if (audioRef.current) {
+      console.log("decrease");
       const newVolume = Math.max(volume - 0.1, 0);
       audioRef.current.volume = newVolume;
       setVolume(newVolume);
@@ -385,13 +413,13 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
           {/* Volume Down */}
           <AudioControlButton
             defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/VolumeDown/VolumeDown.png"
-            hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/VolumeDown/VolumeDownHover.png"
+            hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/VolumeDown/VolumeDownClic.png"
             clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/VolumeDown/VolumeDownClic.png"
             onClick={decreaseVolume}
             style={{
               position: "absolute",
-              bottom: `${scaledValue(-321)}px`,
-              left: `${scaledValue(209)}px`,
+              bottom: `${scaledValue(-320)}px`,
+              left: `${scaledValue(212)}px`,
               width: `${scaledValue(150)}px`,
               height: `${scaledValue(150)}px`,
               backgroundSize: "contain",
@@ -403,7 +431,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
           {/* Play/Pause */}
           <AudioControlButton
             defaultIcon={isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/Pause/Pause.png" : "/VERSION_MOBILE/ELEMENTS/Boutons/Play/Play.png"}
-            hoverIcon={isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/Pause/Pause.png" : "/VERSION_MOBILE/ELEMENTS/Boutons/Play/PlayClic.png"}
+            hoverIcon={isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/Pause/PauseClic.png" : "/VERSION_MOBILE/ELEMENTS/Boutons/Play/PlayClic.png"}
             clickedIcon={isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/Pause/PauseClic.png" : "/VERSION_MOBILE/ELEMENTS/Boutons/Play/PlayClic.png"}
             onClick={togglePlayPause}
             style={{
@@ -425,16 +453,16 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
             onClick={togglePaysage}
             style={{
               position: "absolute",
-              bottom: `${scaledValue(-305)}px`,
-              left: `${scaledValue(130)}px`,
-              width: `${scaledValue(125)}px`,
-              height: `${scaledValue(125)}px`,
+              bottom: `${scaledValue(-312)}px`,
+              left: `${scaledValue(119)}px`,
+              width: `${scaledValue(135)}px`,
+              height: `${scaledValue(135)}px`,
               backgroundSize: "contain",
               background: "contain",
               backgroundRepeat: "no-repeat"
             }}
           />
-          {/* Play/Pause */}
+          {/* Shuffle */}
           <AudioControlButton
             defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Shuffle/Shuffle.png"
             hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Shuffle/ShuffleHover.png"
@@ -442,15 +470,17 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
             onClick={togglePlayPause}
             style={{
               position: "absolute",
-              bottom: `${scaledValue(-305)}px`,
-              right: `${scaledValue(132)}px`,
-              width: `${scaledValue(125)}px`,
-              height: `${scaledValue(125)}px`,
+              bottom: `${scaledValue(-312)}px`,
+              right: `${scaledValue(128)}px`,
+              width: `${scaledValue(135)}px`,
+              height: `${scaledValue(135)}px`,
               backgroundSize: "contain",
               background: "contain",
               backgroundRepeat: "no-repeat"
             }}
           />
+
+
 
           {/* Close */}
           {/* <AudioControlButton
