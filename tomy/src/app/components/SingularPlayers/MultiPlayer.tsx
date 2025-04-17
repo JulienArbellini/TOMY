@@ -37,6 +37,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const [volume, setVolume] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isPortrait, setIsPortrait] = useState(window.innerHeight > window.innerWidth);
+  const mediaElementSourceRef = useRef<MediaElementAudioSourceNode | null>(null);
 
   // Créer une liste de pistes
   const trackList: Track[] = tracks || [{ src: src!, title }];
@@ -118,9 +119,15 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
 
           if (audioRef.current) {
             const audioContext = p.getAudioContext();
-            const mediaElement = audioContext.createMediaElementSource(audioRef.current);
-            mediaElement.connect(audioContext.destination);
-            fft.setInput(mediaElement);
+          
+            // Création unique du mediaElementSource
+            if (!mediaElementSourceRef.current) {
+              const mediaSource = audioContext.createMediaElementSource(audioRef.current);
+              mediaSource.connect(audioContext.destination);
+              mediaElementSourceRef.current = mediaSource;
+            }
+          
+            fft.setInput(mediaElementSourceRef.current);
           }
         };
 
@@ -152,6 +159,8 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
     };
   }, []);
 
+
+
   useEffect(() => {
     if (p5Instance) {
       // On attend le prochain rafraîchissement d'affichage
@@ -161,53 +170,142 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
     }
   }, [p5Instance, scale]);
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
+  // useEffect(() => {
+  //   const audio = audioRef.current;
+  //   if (!audio) return;
   
-    audio.src = currentTrack.src;
+  //   audio.src = currentTrack.src;
   
-    const playWhenReady = async () => {
-      try {
-        if (isPlaying) {
-          await audio.play();
-        }
-      } catch (err) {
-        console.warn("Impossible de jouer l'audio :", err);
-      }
-    };
+  //   const playWhenReady = async () => {
+  //     try {
+  //       if (isPlaying) {
+  //         await audio.play();
+  //       }
+  //     } catch (err) {
+  //       console.warn("Impossible de jouer l'audio :", err);
+  //     }
+  //   };
   
-    // Important : attendre un tick pour que le src soit bien pris en compte
-    setTimeout(playWhenReady, 50);
+  //   // Important : attendre un tick pour que le src soit bien pris en compte
+  //   setTimeout(playWhenReady, 50);
   
-  }, [currentTrackIndex, isPlaying, currentTrack.src]);
+  // }, [currentTrackIndex, isPlaying, currentTrack.src]);
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
+  // useEffect(() => {
+  //   const audio = audioRef.current;
+  //   if (!audio) return;
   
-    const handleEnded = () => {
-      setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % trackList.length);
-    };
+  //   const handleEnded = () => {
+  //     setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % trackList.length);
+  //   };
   
-    audio.addEventListener("ended", handleEnded);
+  //   audio.addEventListener("ended", handleEnded);
   
-    return () => {
-      audio.removeEventListener("ended", handleEnded);
-    };
-  }, [trackList.length]);
+  //   return () => {
+  //     audio.removeEventListener("ended", handleEnded);
+  //   };
+  // }, [trackList.length]);
+
+
 
   // **Actions des contrôles personnalisés**
-  const togglePlayPause = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
+  // const togglePlayPause = async () => {
+  //   if (!audioRef.current) return;
+  
+  //   const audio = audioRef.current;
+  
+  //   // 🔧 On récupère ou crée le contexte
+  //   const audioContext =
+  //     (window as any).p5?.getAudioContext?.() ||
+  //     new (window.AudioContext || window.webkitAudioContext)();
+  
+  //   // 🧠 On le "resume" systématiquement dans l'interaction utilisateur
+  //   if (audioContext.state === "suspended") {
+  //     await audioContext.resume();
+  //     console.log("🔊 AudioContext resumed");
+  //   }
+  
+  //   try {
+  //     // 🎧 Création de la source audio (si pas encore faite)
+  //     if (!mediaElementSourceRef.current) {
+  //       const source = audioContext.createMediaElementSource(audio);
+  //       source.connect(audioContext.destination);
+  //       mediaElementSourceRef.current = source;
+  //     }
+  
+  //     if (audio.paused) {
+  //       await audio.load();
+  //       await audio.play();
+  //       console.log("▶️ Lecture démarrée");
+  //       setIsPlaying(true);
+  //     } else {
+  //       audio.pause();
+  //       console.log("⏸️ Lecture mise en pause");
+  //       setIsPlaying(false);
+  //     }
+  //   } catch (e) {
+  //     console.warn("❌ Erreur lors de la lecture audio :", e);
+  //   }
+  // };
+  const togglePlayPause = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+  
+    // 1) Résume le AudioContext de p5 (ou natif)
+    const audioContext = (window as any).p5?.getAudioContext?.() || new AudioContext();
+    if (audioContext.state === "suspended") {
+      await audioContext.resume();
+      console.log("🔊 AudioContext resumed");
+    }
+  
+    // 2) On joue ou on met en pause directement l’élément <audio>
+    if (audio.paused) {
+      try {
+        await audio.play();
+        console.log("▶️ Lecture démarrée");
+        setIsPlaying(true);
+      } catch (err) {
+        console.warn("❌ Impossible de jouer :", err);
       }
-      setIsPlaying(!isPlaying);
+    } else {
+      audio.pause();
+      console.log("⏸️ Lecture mise en pause");
+      setIsPlaying(false);
     }
   };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+  
+    const handleError = () => {
+      const error = audio.error;
+      if (error) {
+        console.error("🎧 Erreur audio détectée :", {
+          code: error.code,
+          message: (() => {
+            switch (error.code) {
+              case 1: return "MEDIA_ERR_ABORTED - L'utilisateur a annulé la lecture.";
+              case 2: return "MEDIA_ERR_NETWORK - Une erreur de réseau s’est produite.";
+              case 3: return "MEDIA_ERR_DECODE - Une erreur de décodage a empêché la lecture.";
+              case 4: return "MEDIA_ERR_SRC_NOT_SUPPORTED - Format non supporté ou fichier introuvable.";
+              default: return "Erreur inconnue.";
+            }
+          })()
+        });
+      } else {
+        console.warn("⚠️ Événement 'error' capturé, mais aucun objet d'erreur détecté.");
+      }
+    };
+  
+    audio.addEventListener("error", handleError);
+  
+    return () => {
+      audio.removeEventListener("error", handleError);
+    };
+  }, []);
+
+
 
   const togglePaysage = () => {
     setBackgroundIndex((prev) => (prev + 1) % backgrounds.length);
@@ -526,7 +624,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
         <audio
           ref={audioRef}
           src={currentTrack.src}
-          autoPlay={autoplay}
+          autoPlay={false}
           controls={false}
           style={{ display: 'none' }}
         />

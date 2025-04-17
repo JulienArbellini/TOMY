@@ -18,6 +18,8 @@ export default function RootLayout({
     <html lang="en">
             <head>
         {/* Ajoutez les liens de préchargement ici */}
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"></meta>
         <link
           rel="preload"
           href="/OPTIMIZED_PLAYER/Play.avif"
