@@ -35,6 +35,8 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const [isPlaying, setIsPlaying] = useState(autoplay);
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(1);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isPortrait, setIsPortrait] = useState(window.innerHeight > window.innerWidth);
 
   // Créer une liste de pistes
   const trackList: Track[] = tracks || [{ src: src!, title }];
@@ -49,22 +51,42 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
     "/VERSION_MOBILE/ELEMENTS/Fonds/Paysage1.jpeg",
     "/VERSION_MOBILE/ELEMENTS/Fonds/Paysage2.webp"
   ];
+  
+  
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+
 
   useEffect(() => {
     const handleResize = () => {
+      setIsPortrait(window.innerHeight > window.innerWidth);
       const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+    
       const originalWidth = 556;
-      const originalHeight = 337;
+      const originalHeight = 17 + 60 + 280 + 197 + 30; // cadre + titre + canvas + bouton + marges
       const ratio = originalHeight / originalWidth;
     
-      const maxWidth = windowWidth*0.9;
-      const maxHeight = maxWidth * ratio;
+      const isPortrait = windowHeight > windowWidth;
     
-      const scaleWidth = maxWidth / originalWidth;
-      const scaleHeight = maxHeight / originalHeight;
+      let maxWidth: number;
+      let maxHeight: number;
     
-      const newScale = Math.min(scaleWidth, scaleHeight);
-      setScale(newScale);
+      if (isPortrait) {
+        maxWidth = windowWidth * 0.9;
+        maxHeight = maxWidth * ratio;
+        const scaleWidth = maxWidth / originalWidth;
+        const scaleHeight = maxHeight / originalHeight;
+      
+        const newScale = Math.min(scaleWidth, scaleHeight);
+        setScale(newScale);
+      } else {
+        const maxHeight = windowHeight * 0.8;
+        const scaleHeight = maxHeight / originalHeight;
+        setScale(scaleHeight);
+      }
+    
+
     };
   
     handleResize();
@@ -280,6 +302,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   return (
     <div 
     className="h-screen w-full flex justify-center"
+    ref={containerRef}
     style={{ 
       backgroundImage: `url(${currentBackground})`,
       backgroundSize: "cover"
@@ -289,9 +312,12 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
         className="relative flex flex-col items-center"
         style={{
 
-          top: `${scaledValue(115)}px`,
-          height: `${scaledValue(337)}px`,
+          top: isPortrait ?`${scaledValue(115)}px` : `${scaledValue(30)}px`,
+          // height: `${scaledValue(337)}px`,
           width: `${scaledValue(576)}px`,
+          height: isPortrait
+          ? `${scaledValue(337)}px`
+          : `${window.innerHeight * 0.9}px`,
         }}
       >
         {/* Cadre décoratif */}
@@ -343,7 +369,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
           onClick={playPreviousTrack}
           style={{
             position: "absolute",
-            bottom: `${scaledValue(-236)}px`,
+            top: `${scaledValue(426)}px`,
             left: `${scaledValue(6)}px`,
             width: `${scaledValue(150)}px`,
             height: `${scaledValue(150)}px`,
@@ -363,7 +389,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
             onClick={playNextTrack}
             style={{
               position: "absolute",
-              bottom: `${scaledValue(-236)}px`,
+              top: `${scaledValue(426)}px`,
               right: `${scaledValue(6)}px`,
               width: `${scaledValue(150)}px`,
               height: `${scaledValue(150)}px`,
@@ -382,7 +408,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
             onClick={increaseVolume}
             style={{
               position: "absolute",
-              bottom: `${scaledValue(-198)}px`,
+              top: `${scaledValue(415)}px`,
               right: `${scaledValue(112)}px`,
               width: `${scaledValue(120)}px`,
               height: `${scaledValue(120)}px`,
@@ -400,7 +426,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
             onClick={toggleMute}
             style={{
               position: "absolute",
-              bottom: `${scaledValue(-198)}px`,
+              top: `${scaledValue(415)}px`,
               left: `${scaledValue(122)}px`,
               width: `${scaledValue(120)}px`,
               height: `${scaledValue(120)}px`,
@@ -418,7 +444,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
             onClick={decreaseVolume}
             style={{
               position: "absolute",
-              bottom: `${scaledValue(-320)}px`,
+              top: `${scaledValue(505)}px`,
               left: `${scaledValue(212)}px`,
               width: `${scaledValue(150)}px`,
               height: `${scaledValue(150)}px`,
@@ -436,7 +462,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
             onClick={togglePlayPause}
             style={{
               position: "absolute",
-              bottom: `${scaledValue(-255)}px`,
+              top: `${scaledValue(395)}px`,
               left: `${scaledValue(188)}px`,
               width: `${scaledValue(197)}px`,
               height: `${scaledValue(197)}px`,
@@ -453,7 +479,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
             onClick={togglePaysage}
             style={{
               position: "absolute",
-              bottom: `${scaledValue(-312)}px`,
+              top: `${scaledValue(512)}px`,
               left: `${scaledValue(119)}px`,
               width: `${scaledValue(135)}px`,
               height: `${scaledValue(135)}px`,
@@ -470,7 +496,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
             onClick={togglePlayPause}
             style={{
               position: "absolute",
-              bottom: `${scaledValue(-312)}px`,
+              top: `${scaledValue(512)}px`,
               right: `${scaledValue(128)}px`,
               width: `${scaledValue(135)}px`,
               height: `${scaledValue(135)}px`,
