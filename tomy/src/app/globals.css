@@ -79,4 +79,128 @@ body {
   100% { transform: translate(-50%, -50%) translateX(0); }
 }
 
+/* --- Mode portrait --- */
+@media screen and (orientation: portrait) and (max-width: 768px) {
+  
+  html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;       /* empêche le scroll */
+  height: 100%;
+  touch-action: none;     /* facultatif si tu veux éviter les rebonds */
+}
+  
+  #orientation-wrapper {
+    /* Ici, on NE veut PAS de rotation */
+    transform: none;
+    transform-origin: center center;
+
+    /* On remplit l'écran verticalement */
+    width: 100vw;
+    height: 100vh;
+
+    /* En option, background, etc. */
+    background: blue;
+    position: relative;
+    top: 0;
+    left: 0;
+    translate: 0;
+    overflow: auto; /* ou hidden, comme tu veux */
+    z-index: 9999; /* si nécessaire */
+  }
+}
+
+/* --- Mode paysage --- */
+@media screen and (orientation: landscape) and (max-width: 968px) {
+  
+  html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;       /* empêche le scroll */
+  height: 100%;
+  touch-action: none;     /* facultatif si tu veux éviter les rebonds */
+}
+  
+  #orientation-wrapper {
+    /* Ici, on applique la rotation pour que l'interface reste verticale */
+    transform: rotate(-90deg);
+    transform-origin: center center;
+
+    /* On inverse largeur et hauteur pour qu'en paysage, tout l'écran soit rempli */
+    width: 100vh; 
+    height: 100vw;
+
+    /* On centre l'élément pivoté au milieu de l'écran */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+
+    /* On met un fond noir */
+    background: blue;
+    /* On masque ce qui dépasse */
+    overflow: hidden;
+    z-index: 9999;
+  }
+}
+
+/* Ipod player */
+.ipod-wheel {
+  position: relative;
+  width: 200px; 
+  height: 200px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 auto; /* centrer */
+}
+
+.wheel-button {
+  position: absolute;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Bouton haut */
+.wheel-button.top {
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Bouton bas */
+.wheel-button.bottom {
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Bouton gauche */
+.wheel-button.left {
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Bouton droite */
+.wheel-button.right {
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Le bouton central */
+.wheel-center-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  background-color: #aaa;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
 
