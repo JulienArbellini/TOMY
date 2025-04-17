@@ -13,7 +13,6 @@ import UniversalPlayer from "./components/GenericPlayer/UniversalPlayer";
 import Siege from "./menu/Siege";
 import ControlButton from "./components/Player/ControlButton";
 import { userAgent } from "next/server";
-import IpodPlayer from "./components/smartphone/ipodPlayer";
 import NewMediaPlayer from "./components/SingularPlayers/MultiPlayer";
 import { playlist } from "@/data/playlist";
 import MusicPlayer from "./components/SingularPlayers/MusicPlayer";
