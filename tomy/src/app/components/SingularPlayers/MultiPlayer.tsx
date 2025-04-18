@@ -38,6 +38,8 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isPortrait, setIsPortrait] = useState(window.innerHeight > window.innerWidth);
   const mediaElementSourceRef = useRef<MediaElementAudioSourceNode | null>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
+  const [shouldScroll, setShouldScroll] = useState(false);  
 
   // Créer une liste de pistes
   const trackList: Track[] = tracks || [{ src: src!, title }];
@@ -57,6 +59,15 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
 
+  useEffect(() => {
+    if (!titleRef.current) return;
+  
+    const container = titleRef.current.parentElement;
+    if (!container) return;
+  
+    const isOverflowing = titleRef.current.scrollWidth > container.clientWidth;
+    setShouldScroll(isOverflowing);
+  }, [currentTrack.title, scale]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -487,16 +498,31 @@ useEffect(() => {
 
         {/* Titre de la piste */}
         <div
-          className="text-lg font-bold mb-4 z-10"
+          className="z-10"
           style={{
             position: "absolute",
-            top: `${scaledValue(60)}px`,   // centre vertical
-            left: `${scaledValue(564/2)}px`, // centre horizontal
-            transform: "translate(-50%, -50%)",    // décale le texte de la moitié de sa propre largeur/hauteur
+            top: `${scaledValue(60)}px`,
+            left: `${scaledValue(564 / 2)}px`,
+            transform: "translate(-50%, -50%)",
+            width: `${scaledValue(500)}px`,
+            overflow: "hidden",
+            whiteSpace: "nowrap",
             textAlign: "center",
+            color: "white",
           }}
         >
-          {currentTrack.title}
+          <div
+            ref={titleRef}
+            style={{
+              display: "inline-block",
+              fontWeight: "bold",
+              fontSize: `${scaledValue(35)}px`,
+              animation: shouldScroll ? "scrollText 10s linear infinite" : undefined,
+              paddingRight: shouldScroll ? "100%" : undefined,
+            }}
+          >
+            {currentTrack.title}
+          </div>
         </div>
 
         {/* Canvas pour la visualisation avec p5 */}
