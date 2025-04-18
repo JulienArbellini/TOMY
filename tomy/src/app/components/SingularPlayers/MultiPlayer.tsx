@@ -39,13 +39,16 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const [isPortrait, setIsPortrait] = useState(window.innerHeight > window.innerWidth);
   const mediaElementSourceRef = useRef<MediaElementAudioSourceNode | null>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-  const [shouldScroll, setShouldScroll] = useState(false);  
+  const [shouldScroll, setShouldScroll] = useState(false);
+  const [isShuffled, setIsShuffled] = useState(false);
+  const [shuffledIndices, setShuffledIndices] = useState<number[]>([]);  
 
   // Créer une liste de pistes
   const trackList: Track[] = tracks || [{ src: src!, title }];
 
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  const currentTrack = trackList[currentTrackIndex];
+  const displayedIndex = isShuffled ? shuffledIndices[currentTrackIndex] : currentTrackIndex;
+  const currentTrack = trackList[displayedIndex];
 
   const scaledValue = (value: number) => value * scale;
 
@@ -107,6 +110,27 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const generateShuffledIndices = (length: number): number[] => {
+    const indices = Array.from({ length }, (_, i) => i);
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    return indices;
+  };
+
+  const toggleShuffle = () => {
+    setIsShuffled((prev) => {
+      const newState = !prev;
+      if (newState) {
+        setShuffledIndices(generateShuffledIndices(trackList.length));
+      } else {
+        setShuffledIndices([]);
+      }
+      return newState;
+    });
+  };
 
   // useEffect(() => {
   //   let localP5Instance: any;
@@ -257,20 +281,20 @@ useEffect(() => {
   
   // }, [currentTrackIndex, isPlaying, currentTrack.src]);
 
-  // useEffect(() => {
-  //   const audio = audioRef.current;
-  //   if (!audio) return;
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
   
-  //   const handleEnded = () => {
-  //     setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % trackList.length);
-  //   };
+    const handleEnded = () => {
+      setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % trackList.length);
+    };
   
-  //   audio.addEventListener("ended", handleEnded);
+    audio.addEventListener("ended", handleEnded);
   
-  //   return () => {
-  //     audio.removeEventListener("ended", handleEnded);
-  //   };
-  // }, [trackList.length]);
+    return () => {
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, [trackList.length]);
 
 
 
@@ -405,13 +429,16 @@ useEffect(() => {
   };
 
   const playNextTrack = () => {
-    setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % tracks.length);
+    setCurrentTrackIndex((prevIndex) => {
+      const nextIndex = (prevIndex + 1) % trackList.length;
+      return nextIndex;
+    });
     setIsPlaying(true);
   };
 
   const playPreviousTrack = () => {
     setCurrentTrackIndex((prevIndex) =>
-      prevIndex === 0 ? tracks.length - 1 : prevIndex - 1
+      prevIndex === 0 ? trackList.length - 1 : prevIndex - 1
     );
     setIsPlaying(true);
   };
@@ -674,7 +701,7 @@ useEffect(() => {
             defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Shuffle/Shuffle.png"
             hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Shuffle/ShuffleHover.png"
             clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Shuffle/ShuffleClic.png"            
-            onClick={togglePlayPause}
+            onClick={toggleShuffle}
             style={{
               position: "absolute",
               top: `${scaledValue(512)}px`,
