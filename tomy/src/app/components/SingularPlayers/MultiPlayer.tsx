@@ -159,49 +159,61 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   //   };
   // }, []);
 
-  useEffect(() => {
-    let localP5Instance: any;
-  
-    const loadP5 = async () => {
-      // 1) Chargez d’abord le module p5 et récupérez son export par défaut
-      const p5Module = await import("p5");
-      const P5       = p5Module.default;
-    
-      // ←—— Ajoutez cette ligne pour que p5.sound trouve bien p5 en global
-      ;(window as any).p5 = P5;
-    
-      // 2) Chargez ensuite l’addon sound (il s’appuie sur window.p5)
-      await import("p5/lib/addons/p5.sound");
-    
-      // 3) Définissez votre sketch comme avant
-      const sketch = (p: any) => {
-        p.setup = () => {
-          const canvas = p.createCanvas(
-            scaledValue(580),
-            scaledValue(280)
-          );
-          canvas.parent(canvasContainerRef.current!);
-    
-          // On initialise juste fft, on ne touche pas encore au son
-          fftRef.current = new p5Module.default.FFT();
-          p.noFill();
-        };
-    
-        p.draw = () => {
-          const waveform = fftRef.current.waveform();
-          p.background(0);
-          // … votre code de dessin …
-        };
+
+
+// …
+
+useEffect(() => {
+  let localP5: any;
+
+  const loadP5 = async () => {
+    // 1) importe p5 et expose-le global pour p5.sound
+    const p5Module = await import("p5");
+    const P5       = p5Module.default;
+    ;(window as any).p5 = P5;
+
+    // 2) importe l’addon son (il va chercher window.p5)
+    await import("p5/lib/addons/p5.sound");
+
+    // 3) définis ton sketch
+    const sketch = (p: any) => {
+      p.setup = () => {
+        console.log("✅ p5.setup");               // <— debug
+        const c = p.createCanvas(
+          scaledValue(580),
+          scaledValue(280)
+        );
+        c.parent(canvasContainerRef.current!);
+
+        // instancie la FFT, sans l’y connecter tout de suite
+        fftRef.current = new p5Module.default.FFT();
+        p.noFill();
       };
-    
-      // 4) Créez l’instance P5
-      const localP5Instance = new P5(sketch);
-      setP5Instance(localP5Instance);
+
+      p.draw = () => {
+        // console.log("✅ p5.draw");             // <— tu peux activer pour debugger
+        p.background(20);                         // fond gris foncé pour mieux voir
+        const waveform = fftRef.current.waveform(); 
+        p.stroke(0, 255, 0);
+        p.strokeWeight(2);
+        p.beginShape();
+        waveform.forEach((v: number, i: number) => {
+          const x = p.map(i, 0, waveform.length, 0, p.width);
+          const y = p.map(v, -1, 1, 0, p.height);
+          p.vertex(x, y);
+        });
+        p.endShape();
+      };
     };
-  
-    loadP5();
-    return () => localP5Instance?.remove();
-  }, []);
+
+    // 4) crée l’instance et stocke-la
+    localP5 = new P5(sketch);
+    setP5Instance(localP5);
+  };
+
+  loadP5();
+  return () => localP5?.remove();
+}, []);
 
 
   useEffect(() => {
