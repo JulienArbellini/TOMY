@@ -17,6 +17,7 @@ import NewMediaPlayer from "./components/SingularPlayers/MultiPlayer";
 import { playlist } from "@/data/playlist";
 import MusicPlayer from "./components/SingularPlayers/MusicPlayer";
 import MultiPlayer from "./components/SingularPlayers/MultiPlayer";
+import AudioPlayer from "./components/GenericPlayer/AudioPlayer";
 
 /**
  * Composant principal "Home".
@@ -195,6 +196,7 @@ useEffect(() => {
         onClose={() => console.log("fermer")}
         // Tu peux aussi passer d'autres props comme audioConfig?.extraContent
       />
+
     );
   } else{
     return (

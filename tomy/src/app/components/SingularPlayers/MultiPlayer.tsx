@@ -97,16 +97,83 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
     };
   }, []);
 
+  // useEffect(() => {
+  //   let localP5Instance: any;
+  //   let fft: any;
+
+  //   const loadP5 = async () => {
+  //     const p5Module = await import("p5");
+  //     const p5 = p5Module.default;
+  //     (window as any).p5 = p5;
+  //     await import("p5/lib/addons/p5.sound");
+
+  //     const sketch = (p: any) => {
+  //       p.setup = () => {
+  //         const canvas = p.createCanvas(
+  //           scaledValue(580),
+  //           scaledValue(280)
+  //         );
+  //         canvas.parent(canvasContainerRef.current!);
+  //         fft = new p5.FFT();
+  //         p.noFill();
+
+  //         // if (audioRef.current) {
+  //         //   const audioContext = p.getAudioContext();
+          
+  //         //   // Création unique du mediaElementSource
+  //         //   if (!mediaElementSourceRef.current) {
+  //         //     const mediaSource = audioContext.createMediaElementSource(audioRef.current);
+  //         //     mediaSource.connect(audioContext.destination);
+  //         //     mediaElementSourceRef.current = mediaSource;
+  //         //   }
+          
+  //         //   fft.setInput(mediaElementSourceRef.current);
+  //         // }
+  //       };
+
+  //       p.draw = () => {
+  //         p.background(0);
+  //         const waveform = fft.waveform();
+
+  //         p.noFill();
+  //         p.stroke(0, 255, 0);
+  //         p.strokeWeight(2);
+  //         p.beginShape();
+  //         for (let i = 0; i < waveform.length; i++) {
+  //           const x = p.map(i, 0, waveform.length, 0, p.width);
+  //           const y = p.map(waveform[i], -1, 1, 0, p.height);
+  //           p.vertex(x, y);
+  //         }
+  //         p.endShape();
+  //       };
+  //     };
+
+  //     localP5Instance = new p5(sketch);
+  //     setP5Instance(localP5Instance);
+  //   };
+
+  //   loadP5();
+
+  //   return () => {
+  //     if (localP5Instance) localP5Instance.remove();
+  //   };
+  // }, []);
+
   useEffect(() => {
     let localP5Instance: any;
-    let fft: any;
-
+  
     const loadP5 = async () => {
+      // 1) Chargez d’abord le module p5 et récupérez son export par défaut
       const p5Module = await import("p5");
-      const p5 = p5Module.default;
-      (window as any).p5 = p5;
+      const P5       = p5Module.default;
+    
+      // ←—— Ajoutez cette ligne pour que p5.sound trouve bien p5 en global
+      ;(window as any).p5 = P5;
+    
+      // 2) Chargez ensuite l’addon sound (il s’appuie sur window.p5)
       await import("p5/lib/addons/p5.sound");
-
+    
+      // 3) Définissez votre sketch comme avant
       const sketch = (p: any) => {
         p.setup = () => {
           const canvas = p.createCanvas(
@@ -114,51 +181,27 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
             scaledValue(280)
           );
           canvas.parent(canvasContainerRef.current!);
-          fft = new p5.FFT();
+    
+          // On initialise juste fft, on ne touche pas encore au son
+          fftRef.current = new p5Module.default.FFT();
           p.noFill();
-
-          if (audioRef.current) {
-            const audioContext = p.getAudioContext();
-          
-            // Création unique du mediaElementSource
-            if (!mediaElementSourceRef.current) {
-              const mediaSource = audioContext.createMediaElementSource(audioRef.current);
-              mediaSource.connect(audioContext.destination);
-              mediaElementSourceRef.current = mediaSource;
-            }
-          
-            fft.setInput(mediaElementSourceRef.current);
-          }
         };
-
+    
         p.draw = () => {
+          const waveform = fftRef.current.waveform();
           p.background(0);
-          const waveform = fft.waveform();
-
-          p.noFill();
-          p.stroke(0, 255, 0);
-          p.strokeWeight(2);
-          p.beginShape();
-          for (let i = 0; i < waveform.length; i++) {
-            const x = p.map(i, 0, waveform.length, 0, p.width);
-            const y = p.map(waveform[i], -1, 1, 0, p.height);
-            p.vertex(x, y);
-          }
-          p.endShape();
+          // … votre code de dessin …
         };
       };
-
-      localP5Instance = new p5(sketch);
+    
+      // 4) Créez l’instance P5
+      const localP5Instance = new P5(sketch);
       setP5Instance(localP5Instance);
     };
-
+  
     loadP5();
-
-    return () => {
-      if (localP5Instance) localP5Instance.remove();
-    };
+    return () => localP5Instance?.remove();
   }, []);
-
 
 
   useEffect(() => {
@@ -247,30 +290,32 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   //     console.warn("❌ Erreur lors de la lecture audio :", e);
   //   }
   // };
-  const togglePlayPause = async () => {
-    const audio = audioRef.current;
-    if (!audio) return;
+  const fftRef = useRef<any>(null);          // à déclarer en haut
+
+  const togglePlayPause = () => {
+    const audio = audioRef.current!;
+    if (!p5Instance) return;
   
-    // 1) Résume le AudioContext de p5 (ou natif)
-    const audioContext = (window as any).p5?.getAudioContext?.() || new AudioContext();
-    if (audioContext.state === "suspended") {
-      await audioContext.resume();
-      console.log("🔊 AudioContext resumed");
+    // 1) Réveille le contexte dans la même pile d’événement
+    const ctx: AudioContext = p5Instance.getAudioContext();
+    if (ctx.state === "suspended") ctx.resume();
+  
+    // 2) Crée et connecte le media source **une seule fois**
+    if (!mediaElementSourceRef.current) {
+      const srcNode = ctx.createMediaElementSource(audio);
+      srcNode.connect(ctx.destination);
+      mediaElementSourceRef.current = srcNode;
+      fftRef.current.setInput(srcNode);
     }
   
-    // 2) On joue ou on met en pause directement l’élément <audio>
-    if (audio.paused) {
-      try {
-        await audio.play();
-        console.log("▶️ Lecture démarrée");
-        setIsPlaying(true);
-      } catch (err) {
-        console.warn("❌ Impossible de jouer :", err);
+    // 3) Lecture / pause
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
       }
-    } else {
-      audio.pause();
-      console.log("⏸️ Lecture mise en pause");
-      setIsPlaying(false);
+      setIsPlaying(!isPlaying);
     }
   };
 
@@ -621,14 +666,14 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
 
 
         {/* Élément audio caché */}
-        <audio
-          ref={audioRef}
-          src={currentTrack.src}
-          autoPlay={false}
-          controls={false}
-          style={{ display: 'none' }}
-        />
       </div>
+      <audio
+        ref={audioRef}
+        src={currentTrack.src}
+        autoPlay={true}
+        controls={false}
+        style={{ display: "block", width: "100%", maxWidth: 300 }}
+      />
     </div>
   );
 };
