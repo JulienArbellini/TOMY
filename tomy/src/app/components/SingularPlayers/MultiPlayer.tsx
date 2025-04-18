@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useEffect, useRef, useState, CSSProperties} from "react";
+import PlayerFrame from "../GenericPlayer/PlayerFrame";
 
 
 interface Track {
   src: string;
   title: string;
+  type?: 'audio' | 'video'; // 'audio' par défaut
 }
 
 interface MultiPlayerProps {
@@ -36,6 +38,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isPortrait, setIsPortrait] = useState(window.innerHeight > window.innerWidth);
   const mediaElementSourceRef = useRef<MediaElementAudioSourceNode | null>(null);
   const titleRef = useRef<HTMLDivElement>(null);
@@ -49,6 +52,8 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const displayedIndex = isShuffled ? shuffledIndices[currentTrackIndex] : currentTrackIndex;
   const currentTrack = trackList[displayedIndex];
+  const isVideo = currentTrack.type === "video";
+  const youtubePlayerRef = useRef<any>(null);
 
   const scaledValue = (value: number) => value * scale;
 
@@ -71,6 +76,33 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
     const isOverflowing = titleRef.current.scrollWidth > container.clientWidth;
     setShouldScroll(isOverflowing);
   }, [currentTrack.title, scale]);
+
+  useEffect(() => {
+    if (currentTrack.type !== "video") return;
+  
+    const onYouTubeIframeAPIReady = () => {
+      youtubePlayerRef.current = new (window as any).YT.Player(`yt-player`, {
+        events: {
+          onReady: () => {
+            if (autoplay || isPlaying) {
+              youtubePlayerRef.current?.playVideo();
+            }
+          },
+        },
+      });
+    };
+  
+    // Charger l'API si pas encore faite
+    if (!(window as any).YT) {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
+      (window as any).onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+    } else {
+      onYouTubeIframeAPIReady();
+    }
+  }, [currentTrack]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -199,6 +231,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
 // …
 
 useEffect(() => {
+  if (currentTrack.type === "video") return;
   let localP5: any;
 
   const loadP5 = async () => {
@@ -227,7 +260,7 @@ useEffect(() => {
 
       p.draw = () => {
         // console.log("✅ p5.draw");             // <— tu peux activer pour debugger
-        p.background(20);                         // fond gris foncé pour mieux voir
+        p.background(0);                         // fond gris foncé pour mieux voir
         const waveform = fftRef.current.waveform(); 
         p.stroke(0, 255, 0);
         p.strokeWeight(2);
@@ -340,6 +373,23 @@ useEffect(() => {
   const fftRef = useRef<any>(null);          // à déclarer en haut
 
   const togglePlayPause = () => {
+
+    if (currentTrack.type === "video") {
+      const player = youtubePlayerRef.current;
+      if (player && player.getPlayerState) {
+        const state = player.getPlayerState(); // 1 = playing, 2 = paused
+  
+        if (state === 1) {
+          player.pauseVideo();
+          setIsPlaying(false);
+        } else {
+          player.playVideo();
+          setIsPlaying(true);
+        }
+      }
+      return;
+    }
+
     const audio = audioRef.current!;
     if (!p5Instance) return;
   
@@ -367,6 +417,7 @@ useEffect(() => {
   };
 
   useEffect(() => {
+    if (currentTrack.type !== "audio") return;
     const audio = audioRef.current;
     if (!audio) return;
   
@@ -385,17 +436,12 @@ useEffect(() => {
             }
           })()
         });
-      } else {
-        console.warn("⚠️ Événement 'error' capturé, mais aucun objet d'erreur détecté.");
       }
     };
   
     audio.addEventListener("error", handleError);
-  
-    return () => {
-      audio.removeEventListener("error", handleError);
-    };
-  }, []);
+    return () => audio.removeEventListener("error", handleError);
+  }, [currentTrack]);
 
 
 
@@ -458,19 +504,26 @@ useEffect(() => {
     onClick: () => void;
   }) => {
     const [buttonState, setButtonState] = useState<"default" | "hover" | "clicked">("default");
-
-    const handleMouseEnter = () => setButtonState("hover");
-    const handleMouseLeave = () => setButtonState("default");
-    const handleMouseDown = () => setButtonState("clicked");
-    const handleMouseUp = () => setButtonState("hover");
-
+  
+    const isTouch = typeof window !== "undefined" && "ontouchstart" in window;
+  
+    const handleClick = () => {
+      setButtonState("clicked");
+      onClick();
+  
+      // Retour à l'état par défaut après 150ms
+      setTimeout(() => {
+        setButtonState("default");
+      }, 150);
+    };
+  
     const currentIcon =
       buttonState === "clicked"
         ? clickedIcon
         : buttonState === "hover"
         ? hoverIcon
         : defaultIcon;
-
+  
     return (
       <div
         className="bg-cover cursor-pointer"
@@ -480,11 +533,11 @@ useEffect(() => {
           ...style,
           backgroundImage: `url(${currentIcon})`,
         }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onClick={onClick}
+        onMouseEnter={() => !isTouch && setButtonState("hover")}
+        onMouseLeave={() => !isTouch && setButtonState("default")}
+        onMouseDown={() => !isTouch && setButtonState("clicked")}
+        onMouseUp={() => !isTouch && setButtonState("hover")}
+        onClick={handleClick}
       ></div>
     );
   };
@@ -524,48 +577,90 @@ useEffect(() => {
         />
 
         {/* Titre de la piste */}
-        <div
-          className="z-10"
-          style={{
-            position: "absolute",
-            top: `${scaledValue(60)}px`,
-            left: `${scaledValue(564 / 2)}px`,
-            transform: "translate(-50%, -50%)",
-            width: `${scaledValue(500)}px`,
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textAlign: "center",
-            color: "white",
-          }}
-        >
+        {!isVideo ? (
           <div
-            ref={titleRef}
+            className="z-10"
             style={{
-              display: "inline-block",
-              fontWeight: "bold",
-              fontSize: `${scaledValue(35)}px`,
-              animation: shouldScroll ? "scrollText 10s linear infinite" : undefined,
-              paddingRight: shouldScroll ? "100%" : undefined,
+              position: "absolute",
+              top: `${scaledValue(60)}px`,
+              left: `${scaledValue(564 / 2)}px`,
+              transform: "translate(-50%, -50%)",
+              width: `${scaledValue(500)}px`,
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textAlign: "center",
+              color: "white",
             }}
           >
-            {currentTrack.title}
+            <div
+              ref={titleRef}
+              style={{
+                display: "inline-block",
+                fontWeight: "bold",
+                fontSize: `${scaledValue(35)}px`,
+                animation: shouldScroll ? "scrollText 10s linear infinite" : undefined,
+                paddingRight: shouldScroll ? "100%" : undefined,
+              }}
+            >
+              {currentTrack.title}
+            </div>
           </div>
-        </div>
+          ) : <div className="div"></div>
+          }
 
         {/* Canvas pour la visualisation avec p5 */}
-        <div
-          ref={canvasContainerRef}
-          className="absolute w-full flex justify-center items-center"
-          style={{
-            top: `${scaledValue(17)}px`,
-            left: `${scaledValue(6)}px`,
-            height: `${scaledValue(410)}px`,
-            width: `${scaledValue(564)}px`,
+        {currentTrack.type !== "video" && (
+          <div
+            ref={canvasContainerRef}
+            className="absolute w-full flex justify-center items-center"
+            style={{
+              top: `${scaledValue(17)}px`,
+              left: `${scaledValue(6)}px`,
+              height: `${scaledValue(410)}px`,
+              width: `${scaledValue(564)}px`,
+              backgroundColor: "black",
+              overflow: "hidden",
+            }}
+          ></div>
+        )}
 
-            backgroundColor: "black",
-            overflow: "hidden",
-          }}
-        ></div>
+        {currentTrack.type === "video" && (
+          <div
+            className="absolute"
+            style={{
+              top: `${scaledValue(17)}px`,
+              left: `${scaledValue(6)}px`,
+              height: `${scaledValue(410)}px`,
+              width: `${scaledValue(564)}px`,
+              overflow: "hidden",
+            }}
+          >
+            <div style={{ height: "100%", width: "100%", overflow: "hidden" }}>
+            <div
+              className="absolute"
+              style={{
+                top: `${scaledValue(-260)}px`,
+                left: 0,
+                height: `${scaledValue(230)}px`,
+                width: `100%`,
+              }}
+            >
+                <iframe
+                  src={`https://www.youtube.com/embed/${currentTrack.src}?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=${currentTrack.src}`}
+                  id="yt-player"
+                  style={{
+                    width: "100%",
+                    height: "400%",
+                    pointerEvents: "none",
+                  }}
+                  allow="autoplay; encrypted-media"
+                  allowFullScreen
+                  frameBorder="0"
+                />
+                </div>
+            </div>
+          </div>
+        )}
 
         {/* Contrôles audio personnalisés */}
       
@@ -732,13 +827,25 @@ useEffect(() => {
 
         {/* Élément audio caché */}
       </div>
-      <audio
-        ref={audioRef}
-        src={currentTrack.src}
-        autoPlay={true}
-        controls={false}
-        style={{ display: "block", width: "100%", maxWidth: 300 }}
+      {isVideo ? (
+        <PlayerFrame
+        playerRef={iframeRef}
+        src={currentTrack.src} // ID YouTube
+        onClose={onClose}
+        scale={scale}
+        frameSrc={frameSrc}
+        isPlayingAndDelay={isPlaying}
+        isVideoEnded={false} // ou à calculer selon tes besoins
       />
+      ) : (
+        <audio
+          ref={audioRef}
+          src={currentTrack.src}
+          autoPlay
+          controls={false}
+          style={{ display: "block", width: "100%", maxWidth: 300 }}
+        />
+      )}
     </div>
   );
 };
