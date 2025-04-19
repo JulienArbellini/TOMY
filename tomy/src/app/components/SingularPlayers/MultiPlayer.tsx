@@ -54,6 +54,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const currentTrack = trackList[displayedIndex];
   const isVideo = currentTrack.type === "video";
   const youtubePlayerRef = useRef<any>(null);
+  const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
 
   const scaledValue = (value: number) => value * scale;
 
@@ -639,9 +640,9 @@ useEffect(() => {
             <div
               className="absolute"
               style={{
-                top: `${scaledValue(-260)}px`,
+                top: `${scaledValue(-235)}px`,
                 left: 0,
-                height: `${scaledValue(230)}px`,
+                height: `${scaledValue(220)}px`,
                 width: `100%`,
               }}
             >
