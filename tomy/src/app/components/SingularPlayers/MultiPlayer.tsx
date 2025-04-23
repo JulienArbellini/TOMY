@@ -61,6 +61,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const isVideo = currentTrack.type === "video";
   const youtubePlayerRef = useRef<any>(null);
   const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
+  const [overlayVisible, setOverlayVisible] = useState(true);
 
   const scaledValue = (value: number) => value * scale;
 
@@ -112,6 +113,10 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
     setShouldScroll(isOverflowing);
   }, [currentTrack.title, scale]);
 
+  useEffect(() => {
+    if (currentTrack.type === "video") setOverlayVisible(true);
+  }, [currentTrack]);
+
 useEffect(() => {
   if (currentTrack.type !== "video") return;
 
@@ -125,18 +130,26 @@ useEffect(() => {
           youtubePlayerRef.current?.playVideo();
         },
         onStateChange: (event: any) => {
-          // 🎯 C'est ici qu'on détecte si la vidéo est en cours de lecture
-          if (event.data === window.YT.PlayerState.PLAYING) {
-            console.log("▶️ Vidéo en lecture");
-            setIsVideoActuallyPlaying(true);
-          } else {
-            console.log("⏸ Vidéo en pause ou arrêtée");
-            setIsVideoActuallyPlaying(false);
+          const state = event.data;
+          if (state === window.YT.PlayerState.PLAYING) {
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => setOverlayVisible(false));
+            });
+            setIsPlaying(true);          // ← ajoute
+            setHasPlayerStarted(true);   // ← ajoute
+          } else if (state === window.YT.PlayerState.PAUSED ||
+                     state === window.YT.PlayerState.ENDED) {
+            setIsPlaying(false);         // ← ajoute
+          } else if (state === window.YT.PlayerState.BUFFERING) {
+            setOverlayVisible(true);
           }
-        },
+        }
+        
       },
     });
   };
+
+
 
   if (!window.YT) {
     const tag = document.createElement("script");
@@ -321,21 +334,19 @@ useEffect(() => {
 
     if (currentTrack.type === "video") {
       const player = youtubePlayerRef.current;
-      if (player && player.getPlayerState) {
-        const state = player.getPlayerState(); // 1 = playing, 2 = paused
-  
-        if (state === 1) {
-          console.log("toto");
-          player.pauseVideo();
-          setIsPlaying(false);
-        } else {
-          player.playVideo();
-          setIsPlaying(true);
-          setHasPlayerStarted(true); // ✅
-        }
+      if (!player) return;
+      const state = player.getPlayerState(); // 1 = playing
+    
+      if (state === 1) {
+        player.pauseVideo();
+      } else {
+        player.playVideo();
       }
+      // 👉 ne touche PAS à setIsPlaying ici
       return;
     }
+    
+  
 
     const audio = audioRef.current!;
     if (!p5Instance) return;
@@ -602,7 +613,7 @@ useEffect(() => {
 
         {currentTrack.type === "video" && (
           <div
-            className="absolute bg-black"
+            className="absolute bg-red-400"
             style={{
               top: `${scaledValue(17)}px`,
               left: `${scaledValue(6)}px`,
@@ -612,7 +623,6 @@ useEffect(() => {
             }}
           >
             <div style={{ height: "100%", width: "100%", overflow: "hidden" }}>
-            {!isVideoActuallyPlaying && (
               <div className="bg-black flex justify-center items-center"
               style={{
                 position: "absolute",
@@ -624,23 +634,12 @@ useEffect(() => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                zIndex: 2,
+                zIndex: overlayVisible ? 5 : 0
               }}
               >
-                <img
-                  src="/loader.gif"
-                  alt="Chargement..."
-                  style={{
-                    height: `${scaledValue(207)}px`,
-                    width: `${scaledValue(207)}px`,
-                    objectFit: "cover",
-                    zIndex: 5,
-                  }}
-                    />
               </div>
 
           
-            )}
             <div
               className="absolute"
               style={{
@@ -653,15 +652,20 @@ useEffect(() => {
 
 
 
-            <iframe
-              id="yt-player"
-              key={currentTrack.src}
-              src={`https://www.youtube.com/embed/${currentTrack.src}?enablejsapi=1&mute=0&loop=1&playlist=${currentTrack.src}`}
-              style={{ width: "100%", height: "400%", pointerEvents: "none" }}
-              allow="autoplay; encrypted-media"
-              allowFullScreen
-              frameBorder="0"
-            />
+          <iframe
+            id="yt-player"
+            key={currentTrack.src}
+            src={`https://www.youtube.com/embed/${currentTrack.src}?enablejsapi=1&mute=0&loop=1&playlist=${currentTrack.src}&modestbranding=1&controls=0&playsinline=1`}
+            style={{
+              width: "100%",
+              height: "400%",
+              pointerEvents: "none",
+              zIndex : 4,
+            }}
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            frameBorder="0"
+          />
                 </div>
             </div>
           </div>
@@ -822,20 +826,6 @@ useEffect(() => {
             }}
           />
 
-
-
-          {/* Close */}
-          {/* <AudioControlButton
-            defaultIcon="/vectors/ELEMENTS/Boutons/TOUTPlayer/Exit.avif"
-            hoverIcon="/vectors/ELEMENTS/Boutons/TOUTPlayer/ExitHover.avif"
-            clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif"
-            onClick={onClose}
-            style={{
-              position: "absolute",
-              bottom: `${scaledValue(7)}px`,
-              left: `${scaledValue(7)}px`,
-            }}
-          /> */}
 
 
         {/* Élément audio caché */}
