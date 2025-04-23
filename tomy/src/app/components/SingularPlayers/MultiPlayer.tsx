@@ -34,7 +34,8 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
   const [p5Instance, setP5Instance] = useState<any>(null);
-  const [isPlaying, setIsPlaying] = useState(autoplay);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [hasPlayerStarted, setHasPlayerStarted] = useState(false); // 👈 Nouvelle variable
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -47,6 +48,9 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const [shuffledIndices, setShuffledIndices] = useState<number[]>([]);  
   const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [youtubeReady, setYoutubeReady] = useState(false); // utile pour YouTube
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [isVideoActuallyPlaying, setIsVideoActuallyPlaying] = useState(false);
 
   // Créer une liste de pistes
   const trackList: Track[] = tracks || [{ src: src!, title }];
@@ -94,6 +98,11 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const windowHeight = window.innerHeight;
 
   useEffect(() => {
+    setIsPlaying(false); // 🔁 Corrige le bouton pause affiché à tort
+    setHasPlayerStarted(false);
+  }, [currentTrackIndex]);
+
+  useEffect(() => {
     if (!titleRef.current) return;
   
     const container = titleRef.current.parentElement;
@@ -103,34 +112,46 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
     setShouldScroll(isOverflowing);
   }, [currentTrack.title, scale]);
 
-  useEffect(() => {
-    if (currentTrack.type !== "video") return;
-  
-    const onYouTubeIframeAPIReady = () => {
-      youtubePlayerRef.current = new (window as any).YT.Player("yt-player", {
-        events: {
-          onReady: () => {
-            console.log("✅ YouTube Player ready");
-            if (shouldAutoPlay) {
-              youtubePlayerRef.current.playVideo();
-              setIsPlaying(true);
-              setShouldAutoPlay(false); // reset
-            }
-          },
+useEffect(() => {
+  if (currentTrack.type !== "video") return;
+
+  const onYouTubeIframeAPIReady = () => {
+    youtubePlayerRef.current = new window.YT.Player("yt-player", {
+      events: {
+        onReady: (event: any) => {
+          console.log("✅ YouTube player ready");
+          setYoutubeReady(true);
+          setIsVideoReady(true);
+          youtubePlayerRef.current?.playVideo();
         },
-      });
-    };
-  
-    if (!(window as any).YT) {
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      const firstScriptTag = document.getElementsByTagName("script")[0];
-      firstScriptTag?.parentNode?.insertBefore(tag, firstScriptTag);
-      (window as any).onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-    } else {
-      onYouTubeIframeAPIReady();
-    }
-  }, [currentTrack]);
+        onStateChange: (event: any) => {
+          // 🎯 C'est ici qu'on détecte si la vidéo est en cours de lecture
+          if (event.data === window.YT.PlayerState.PLAYING) {
+            console.log("▶️ Vidéo en lecture");
+            setIsVideoActuallyPlaying(true);
+          } else {
+            console.log("⏸ Vidéo en pause ou arrêtée");
+            setIsVideoActuallyPlaying(false);
+          }
+        },
+      },
+    });
+  };
+
+  if (!window.YT) {
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+    (window as any).onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+  } else {
+    onYouTubeIframeAPIReady();
+  }
+
+  return () => {
+    // Optionnel : détruire proprement le player précédent si besoin
+    youtubePlayerRef.current?.destroy?.();
+  };
+}, [currentTrack]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -192,71 +213,6 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
     });
   };
 
-  // useEffect(() => {
-  //   let localP5Instance: any;
-  //   let fft: any;
-
-  //   const loadP5 = async () => {
-  //     const p5Module = await import("p5");
-  //     const p5 = p5Module.default;
-  //     (window as any).p5 = p5;
-  //     await import("p5/lib/addons/p5.sound");
-
-  //     const sketch = (p: any) => {
-  //       p.setup = () => {
-  //         const canvas = p.createCanvas(
-  //           scaledValue(580),
-  //           scaledValue(280)
-  //         );
-  //         canvas.parent(canvasContainerRef.current!);
-  //         fft = new p5.FFT();
-  //         p.noFill();
-
-  //         // if (audioRef.current) {
-  //         //   const audioContext = p.getAudioContext();
-          
-  //         //   // Création unique du mediaElementSource
-  //         //   if (!mediaElementSourceRef.current) {
-  //         //     const mediaSource = audioContext.createMediaElementSource(audioRef.current);
-  //         //     mediaSource.connect(audioContext.destination);
-  //         //     mediaElementSourceRef.current = mediaSource;
-  //         //   }
-          
-  //         //   fft.setInput(mediaElementSourceRef.current);
-  //         // }
-  //       };
-
-  //       p.draw = () => {
-  //         p.background(0);
-  //         const waveform = fft.waveform();
-
-  //         p.noFill();
-  //         p.stroke(0, 255, 0);
-  //         p.strokeWeight(2);
-  //         p.beginShape();
-  //         for (let i = 0; i < waveform.length; i++) {
-  //           const x = p.map(i, 0, waveform.length, 0, p.width);
-  //           const y = p.map(waveform[i], -1, 1, 0, p.height);
-  //           p.vertex(x, y);
-  //         }
-  //         p.endShape();
-  //       };
-  //     };
-
-  //     localP5Instance = new p5(sketch);
-  //     setP5Instance(localP5Instance);
-  //   };
-
-  //   loadP5();
-
-  //   return () => {
-  //     if (localP5Instance) localP5Instance.remove();
-  //   };
-  // }, []);
-
-
-
-// …
 
 useEffect(() => {
   if (currentTrack.type === "video") return;
@@ -358,49 +314,10 @@ useEffect(() => {
   }, [trackList.length]);
 
 
-
-  // **Actions des contrôles personnalisés**
-  // const togglePlayPause = async () => {
-  //   if (!audioRef.current) return;
-  
-  //   const audio = audioRef.current;
-  
-  //   // 🔧 On récupère ou crée le contexte
-  //   const audioContext =
-  //     (window as any).p5?.getAudioContext?.() ||
-  //     new (window.AudioContext || window.webkitAudioContext)();
-  
-  //   // 🧠 On le "resume" systématiquement dans l'interaction utilisateur
-  //   if (audioContext.state === "suspended") {
-  //     await audioContext.resume();
-  //     console.log("🔊 AudioContext resumed");
-  //   }
-  
-  //   try {
-  //     // 🎧 Création de la source audio (si pas encore faite)
-  //     if (!mediaElementSourceRef.current) {
-  //       const source = audioContext.createMediaElementSource(audio);
-  //       source.connect(audioContext.destination);
-  //       mediaElementSourceRef.current = source;
-  //     }
-  
-  //     if (audio.paused) {
-  //       await audio.load();
-  //       await audio.play();
-  //       console.log("▶️ Lecture démarrée");
-  //       setIsPlaying(true);
-  //     } else {
-  //       audio.pause();
-  //       console.log("⏸️ Lecture mise en pause");
-  //       setIsPlaying(false);
-  //     }
-  //   } catch (e) {
-  //     console.warn("❌ Erreur lors de la lecture audio :", e);
-  //   }
-  // };
   const fftRef = useRef<any>(null);          // à déclarer en haut
 
   const togglePlayPause = () => {
+    console.log("🎬 isVideoActuallyPlaying =", isVideoActuallyPlaying);
 
     if (currentTrack.type === "video") {
       const player = youtubePlayerRef.current;
@@ -408,11 +325,13 @@ useEffect(() => {
         const state = player.getPlayerState(); // 1 = playing, 2 = paused
   
         if (state === 1) {
+          console.log("toto");
           player.pauseVideo();
           setIsPlaying(false);
         } else {
           player.playVideo();
           setIsPlaying(true);
+          setHasPlayerStarted(true); // ✅
         }
       }
       return;
@@ -439,6 +358,7 @@ useEffect(() => {
         audioRef.current.pause();
       } else {
         audioRef.current.play();
+        setHasPlayerStarted(true);
       }
       setIsPlaying(!isPlaying);
     }
@@ -633,7 +553,7 @@ useEffect(() => {
         />
 
         {/* Titre de la piste */}
-        {!isVideo ? (
+        {!youtubeReady ? (
           <div
             className="z-10"
             style={{
@@ -682,7 +602,7 @@ useEffect(() => {
 
         {currentTrack.type === "video" && (
           <div
-            className="absolute"
+            className="absolute bg-black"
             style={{
               top: `${scaledValue(17)}px`,
               left: `${scaledValue(6)}px`,
@@ -692,6 +612,35 @@ useEffect(() => {
             }}
           >
             <div style={{ height: "100%", width: "100%", overflow: "hidden" }}>
+            {!isVideoActuallyPlaying && (
+              <div className="bg-black flex justify-center items-center"
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                height: "100%",
+                width: "100%",
+                backgroundColor: "black",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 2,
+              }}
+              >
+                <img
+                  src="/loader.gif"
+                  alt="Chargement..."
+                  style={{
+                    height: `${scaledValue(207)}px`,
+                    width: `${scaledValue(207)}px`,
+                    objectFit: "cover",
+                    zIndex: 5,
+                  }}
+                    />
+              </div>
+
+          
+            )}
             <div
               className="absolute"
               style={{
@@ -701,18 +650,18 @@ useEffect(() => {
                 width: `100%`,
               }}
             >
-                <iframe
-                  src={`https://www.youtube.com/embed/${currentTrack.src}?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=${currentTrack.src}`}
-                  id="yt-player"
-                  style={{
-                    width: "100%",
-                    height: "400%",
-                    pointerEvents: "none",
-                  }}
-                  allow="autoplay; encrypted-media"
-                  allowFullScreen
-                  frameBorder="0"
-                />
+
+
+
+            <iframe
+              id="yt-player"
+              key={currentTrack.src}
+              src={`https://www.youtube.com/embed/${currentTrack.src}?enablejsapi=1&mute=0&loop=1&playlist=${currentTrack.src}`}
+              style={{ width: "100%", height: "400%", pointerEvents: "none" }}
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              frameBorder="0"
+            />
                 </div>
             </div>
           </div>
@@ -734,7 +683,8 @@ useEffect(() => {
             height: `${scaledValue(150)}px`,
             backgroundSize: "contain",
             background: "contain",
-            backgroundRepeat: "no-repeat"
+            backgroundRepeat: "no-repeat",
+            zIndex: 7,
           }}
         />
 
@@ -753,7 +703,8 @@ useEffect(() => {
               width: `${scaledValue(150)}px`,
               height: `${scaledValue(150)}px`,
               backgroundSize: "contain",
-              backgroundRepeat: "no-repeat"
+              backgroundRepeat: "no-repeat",
+              zIndex: 7,
             }}
           />
 
@@ -773,11 +724,12 @@ useEffect(() => {
               height: `${scaledValue(120)}px`,
               backgroundSize: "contain",
               background: "contain",
-              backgroundRepeat: "no-repeat"
+              backgroundRepeat: "no-repeat",
+              zIndex: 9,
             }}
           />
 
-          {/* Mute */}
+          {/* Volume Down */}
           <AudioControlButton
             defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/VolumeDown.avif"
             hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/VolumeDownHover.avif"
@@ -791,11 +743,12 @@ useEffect(() => {
               height: `${scaledValue(120)}px`,
               backgroundSize: "contain",
               background: "contain",
-              backgroundRepeat: "no-repeat"
+              backgroundRepeat: "no-repeat",
+              zIndex: 7,
             }}
           />
 
-          {/* Volume Down */}
+          {/* Mute */}
           <AudioControlButton
             defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Mute.avif"
             hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Mute.avif"
@@ -809,15 +762,16 @@ useEffect(() => {
               height: `${scaledValue(150)}px`,
               backgroundSize: "contain",
               background: "contain",
-              backgroundRepeat: "no-repeat"
+              backgroundRepeat: "no-repeat",
+              zIndex: 6,
             }}
           />
 
           {/* Play/Pause */}
           <AudioControlButton
-            defaultIcon={isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Pause.avif" : "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Play.avif"}
-            hoverIcon={isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PauseClic.avif" : "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PlayClic.avif"}
-            clickedIcon={isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PauseClic.avif" : "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PlayClic.avif"}
+            defaultIcon={hasPlayerStarted && isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Pause.avif" : "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Play.avif"}
+            hoverIcon={hasPlayerStarted && isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PauseClic.avif" : "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PlayClic.avif"}
+            clickedIcon={hasPlayerStarted && isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PauseClic.avif" : "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PlayClic.avif"}
             onClick={togglePlayPause}
             style={{
               position: "absolute",
@@ -827,7 +781,8 @@ useEffect(() => {
               height: `${scaledValue(197)}px`,
               backgroundSize: "contain",
               background: "contain",
-              backgroundRepeat: "no-repeat"
+              backgroundRepeat: "no-repeat",
+              zIndex: 10,
             }}
           />
           {/* Changer de fond */}
@@ -844,7 +799,8 @@ useEffect(() => {
               height: `${scaledValue(135)}px`,
               backgroundSize: "contain",
               background: "contain",
-              backgroundRepeat: "no-repeat"
+              backgroundRepeat: "no-repeat",
+              zIndex: 10,
             }}
           />
           {/* Shuffle */}
@@ -861,7 +817,8 @@ useEffect(() => {
               height: `${scaledValue(135)}px`,
               backgroundSize: "contain",
               background: "contain",
-              backgroundRepeat: "no-repeat"
+              backgroundRepeat: "no-repeat",
+              zIndex: 10,
             }}
           />
 
