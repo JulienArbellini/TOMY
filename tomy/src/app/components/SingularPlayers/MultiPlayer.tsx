@@ -27,7 +27,7 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   title = "Titre inconnu",
   autoplay = false,
   controls = true,
-  frameSrc = "/VERSION_MOBILE/ELEMENTS/Fonds/AvionVertical.png",
+  frameSrc = "/VERSION_MOBILE/ELEMENTS/Fonds/AvionVertical.avif",
   onClose,
 }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -59,9 +59,22 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const scaledValue = (value: number) => value * scale;
 
   const backgrounds = [
-    "/VERSION_MOBILE/ELEMENTS/Fonds/AvionVerticalPlein.png",
-    "/VERSION_MOBILE/ELEMENTS/Fonds/Paysage1.jpeg",
-    "/VERSION_MOBILE/ELEMENTS/Fonds/Paysage2.webp"
+    "/VERSION_MOBILE/ELEMENTS/Fonds/AvionPixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/CascadePixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/CityPixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/CloudsPixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/DesertPixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/IslandPixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/JapanesePixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/JunglePixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/PalmPixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/PlantesPixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/SablePixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/ScubaPixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/SnowPixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/SunsetPixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/UnderwaterPixel.avif",
+    "/VERSION_MOBILE/ELEMENTS/Fonds/Volcano1Pixel.avif"
   ];
   
   
@@ -82,18 +95,20 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
     if (currentTrack.type !== "video") return;
   
     const onYouTubeIframeAPIReady = () => {
-      youtubePlayerRef.current = new (window as any).YT.Player(`yt-player`, {
+      youtubePlayerRef.current = new (window as any).YT.Player("yt-player", {
         events: {
           onReady: () => {
-            if (autoplay || isPlaying) {
-              youtubePlayerRef.current?.playVideo();
+            console.log("✅ YouTube Player ready");
+            if (shouldAutoPlay) {
+              youtubePlayerRef.current.playVideo();
+              setIsPlaying(true);
+              setShouldAutoPlay(false); // reset
             }
           },
         },
       });
     };
   
-    // Charger l'API si pas encore faite
     if (!(window as any).YT) {
       const tag = document.createElement("script");
       tag.src = "https://www.youtube.com/iframe_api";
@@ -548,28 +563,31 @@ useEffect(() => {
   
   return (
     <div 
-    className="h-screen w-full flex justify-center"
+    className="min-h-[100dvh] w-full flex justify-center items-center"
     ref={containerRef}
     style={{ 
       backgroundImage: `url(${currentBackground})`,
-      backgroundSize: "cover"
+      backgroundSize: isPortrait ? "cover" : "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
      }}
     >
       <div
         className="relative flex flex-col items-center"
         style={{
 
-          top: isPortrait ?`${scaledValue(115)}px` : `${scaledValue(30)}px`,
+          // top: isPortrait ?`${scaledValue(115)}px` : `${scaledValue(30)}px`,
           // height: `${scaledValue(337)}px`,
           width: `${scaledValue(576)}px`,
+          // backgroundColor: "red",
           height: isPortrait
-          ? `${scaledValue(337)}px`
+          ? `${scaledValue(647)}px`
           : `${window.innerHeight * 0.9}px`,
         }}
       >
         {/* Cadre décoratif */}
         <img
-          src={"VERSION_MOBILE/ELEMENTS/TopEcran.png"}
+          src={"VERSION_MOBILE/ELEMENTS/TopEcran.avif"}
           alt="Cadre décoratif autour du contenu"
           style={{
             height: `${scaledValue(17)}px`,
@@ -667,9 +685,9 @@ useEffect(() => {
       
         {/* Previous Track */}
         <AudioControlButton
-          defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Previous/Previous.png"
-          clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Previous/PreviousClic.png"
-          hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Previous/PreviousClic.png"
+          defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Previous.avif"
+          clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PreviousClic.avif"
+          hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PreviousClic.avif"
           onClick={playPreviousTrack}
           style={{
             position: "absolute",
@@ -687,9 +705,9 @@ useEffect(() => {
 
           {/* Next Track */}
           <AudioControlButton
-          defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Next/Next.png"
-          clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Next/NextClic.png"
-          hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Next/NextClic.png"
+          defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Next.avif"
+          clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/NextClic.avif"
+          hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/NextClic.avif"
             onClick={playNextTrack}
             style={{
               position: "absolute",
@@ -706,9 +724,9 @@ useEffect(() => {
 
           {/* Volume Up */}
           <AudioControlButton
-            defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/VolumeUp/VolumeUp.png"
-            clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/VolumeUp/VolumeUpClic.png"
-            hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/VolumeUp/VolumeUpClic.png"
+            defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/VolumeUp.avif"
+            clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/VolumeUpClic.avif"
+            hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/VolumeUpClic.avif"
             onClick={increaseVolume}
             style={{
               position: "absolute",
@@ -724,9 +742,9 @@ useEffect(() => {
 
           {/* Mute */}
           <AudioControlButton
-            defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Mute/Mute.png"
-            hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Mute/MuteHover.png"
-            clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Mute/MuteClic.png"
+            defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/VolumeDown.avif"
+            hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/VolumeDownHover.avif"
+            clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/VolumeDownClic.avif"
             onClick={toggleMute}
             style={{
               position: "absolute",
@@ -742,11 +760,11 @@ useEffect(() => {
 
           {/* Volume Down */}
           <AudioControlButton
-            defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/VolumeDown/VolumeDown.png"
-            hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/VolumeDown/VolumeDownClic.png"
-            clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/VolumeDown/VolumeDownClic.png"
+            defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Mute.avif"
+            hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Mute.avif"
+            clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Mute.avif"
             onClick={decreaseVolume}
-            style={{
+            style={{ 
               position: "absolute",
               top: `${scaledValue(505)}px`,
               left: `${scaledValue(212)}px`,
@@ -760,9 +778,9 @@ useEffect(() => {
 
           {/* Play/Pause */}
           <AudioControlButton
-            defaultIcon={isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/Pause/Pause.png" : "/VERSION_MOBILE/ELEMENTS/Boutons/Play/Play.png"}
-            hoverIcon={isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/Pause/PauseClic.png" : "/VERSION_MOBILE/ELEMENTS/Boutons/Play/PlayClic.png"}
-            clickedIcon={isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/Pause/PauseClic.png" : "/VERSION_MOBILE/ELEMENTS/Boutons/Play/PlayClic.png"}
+            defaultIcon={isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Pause.avif" : "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Play.avif"}
+            hoverIcon={isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PauseClic.avif" : "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PlayClic.avif"}
+            clickedIcon={isPlaying ? "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PauseClic.avif" : "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PlayClic.avif"}
             onClick={togglePlayPause}
             style={{
               position: "absolute",
@@ -777,9 +795,9 @@ useEffect(() => {
           />
           {/* Changer de fond */}
           <AudioControlButton
-            defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Paysage/Paysage.png"
-            hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Paysage/PaysageHover.png"
-            clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Paysage/PaysageClic.png"            
+            defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Paysage.avif"
+            hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PaysageHover.avif"
+            clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/PaysageClic.avif"            
             onClick={togglePaysage}
             style={{
               position: "absolute",
@@ -794,9 +812,9 @@ useEffect(() => {
           />
           {/* Shuffle */}
           <AudioControlButton
-            defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Shuffle/Shuffle.png"
-            hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Shuffle/ShuffleHover.png"
-            clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/Shuffle/ShuffleClic.png"            
+            defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Shuffle.avif"
+            hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/ShuffleHover.avif"
+            clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/ShuffleClic.avif"            
             onClick={toggleShuffle}
             style={{
               position: "absolute",
@@ -814,8 +832,8 @@ useEffect(() => {
 
           {/* Close */}
           {/* <AudioControlButton
-            defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Exit.avif"
-            hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif"
+            defaultIcon="/vectors/ELEMENTS/Boutons/TOUTPlayer/Exit.avif"
+            hoverIcon="/vectors/ELEMENTS/Boutons/TOUTPlayer/ExitHover.avif"
             clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif"
             onClick={onClose}
             style={{
