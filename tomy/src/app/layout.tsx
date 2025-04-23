@@ -37,13 +37,43 @@ const preloadImages = [
   "ExitClic",
 ];
 
+const fonds = [
+  "/VERSION_MOBILE/ELEMENTS/Fonds/AvionPixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/CascadePixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/CityPixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/CloudsPixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/DesertPixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/IslandPixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/JapanesePixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/JunglePixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/PalmPixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/PlantesPixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/SablePixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/ScubaPixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/SnowPixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/SunsetPixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/UnderwaterPixel.avif",
+  "/VERSION_MOBILE/ELEMENTS/Fonds/Volcano1Pixel.avif"
+]
 
 
-const preloadLinks = preloadImages.map((name) => (
+
+const preloadLinksBoutons = preloadImages.map((name) => (
   <link
     key={name}
     rel="preload"
     href={`/VESION_MOBILE/ELEMENTS/Boutons/TOUT/${name}.avif`}
+    as="image"
+    type="image/avif"
+  />
+));
+
+
+const preloadLinksFonds = preloadImages.map((name) => (
+  <link
+    key={name}
+    rel="preload"
+    href={`${name}`}
     as="image"
     type="image/avif"
   />
@@ -89,7 +119,8 @@ export default function RootLayout({
           as="image"
           type="image/avif"
         />
-        {preloadLinks}
+        {preloadLinksBoutons}
+        {preloadLinksFonds}
         {/* Ajoutez toutes les autres images critiques */}
       </head>
       <body className={inter.className}>{children}</body>

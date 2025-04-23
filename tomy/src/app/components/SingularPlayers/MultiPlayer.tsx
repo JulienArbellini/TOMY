@@ -45,6 +45,8 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const [shouldScroll, setShouldScroll] = useState(false);
   const [isShuffled, setIsShuffled] = useState(false);
   const [shuffledIndices, setShuffledIndices] = useState<number[]>([]);  
+  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   // Créer une liste de pistes
   const trackList: Track[] = tracks || [{ src: src!, title }];
@@ -76,6 +78,16 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
     "/VERSION_MOBILE/ELEMENTS/Fonds/UnderwaterPixel.avif",
     "/VERSION_MOBILE/ELEMENTS/Fonds/Volcano1Pixel.avif"
   ];
+
+  useEffect(() => {
+    backgrounds.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => {
+        setLoadedImages((prev) => ({ ...prev, [src]: true }));
+      };
+    });
+  }, []);
   
   
   const windowWidth = window.innerWidth;
@@ -462,7 +474,11 @@ useEffect(() => {
 
 
   const togglePaysage = () => {
-    setBackgroundIndex((prev) => (prev + 1) % backgrounds.length);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setBackgroundIndex((prev) => (prev + 1) % backgrounds.length);
+      setIsTransitioning(false);
+    }, 300); // Temps de fade-out
   };
   
 
@@ -562,16 +578,37 @@ useEffect(() => {
   const currentBackground = backgrounds[backgroundIndex];
   
   return (
-    <div 
-    className="min-h-[100dvh] w-full flex justify-center items-center"
+    <div
     ref={containerRef}
-    style={{ 
-      backgroundImage: `url(${currentBackground})`,
-      backgroundSize: isPortrait ? "cover" : "cover",
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
-     }}
-    >
+    className="min-h-[100dvh] w-full flex justify-center items-center relative overflow-hidden"
+  >
+    {/* BACKGROUND BLUR + NETTE superposées */}
+    <div className="absolute inset-0 z-0">
+      {/* Image floue de secours */}
+      <div
+        style={{
+          backgroundImage: `url(${currentBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          filter: 'blur(12px)',
+          opacity: loadedImages[currentBackground] ? 0 : 1,
+          transition: 'opacity 0.3s ease-in-out',
+        }}
+        className="absolute inset-0"
+      />
+      {/* Image nette */}
+      <div
+        style={{
+          backgroundImage: `url(${currentBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: isTransitioning ? 0 : 1,
+          transition: 'opacity 0.6s ease-in-out',
+        }}
+        className="absolute inset-0"
+      />
+    </div>
+
       <div
         className="relative flex flex-col items-center"
         style={{
