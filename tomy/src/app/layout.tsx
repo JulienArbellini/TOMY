@@ -4,6 +4,51 @@ import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
 
+const preloadImages = [
+  "Play",
+  "PlayHover",
+  "PlayClic",
+  "Pause",
+  "PauseHover",
+  "PauseClic",
+  "Next",
+  "NextHover",
+  "NextClic",
+  "Previous",
+  "PreviousHover",
+  "PreviousClic",
+  "VolumeUp",
+  "VolumeUpHover",
+  "VolumeUpClic",
+  "VolumeDown",
+  "VolumeDownHover",
+  "VolumeDownClic",
+  "Mute",
+  "MuteHover",
+  "MuteClic",
+  "Shuffle",
+  "ShuffleHover",
+  "ShuffleClic",
+  "Paysage",
+  "PaysageHover",
+  "PaysageClic",
+  "Exit",
+  "ExitHover",
+  "ExitClic",
+];
+
+
+
+const preloadLinks = preloadImages.map((name) => (
+  <link
+    key={name}
+    rel="preload"
+    href={`/VESION_MOBILE/ELEMENTS/Boutons/TOUT/${name}.avif`}
+    as="image"
+    type="image/avif"
+  />
+));
+
 export const metadata: Metadata = {
   title: 'Tomy Airlines',
   description: 'Welcome to Tomy Airlines',
@@ -44,6 +89,7 @@ export default function RootLayout({
           as="image"
           type="image/avif"
         />
+        {preloadLinks}
         {/* Ajoutez toutes les autres images critiques */}
       </head>
       <body className={inter.className}>{children}</body>

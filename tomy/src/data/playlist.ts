@@ -1,9 +1,11 @@
-export const playlist = [
+import { PlaylistItem } from "./types";
+
+export const playlist: PlaylistItem[] = [ 
     {
       name: "Music",
       type: "Music",
       playerConfig: {
-        type: "audio", // Peut rester "audio", ou être renommé plus tard en "media"
+        type: "media", // Peut rester "audio", ou être renommé plus tard en "media"
         tracks: [
            { type: "video", src: "DM930C8mnhU", title: "Une vidéo YouTube" },
            { type: "video", src: "kuWYuD7Phi4", title: "Une vidéo YouTube" },
@@ -31,13 +33,6 @@ export const playlist = [
           { src: "/Album/V2/Bombay.wav", title: "Bombay", type: "audio" },
           { src: "/Album/V2/TomyAirlinesTheme.wav", title: "TomyAirlines Theme", type: "audio" },
         ],
-        frameType: "musique",
-        autoplay: false,
-        controls: true,
-        extraContent: {
-          text: "Titre de la musique",
-          image: "/images/album-cover.jpg",
-        },
       },
     },
   ];
