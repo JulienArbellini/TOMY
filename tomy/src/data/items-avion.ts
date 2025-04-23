@@ -347,7 +347,7 @@ export const items = [
       name: "Magazine",
       type: "Magazine",
       x: 643+22,
-      y: 436-13,
+      y: 436-9,
       width:173,
       playerConfig: {
         type: "diaporama",
