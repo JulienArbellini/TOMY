@@ -66,7 +66,8 @@ const handleExitClick = () => {
     frameSrc == '/vectors/ELEMENTS/Cadres/CadreBois.avif' ||
     frameSrc == '/vectors/ELEMENTS/Cadres/CadrePlante.avif' ||
     frameSrc == '/vectors/ELEMENTS/Cadres/CadreSimple.avif' ||
-    frameSrc == '/vectors/ELEMENTS/Cadres/CadreUltrasimple.avif'
+    frameSrc == '/vectors/ELEMENTS/Cadres/CadreUltrasimple.avif' ||
+    frameSrc == '/vectors/ELEMENTS/Cadres/CadreNoir.avif'
   ){
 
     return (
@@ -81,9 +82,12 @@ const handleExitClick = () => {
         <img
           src={frameSrc}
           alt="Cadre décoratif autour du contenu"
+          className="absolute"
           style={{
+            top: `${scaledValue(0)}px`,
+            left: `${scaledValue(0)}px`,
             height: `${scaledValue(538)}px`,
-            width: `${scaledValue(638)}px`,
+            minWidth: `${scaledValue(638)}px`,
           }}
         />
   

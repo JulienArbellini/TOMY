@@ -90,6 +90,8 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
     plante: "/vectors/ELEMENTS/Cadres/CadrePlante.avif",
     bleu: "/vectors/ELEMENTS/Cadres/CadreBleu.avif",
     ticket: "/vectors/ELEMENTS/Cadres/FondTicket.avif",
+    noir: "/vectors/ELEMENTS/Cadres/CadreNoir.avif",
+
     // Assurez-vous que les chemins correspondent à vos fichiers
   };
 

@@ -16,9 +16,9 @@ export const items = [
         "/images/content/Crew4.avif",
       ],
       videos:[
-        "kuWYuD7Phi4",
+        "E_nzu6AtYPk",
       ],
-      src:"kuWYuD7Phi4",
+      src:"E_nzu6AtYPk",
       media: [
         { type: "image", src: "/images/content/Crew1.avif" },
         { type: "video", src: "RS2jNCqCjPs" },
@@ -97,7 +97,7 @@ export const items = [
       playerConfig: {
         type: "video-automatique",
         src: "iSqn03p7wDM",
-        frameType: "ultrasimple",
+        frameType: "noir",
         autoplay: true,
         loop: false,
         controls: false,
@@ -320,9 +320,10 @@ export const items = [
       y: 425-10,
       width:80,
       playerConfig: {
-        type: "video-automatique",
-        src: "Nl7aEdZp6Cc",
-        frameType: "ultrasimple",
+        type: "video",
+        src: "eX9Blu2hDm4",
+        // src: "Nl7aEdZp6Cc",
+        frameType: "cadre1",
         autoplay: true,
         loop: true,
         controls: false,
@@ -456,9 +457,9 @@ export const items = [
       y: 470-22,
       width:39,
       playerConfig: {
-        type: "video",
-        src: "DM930C8mnhU",
-        frameType: "cadre1",
+        type: "video-automatique",
+        src: "Nl7aEdZp6Cc",
+        frameType: "ultrasimple",
         autoplay: false,
         loop: false,
         controls: true,
