@@ -57,21 +57,21 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
   const [isVideoEnded, setIsVideoEnded] = useState<boolean>(false);
 
   const playerImages = [
-    "/OPTIMIZED_PLAYER/Play.avif",
-    "/OPTIMIZED_PLAYER/PlayHover.avif",
-    "/OPTIMIZED_PLAYER/PlayClic.avif",
-    "/OPTIMIZED_PLAYER/Pause.avif",
-    "/OPTIMIZED_PLAYER/PauseHover.avif",
-    "/OPTIMIZED_PLAYER/PauseClic.avif",
-    "/OPTIMIZED_PLAYER/Next.avif",
-    "/OPTIMIZED_PLAYER/NextHover.avif",
-    "/OPTIMIZED_PLAYER/NextClic.avif",
-    "/OPTIMIZED_PLAYER/Previous.avif",
-    "/OPTIMIZED_PLAYER/PreviousHover.avif",
-    "/OPTIMIZED_PLAYER/PreviousClic.avif",
-    "/OPTIMIZED_PLAYER/Exit.avif",
-    "/OPTIMIZED_PLAYER/ExitHover.avif",
-    "/OPTIMIZED_PLAYER/ExitClic.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/Play.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/PlayHover.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/PlayClic.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/Pause.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/PauseHover.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/PauseClic.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/Forward.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/Backwards.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/BackwardsHover.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/BackwardsClic.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/Exit.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif",
+    "/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif",
   ];
 
   // Précharger les images
