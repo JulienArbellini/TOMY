@@ -9,7 +9,7 @@ interface TicketPlayerProps {
 
 const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
   // ---------- États pour tous les champs ----------
-  const [userName, setUserName] = useState("MYSTERIOUS");
+  const [userName, setUserName] = useState("");
   const [sex, setSex] = useState("M");
   const [age, setAge] = useState("18");
   const [date, setDate] = useState("1995-12-07");  // Format ISO pour plus de fiabilité

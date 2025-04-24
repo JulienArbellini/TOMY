@@ -9,28 +9,12 @@ export const items = [
     y: 507-32,
     width: 296-100,
     playerConfig: {
-      type: "video-automatique",
-      images: [
-        "/images/content/Crew1.avif",
-        "/images/content/Crew2.avif",
-        "/images/content/Crew3.avif",
-        "/images/content/Crew4.avif",
-      ],
-      videos:[
-        "E_nzu6AtYPk",
-      ],
-      src:"E_nzu6AtYPk",
-      media: [
-        { type: "image", src: "/images/content/Crew1.avif" },
-        { type: "video", src: "RS2jNCqCjPs" },
-        { type: "image", src: "/images/content/Crew2.avif" },
-      ],
+      type: "video",
+      src: "E_nzu6AtYPk",
       frameType: "bleu",
-      videoAutoplay: true,
-      videoControls: false,
-      action: "playSound",
-      soundSrc: "/sounds/Yipii.mp3",
-      // Affichage conditionnel entre images et vidéo
+      autoplay: false,
+      loop: false,
+      controls: true,
     },
   },
 
@@ -58,7 +42,7 @@ export const items = [
       playerConfig: {
         type: "diaporama",
         images: [
-          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1740928584/ofaupiye2nvil614rdtv.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745496462/gzxilsrmdd37acmuqjum.png",
         ],
         videos:[
           "RS2jNCqCjPs",
@@ -145,7 +129,7 @@ export const items = [
         media: [
           { type: "image", src: "/images/content/Cigarette/Smoking.avif" },
           { type: "video", src: "ZL0xeOWVOcY" },
-          { type: "image", src: "/images/content/Cigarette/Smoking.avif" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745496614/yjjqaey9sjrmrzzhr9ci.png" },
           { type: "video", src: "v_yCZ442xuk" },
         ],
         images: [
@@ -562,11 +546,11 @@ export const items = [
         frameType: "ultrasimple",
         media: [
           { type: "video", src: "jQZPmkoKuW0" },
-          { type: "image", src: "/images/content/Crew1.avif" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745496619/sihnzvn6frnebzigf0f1.png" },
           { type: "video", src: "h5oPoCPFK20" },
-          { type: "image", src: "/images/content/Crew1.avif" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745496617/ekhae6gdxqhib0usewkf.png" },
           { type: "video", src: "H0K_CDoRDMk" },
-          { type: "image", src: "/images/content/Crew1.avif" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745496613/i5dq5lhirdylmh3xzxst.png" },
         ],
         autoplay: true,
         loop: true,
