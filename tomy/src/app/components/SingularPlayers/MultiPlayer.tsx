@@ -637,6 +637,7 @@ useEffect(() => {
                 zIndex: overlayVisible ? 5 : 0
               }}
               >
+                <img className="w-20 h-20"  src="loader.gif" alt="" />
               </div>
 
           

@@ -95,19 +95,19 @@ useEffect(() => {
 
 
 
-    const handlePlayToggle = () => {
-      const playAudio = audioRefs.current.playToggle;
+    // const handlePlayToggle = () => {
+    //   const playAudio = audioRefs.current.playToggle;
     
-      if (currentStep === 0) {
-        setCurrentStep(1);
-        setShowPlay(false);
-        nextStep(1); // Lance le son1
-      }
+    //   if (currentStep === 0) {
+    //     setCurrentStep(1);
+    //     setShowPlay(false);
+    //     nextStep(1); // Lance le son1
+    //   }
     
-      if (playAudio) {
-        playAudio.play().catch(err => console.error("Erreur audio:", err));
-      }
-    };
+    //   if (playAudio) {
+    //     playAudio.play().catch(err => console.error("Erreur audio:", err));
+    //   }
+    // };
 
   /**
    * Gère la progression dans les 3 étapes
@@ -303,7 +303,7 @@ useEffect(() => {
   
   
   
-          {showPlay &&
+          {/* {showPlay &&
   
             <ControlButton
             defaultIcon={"/vectors/ELEMENTS/BoutonsPlayer/VolumeUp.avif"}
@@ -319,7 +319,7 @@ useEffect(() => {
               width: `40px`,
             }}
             />
-          }
+          } */}
   
           
         </div>

@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import ClientImagePreload from "./client-image-preload";
 import PreloadWrapper from './preloadWrapper';
+import { Toaster } from 'react-hot-toast';
+
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -31,6 +33,7 @@ export default function RootLayout({
         {/* Ajoutez toutes les autres images critiques */}
       </head>
       <body className={inter.className}>
+      <Toaster position="top-left" reverseOrder={false} />
       <PreloadWrapper>{children}</PreloadWrapper>
         </body>
     </html>

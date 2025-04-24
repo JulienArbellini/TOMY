@@ -36,6 +36,7 @@
     "postcss": "8.4.40",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "react-hot-toast": "^2.5.2",
     "react-parallax-tilt": "^1.7.248",
     "react-player": "^2.16.0",
     "sharp": "^0.33.5",

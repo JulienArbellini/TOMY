@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { PDFDocument, rgb } from "pdf-lib";
 import InteractiveButton from "../GenericPlayer/InteractiveButton"; // Vérifie le bon chemin
+import toast from 'react-hot-toast';
 
 interface TicketPlayerProps {
   onClose: () => void;
@@ -9,7 +10,7 @@ interface TicketPlayerProps {
 
 const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
   // ---------- États pour tous les champs ----------
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("NOM PRÉNOM");
   const [sex, setSex] = useState("M");
   const [age, setAge] = useState("18");
   const [date, setDate] = useState("1995-12-07");  // Format ISO pour plus de fiabilité
@@ -168,7 +169,7 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
 
       // On utilise la valeur saisie par l'utilisateur
       formData.append("toEmail", recipientEmail || "destinataire@example.com");
-      formData.append("subject", "Votre Billet Personnalisé");
+      formData.append("subject", "Votre Voyage avec Tomy Airlines");
 
       // 7. Envoyer la requête vers l'API Route Next.js
       const response = await fetch("/api/send-pdf", {
@@ -178,9 +179,11 @@ const TicketPlayer: React.FC<TicketPlayerProps> = ({ onClose }) => {
 
       if (!response.ok) {
         console.error("Échec de l'envoi du PDF");
+        toast.error("Échec de l'envoi du billet.");
       } else {
         console.log("PDF envoyé par email avec succès !");
-        alert("PDF envoyé avec succès !");
+        // alert("PDF envoyé avec succès !");
+        toast.success("Billet envoyé par email ! 🎟️");
       }
     } catch (error) {
       console.error("Erreur lors de la génération / envoi du PDF :", error);
