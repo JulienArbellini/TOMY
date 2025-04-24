@@ -1,6 +1,7 @@
 // items.ts
 
 export const items = [
+  
   {
     name: "PiscineSimple",
     type: "PiscineSimple",
@@ -32,21 +33,7 @@ export const items = [
       // Affichage conditionnel entre images et vidéo
     },
   },
-    {
-      name: "Terrasse",
-      type: "Terrasse",
-      x: 1058-110,
-      y: 276+17,
-      width:178-50,
-      playerConfig: {
-        type: "video-automatique",
-        src: "8Weh3T-fVoU",
-        frameType: "ultrasimple",
-        autoplay: true,
-        loop: true,
-        controls: false,
-      },
-    },
+
     {
       name: "Serre",
       type: "Serre",
@@ -102,6 +89,21 @@ export const items = [
         loop: false,
         controls: false,
         extraButton: "exitButton",
+      },
+    },
+    {
+      name: "Terrasse",
+      type: "Terrasse",
+      x: 1058-110,
+      y: 276+17,
+      width:178-50,
+      playerConfig: {
+        type: "video-automatique",
+        src: "8Weh3T-fVoU",
+        frameType: "ultrasimple",
+        autoplay: true,
+        loop: true,
+        controls: false,
       },
     },
     {
