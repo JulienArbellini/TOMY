@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import ClientImagePreload from "./client-image-preload";
 import PreloadWrapper from './preloadWrapper';
 import { Toaster } from 'react-hot-toast';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 
 
@@ -34,7 +35,10 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
       <Toaster position="top-left" reverseOrder={false} />
-      <PreloadWrapper>{children}</PreloadWrapper>
+      <PreloadWrapper>
+        {children}
+        </PreloadWrapper>
+        <SpeedInsights/>
         </body>
     </html>
   )
