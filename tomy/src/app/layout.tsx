@@ -5,6 +5,8 @@ import ClientImagePreload from "./client-image-preload";
 import PreloadWrapper from './preloadWrapper';
 import { Toaster } from 'react-hot-toast';
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react"
+
 
 
 
@@ -39,6 +41,7 @@ export default function RootLayout({
         {children}
         </PreloadWrapper>
         <SpeedInsights/>
+        <Analytics/>
         </body>
     </html>
   )
