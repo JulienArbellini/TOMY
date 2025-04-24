@@ -133,7 +133,7 @@ const PreloadWrapper = ({ children }: { children: React.ReactNode }) => {
 <img
         src="/loader.gif" // <-- ton GIF
         alt="Chargement..."
-        className="w-45 h-45 object-contain"
+        className="w-32 h-32 object-contain"
       />
         <p className="mt-4 text-white text-xl font-semibold animate-pulse">
           Décollage imminent...

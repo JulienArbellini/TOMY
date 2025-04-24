@@ -42,7 +42,7 @@ export const items = [
       width:185-50,
       playerConfig: {
         type: "video-automatique",
-        src: "7lElhppWv90",
+        src: "UVITbxfdMw0",
         frameType: "plante",
         autoplay: true,
         loop: true,
@@ -100,7 +100,7 @@ export const items = [
       playerConfig: {
         type: "video-automatique",
         src: "8Weh3T-fVoU",
-        frameType: "ultrasimple",
+        frameType: "noir",
         autoplay: true,
         loop: true,
         controls: false,
@@ -182,7 +182,7 @@ export const items = [
       width: 90,
       playerConfig: {
         type: "video-automatique",
-        src: "2kUbVBY25iU",
+        src: "WlEKsFBEXkA",
         frameType: "edgy",
         autoplay: true,
         loop: true,
@@ -228,7 +228,7 @@ export const items = [
       width: 49-17,
       playerConfig: {
         type: "video-automatique",
-        src: "8sy5ETad0Z8",
+        src: "ws3NOU4dO20",
         frameType: "surfy",
         autoplay: true,
         loop: true,
@@ -339,7 +339,7 @@ export const items = [
       width:80-30,
       playerConfig: {
         type: "video-automatique",
-        src: "MVqZpSwBuhg",
+        src: "N579vRZfAGs",
         frameType: "ultrasimple",
         autoplay: false,
         loop: false,
@@ -445,7 +445,7 @@ export const items = [
       width: 154,
       playerConfig: {
         type: "video-automatique",
-        src: "PsQthA38E4s",
+        src: "NTAHlBU2E2c",
         frameType: "ultrasimple",
         autoplay: true,
         loop: true,
@@ -561,9 +561,12 @@ export const items = [
         src: "jQZPmkoKuW0",
         frameType: "ultrasimple",
         media: [
-          { type: "video", src: "H0K_CDoRDMk" },
+          { type: "video", src: "jQZPmkoKuW0" },
           { type: "image", src: "/images/content/Crew1.avif" },
           { type: "video", src: "h5oPoCPFK20" },
+          { type: "image", src: "/images/content/Crew1.avif" },
+          { type: "video", src: "H0K_CDoRDMk" },
+          { type: "image", src: "/images/content/Crew1.avif" },
         ],
         autoplay: true,
         loop: true,
