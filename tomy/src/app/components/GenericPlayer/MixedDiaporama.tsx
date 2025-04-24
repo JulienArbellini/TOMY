@@ -142,7 +142,7 @@ const MixedDiaporama: React.FC<MixedDiaporamaProps> = ({
         {/* Cadre principal */}
         <img
           src={frameSrc}
-          alt="Cadre décoratif autour du contenu"
+          alt="Utilise google chrome frero"
           style={{
             height: `${scaledValue(570)}px`,
             width: `${scaledValue(675)}px`,
@@ -208,7 +208,7 @@ const MixedDiaporama: React.FC<MixedDiaporamaProps> = ({
         {/* Cadre principal */}
         <img
           src={frameSrc}
-          alt="Cadre décoratif autour du contenu"
+          alt="Utilise google chrome frero"
           style={{
             height: `${scaledValue(538)}px`,
             width: `${scaledValue(638)}px`,

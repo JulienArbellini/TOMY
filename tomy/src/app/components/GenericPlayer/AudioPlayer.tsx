@@ -252,7 +252,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
       {/* Cadre décoratif */}
       <img
         src={frameSrc}
-        alt="Cadre décoratif autour du contenu"
+        alt="Utilise google chrome frero"
         style={{
           height: `${scaledValue(337)}px`,
           width: `${scaledValue(556)}px`,

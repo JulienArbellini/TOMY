@@ -556,7 +556,7 @@ useEffect(() => {
         {/* Cadre décoratif */}
         <img
           src={"VERSION_MOBILE/ELEMENTS/TopEcran.avif"}
-          alt="Cadre décoratif autour du contenu"
+          alt="Utilise google chrome frero"
           style={{
             height: `${scaledValue(17)}px`,
             width: `${scaledValue(565)}px`,

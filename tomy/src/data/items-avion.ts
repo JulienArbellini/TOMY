@@ -24,7 +24,7 @@ export const items = [
         { type: "video", src: "RS2jNCqCjPs" },
         { type: "image", src: "/images/content/Crew2.avif" },
       ],
-      frameType: "ultrasimple",
+      frameType: "bleu",
       videoAutoplay: true,
       videoControls: false,
       action: "playSound",
@@ -241,7 +241,7 @@ export const items = [
       width:270-50,
       playerConfig: {
         type: "game",
-        src: "https://tomy-jeu.vercel.app/",
+        src: "https://jeu-tomyairlines.vercel.app/",
         frameType: "ultrasimple",
       },
       //rendre cliquable

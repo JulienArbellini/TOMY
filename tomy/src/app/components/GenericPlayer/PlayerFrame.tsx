@@ -81,7 +81,7 @@ const handleExitClick = () => {
         {/* Cadre Principal */}
         <img
           src={frameSrc}
-          alt="Cadre décoratif autour du contenu"
+          alt="Utilise google chrome frero"
           className="absolute"
           style={{
             top: `${scaledValue(0)}px`,
@@ -204,7 +204,7 @@ const handleExitClick = () => {
         {/* Cadre Principal */}
         <img
           src={frameSrc}
-          alt="Cadre décoratif autour du contenu"
+          alt="Utilise google chrome frero"
           style={{
             height: `${scaledValue(569)}px`,
             width: `${scaledValue(640)}px`,
@@ -324,7 +324,7 @@ const handleExitClick = () => {
         {/* Cadre Principal */}
         <img
           src={frameSrc}
-          alt="Cadre décoratif autour du contenu"
+          alt="Utilise google chrome frero"
           style={{
             height: `${scaledValue(570)}px`,
             width: `${scaledValue(675)}px`,
