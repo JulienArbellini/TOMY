@@ -97,12 +97,43 @@ export const items = [
       y: 436-20,
       width: 212-50,
       playerConfig: {
-        type: "video-automatique",
-        src: "RS2jNCqCjPs",
-        action: "randomAdvice",
-        frameType: "simple",
-        //comme Gourou maus garder icone de Brace
-        // Associe la souris avec une note au survol
+        type: "diaporama",
+        images: [
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605465/gqp0xqwqzfg7nnxs2q71.jpg",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605467/cyfohv3t03qwpauu8e1b.jpg",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605469/cgj0m6g9eqhrvz1t1mde.jpg",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/wczs6xntnwmgwu0uqmk8.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/y9aklpun1258hjbpfwdo.jpg",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/kub05udvpvjiaxffnkk0.jpg",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/e9tg7v0lx09lxcg6ybdh.jpg",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605467/yck0ncw2mzlw5ukenm2f.jpg",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605467/qlf8umdgzoih5cm1kyz7.jpg",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605465/belfz8yrhgnabezzj4tg.jpg",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745604779/d3gi32xjs95hr5abxcka.png",
+          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745496619/sihnzvn6frnebzigf0f1.png"
+        ],
+        videos:[
+          "RS2jNCqCjPs",
+        ],
+        media: [
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605465/gqp0xqwqzfg7nnxs2q71.jpg" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605467/cyfohv3t03qwpauu8e1b.jpg" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605469/cgj0m6g9eqhrvz1t1mde.jpg" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/wczs6xntnwmgwu0uqmk8.png" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/y9aklpun1258hjbpfwdo.jpg" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/kub05udvpvjiaxffnkk0.jpg" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/e9tg7v0lx09lxcg6ybdh.jpg" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605467/yck0ncw2mzlw5ukenm2f.jpg" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605467/qlf8umdgzoih5cm1kyz7.jpg" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605465/belfz8yrhgnabezzj4tg.jpg" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745604779/d3gi32xjs95hr5abxcka.png" },
+          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745496619/sihnzvn6frnebzigf0f1.png" },
+
+        ],
+        frameType: "bois",
+        videoAutoplay: true,
+        videoControls: false,
+        // Affichage conditionnel entre images et vidéo
       },
       advice: [
         "Il faut battre le frère tant qu'il est chauve",

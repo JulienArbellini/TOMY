@@ -184,9 +184,6 @@ const AvionMenu: React.FC<AvionMenuProps> = ({
       onSiegeClick()
       return;
     }
-    if (item.type === "Brace" ) {
-      return;
-    }
     setWasMutedBeforePlayer(isMuted);
 
     if (audioRef.current && !isMuted && !noMuteIcons.includes(type)) {
