@@ -73,8 +73,6 @@ const PreloadWrapper3 = ({ children }: { children: React.ReactNode }) => {
     "/vectors/ELEMENTS/Cadres/CadreMagazine.avif",
     "/vectors/ELEMENTS/Cadres/CadreMusique.webp",
     "/vectors/ELEMENTS/Cadres/FondTicket.avif",
-    
-    
   ]
 
   const isMobile = typeof window !== "undefined" &&
