@@ -118,7 +118,10 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   }, [currentTrack]);
 
 useEffect(() => {
-  if (currentTrack.type !== "video") return;
+  if (currentTrack.type !== "video") {
+    setYoutubeReady(false);      // ↩︎ on ré-affiche le titre/canvas
+    setOverlayVisible(false);    // bonus : on nettoie l’overlay de chargement
+  }
 
   const onYouTubeIframeAPIReady = () => {
     youtubePlayerRef.current = new window.YT.Player("yt-player", {
@@ -163,6 +166,8 @@ useEffect(() => {
   return () => {
     // Optionnel : détruire proprement le player précédent si besoin
     youtubePlayerRef.current?.destroy?.();
+    youtubePlayerRef.current = null;  // on reset la ref
+    setYoutubeReady(false);  
   };
 }, [currentTrack]);
 
@@ -228,17 +233,18 @@ useEffect(() => {
 
 
 useEffect(() => {
-  if (currentTrack.type === "video") return;
+
   let localP5: any;
 
   const loadP5 = async () => {
     // 1) importe p5 et expose-le global pour p5.sound
     const p5Module = await import("p5");
     const P5       = p5Module.default;
-    ;(window as any).p5 = P5;
+    (window as any).p5 = P5;
 
     // 2) importe l’addon son (il va chercher window.p5)
     await import("p5/lib/addons/p5.sound");
+    fftRef.current = new P5.FFT();
 
     // 3) définis ton sketch
     const sketch = (p: any) => {
@@ -249,6 +255,8 @@ useEffect(() => {
           scaledValue(280)
         );
         c.parent(canvasContainerRef.current!);
+        // c.style("width", "200%");
+        // c.style("height", "100%");
 
         // instancie la FFT, sans l’y connecter tout de suite
         fftRef.current = new p5Module.default.FFT();
@@ -281,14 +289,6 @@ useEffect(() => {
 }, []);
 
 
-  useEffect(() => {
-    if (p5Instance) {
-      // On attend le prochain rafraîchissement d'affichage
-      requestAnimationFrame(() => {
-        p5Instance.resizeCanvas(scaledValue(580), scaledValue(280));
-      });
-    }
-  }, [p5Instance, scale]);
 
   // useEffect(() => {
   //   const audio = audioRef.current;
@@ -329,6 +329,55 @@ useEffect(() => {
 
   const fftRef = useRef<any>(null);          // à déclarer en haut
 
+  // ───────────────────────────────────────────
+// Garde isPlaying synchronisé avec l’élément
+// ───────────────────────────────────────────
+useEffect(() => {
+  const audio = audioRef.current;
+  if (!audio) return;
+
+  const handlePlay  = () => {
+    setIsPlaying(true);
+    setHasPlayerStarted(true);   // on a déjà joué au moins une fois
+  };
+  const handlePause = () => setIsPlaying(false);
+
+  audio.addEventListener("play",  handlePlay);
+  audio.addEventListener("pause", handlePause);
+
+  return () => {
+    audio.removeEventListener("play",  handlePlay);
+    audio.removeEventListener("pause", handlePause);
+  };
+}, [currentTrackIndex]);          // se ré-attache sur chaque nouvelle piste
+
+  useEffect(() => {
+    if (currentTrack.type !== "audio") {
+      // On quitte l'audio → on nettoie la précédente source
+      if (mediaElementSourceRef.current) {
+        mediaElementSourceRef.current.disconnect();
+        mediaElementSourceRef.current = null;
+      }
+      return;
+    }
+  
+    if (!p5Instance || !audioRef.current || !fftRef.current) return;
+  
+    const ctx = p5Instance.getAudioContext();
+    if (ctx.state === "suspended") ctx.resume();
+  
+    // On crée une nouvelle source pour le nouvel <audio>
+    const srcNode = ctx.createMediaElementSource(audioRef.current);
+    srcNode.connect(ctx.destination);       // pour entendre le son
+    fftRef.current.setInput(srcNode);       // pour nourrir le FFT
+    mediaElementSourceRef.current = srcNode;
+  
+    // cleanup si ce composant/untrack est démonté
+    return () => {
+      srcNode.disconnect();
+    };
+  }, [currentTrack.type, currentTrackIndex, p5Instance]);
+
   const togglePlayPause = () => {
     console.log("🎬 isVideoActuallyPlaying =", isVideoActuallyPlaying);
 
@@ -346,7 +395,7 @@ useEffect(() => {
       return;
     }
     
-  
+
 
     const audio = audioRef.current!;
     if (!p5Instance) return;
@@ -356,11 +405,15 @@ useEffect(() => {
     if (ctx.state === "suspended") ctx.resume();
   
     // 2) Crée et connecte le media source **une seule fois**
-    if (!mediaElementSourceRef.current) {
-      const srcNode = ctx.createMediaElementSource(audio);
-      srcNode.connect(ctx.destination);
-      mediaElementSourceRef.current = srcNode;
-      fftRef.current.setInput(srcNode);
+    // if (!mediaElementSourceRef.current) {
+    //   const srcNode = ctx.createMediaElementSource(audio);
+    //   srcNode.connect(ctx.destination);
+    //   mediaElementSourceRef.current = srcNode;
+    //   fftRef.current.setInput(srcNode);
+    // }
+
+    if (mediaElementSourceRef.current && fftRef.current) {
+      fftRef.current.setInput(mediaElementSourceRef.current);
     }
   
     // 3) Lecture / pause
@@ -375,32 +428,22 @@ useEffect(() => {
     }
   };
 
+
+
   useEffect(() => {
-    if (currentTrack.type !== "audio") return;
-    const audio = audioRef.current;
-    if (!audio) return;
+    if (!audioRef.current || !p5Instance) return;
+    if (!fftRef.current) return;               // 👈 1. on attend que le FFT existe
   
-    const handleError = () => {
-      const error = audio.error;
-      if (error) {
-        console.error("🎧 Erreur audio détectée :", {
-          code: error.code,
-          message: (() => {
-            switch (error.code) {
-              case 1: return "MEDIA_ERR_ABORTED - L'utilisateur a annulé la lecture.";
-              case 2: return "MEDIA_ERR_NETWORK - Une erreur de réseau s’est produite.";
-              case 3: return "MEDIA_ERR_DECODE - Une erreur de décodage a empêché la lecture.";
-              case 4: return "MEDIA_ERR_SRC_NOT_SUPPORTED - Format non supporté ou fichier introuvable.";
-              default: return "Erreur inconnue.";
-            }
-          })()
-        });
-      }
-    };
+    const ctx = p5Instance.getAudioContext();
+    if (ctx.state === "suspended") ctx.resume();
   
-    audio.addEventListener("error", handleError);
-    return () => audio.removeEventListener("error", handleError);
-  }, [currentTrack]);
+    if (!mediaElementSourceRef.current) {
+      const srcNode = ctx.createMediaElementSource(audioRef.current);
+      srcNode.connect(ctx.destination);
+      fftRef.current.setInput(srcNode);        // 👈 2. maintenant c’est sûr
+      mediaElementSourceRef.current = srcNode;
+    }
+  }, [p5Instance, currentTrackIndex]);         // se relance quand le sketch existe *et* quand tu changes de piste
 
 
 
@@ -605,14 +648,13 @@ useEffect(() => {
         />
 
         {/* Titre de la piste */}
-        {!youtubeReady ? (
+        {currentTrack.type !== "video" && (
           <div
-            className="z-10"
+            className="z-10 absolute"
             style={{
-              position: "absolute",
               top: `${scaledValue(60)}px`,
-              left: `${scaledValue(564 / 2)}px`,
-              transform: "translate(-50%, -50%)",
+              left: "50%",
+              transform: "translateX(-50%)",
               width: `${scaledValue(500)}px`,
               overflow: "hidden",
               whiteSpace: "nowrap",
@@ -626,31 +668,32 @@ useEffect(() => {
                 display: "inline-block",
                 fontWeight: "bold",
                 fontSize: `${scaledValue(35)}px`,
-                animation: shouldScroll ? "scrollText 10s linear infinite" : undefined,
+                animation: shouldScroll
+                  ? "scrollText 10s linear infinite"
+                  : undefined,
                 paddingRight: shouldScroll ? "100%" : undefined,
               }}
             >
               {currentTrack.title}
             </div>
           </div>
-          ) : <div className="div"></div>
-          }
-
-        {/* Canvas pour la visualisation avec p5 */}
-        {currentTrack.type !== "video" && (
-          <div
-            ref={canvasContainerRef}
-            className="absolute w-full flex justify-center items-center"
-            style={{
-              top: `${scaledValue(17)}px`,
-              left: `${scaledValue(6)}px`,
-              height: `${scaledValue(410)}px`,
-              width: `${scaledValue(564)}px`,
-              backgroundColor: "black",
-              overflow: "hidden",
-            }}
-          ></div>
         )}
+
+
+        {/* Canvas p5 : toujours présent, simplement masqué quand c’est une vidéo */}
+        <div
+          ref={canvasContainerRef}
+          className="absolute w-full flex justify-center items-center"
+          style={{
+            top: `${scaledValue(17)}px`,
+            left: `${scaledValue(6)}px`,
+            height: `${scaledValue(410)}px`,
+            width: `${scaledValue(564)}px`,
+            backgroundColor: "black",
+            overflow: "hidden",
+            display: currentTrack.type === "video" ? "none" : "block",
+          }}
+        />
 
         {currentTrack.type === "video" && (
           <div

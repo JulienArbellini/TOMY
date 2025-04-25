@@ -7,12 +7,12 @@ export const playlist: PlaylistItem[] = [
       playerConfig: {
         type: "media", // Peut rester "audio", ou être renommé plus tard en "media"
         tracks: [
-           { type: "video", src: "ArWxU2vPT_4", title: "Intro" },
-           { type: "video", src: "eX9Blu2hDm4", title: "Flight Feeling (film)" },
-           { type: "video", src: "E_nzu6AtYPk", title: "Ocean" },
-           { type: "video", src: "jQZPmkoKuW0", title: "Airport Vigilance" },
-           { type: "video", src: "NTAHlBU2E2c", title: "Kiss" },
-           { src: "/Album/V2/Pop.wav", title: "Pop", type: "audio" },
+          { type: "video", src: "ArWxU2vPT_4", title: "Intro" },
+          { src: "/Album/V2/Pop.wav", title: "Pop", type: "audio" },
+          { type: "video", src: "eX9Blu2hDm4", title: "Flight Feeling (film)" },
+          { type: "video", src: "E_nzu6AtYPk", title: "Ocean" },
+          { type: "video", src: "jQZPmkoKuW0", title: "Airport Vigilance" },
+          { type: "video", src: "NTAHlBU2E2c", title: "Kiss" },
            { type: "video", src: "VlG7InE4VvU", title: "Sparkling Water" },
            { type: "video", src: "UVITbxfdMw0", title: "La Terre" },
            { type: "video", src: "N579vRZfAGs", title: "Apollo" },

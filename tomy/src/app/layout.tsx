@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import ClientImagePreload from "./client-image-preload";
-import PreloadWrapper from './preloadWrapper';
+import PreloadWrapper from './PreloadWrapper';
 import { Toaster } from 'react-hot-toast';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/react"
@@ -54,7 +54,7 @@ export default function RootLayout({
         <link rel="preload" as="image" href="/VERSION_MOBILE/ELEMENTS/TopEcran.avif" media="(max-width: 48rem)"/>
         <link rel="preload" as="image" href="/VERSION_MOBILE/ELEMENTS/Fonds/AvionPixel.avif" media="(max-width: 48rem)"/>
 
-        
+
 
       
         {/* Ajoutez toutes les autres images critiques */}
