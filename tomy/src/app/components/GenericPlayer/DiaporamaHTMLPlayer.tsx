@@ -158,7 +158,7 @@ const DiaporamaHTMLPlayer: React.FC<DiaporamaHTMLPlayerProps> = ({
         }}
       >
         {/* Carte participant·e */}
-        <div className="w-full h-full flex flex-col md:flex-row p-4 gap-4 text-black overflow-y-auto text-[1.7em]">
+        <div className="w-full h-full flex flex-col md:flex-row p-4 gap-4 text-black overflow-y-auto ">
           {/* Photo */}
             {/* Liens de contact */}
             <div className="relative w-full">
@@ -168,8 +168,14 @@ const DiaporamaHTMLPlayer: React.FC<DiaporamaHTMLPlayerProps> = ({
                   href={c.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="absolute bottom-[65px] right-[170px]  flex items-center gap-1 hover:underline"
+                  style= {{
+                    bottom : `${scaled(35)}px`,
+                    right : `${scaled(70)}px`,
+                    fontSize: `${scaled(15)}px`,
+                  }}
+                  className="absolute  flex items-center gap-1 hover:underline"
                 >
+                  
                   {c.iconSrc && (
                     <img
                       src={c.iconSrc}
