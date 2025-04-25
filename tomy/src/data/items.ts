@@ -6,7 +6,7 @@ export const items = [
     type: "MOVIES",
     playerConfig: {
       type: "video",
-      src: "DM930C8mnhU",
+      src: "eX9Blu2hDm4",
       frameType: "cadre1",
       autoplay: false,
       loop: false,
@@ -43,7 +43,7 @@ export const items = [
     type: "TomyIsland",
     playerConfig: {
       type: "video",
-      src: "kuWYuD7Phi4",
+      src: "E_nzu6AtYPk",
       frameType: "bleu",
       autoplay: false,
       loop: false,
@@ -150,7 +150,7 @@ export const items = [
     type: "GAMEr-Manette",
     playerConfig: {
       type: "game",
-      src: "https://tomy-jeu.vercel.app/",
+      src: "https://jeu-tomyairlines.vercel.app/",
       frameType: "ultrasimple",
     },
   },
