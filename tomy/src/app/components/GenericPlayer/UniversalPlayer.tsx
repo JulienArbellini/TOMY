@@ -10,6 +10,7 @@ import MixedDiaporama from "./MixedDiaporama";
 import Player from "../Player/Player";
 import { redirect } from "next/dist/server/api-utils";
 import TicketPlayer from "../SingularPlayers/TicketPlayer";
+import DiaporamaHTMLPlayer from "./DiaporamaHTMLPlayer";
 
 interface UniversalPlayerProps {
   type: string;
@@ -73,6 +74,125 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
     "/vectors/ELEMENTS/BoutonsPlayer/ExitHover.avif",
     "/vectors/ELEMENTS/BoutonsPlayer/ExitClic.avif",
   ];
+
+
+  const participants =  [
+    {
+      photo: "/images/content/Crew/01-TomyAirlinesCrew.avif",
+      name: "Tomy Airlines Crew",
+      description: "",
+      contacts: [
+
+      ],
+
+    },
+    {
+      photo: "/images/content/Crew/02-Tomy.avif",
+      name: "Tomy",
+      description: "",
+      contacts: [
+        { label: "https://linktr.ee/thomaspalmer", url: "https://linktr.ee/thomaspalmer" },
+      ],
+    },
+    {
+      photo: "/images/content/Crew/03-Julien.avif",
+      name: "Julien",
+      description: "",
+      contacts: [
+        { label: "https://julien-arbellini.vercel.app", url: "https://julien-arbellini.vercel.app" },
+      ],
+    },
+    {
+      photo: "/images/content/Crew/04-Clelia.avif",
+      name: "Clélia",
+      description: "",
+      contacts: [
+        { label: "https://www.instagram.com/cleliaguy", url: "https://www.instagram.com/cleliaguy" },
+      ],
+    },
+    {
+      photo: "/images/content/Crew/05-Augustin.avif",
+      name: "Augustin",
+      description: "",
+      contacts: [
+        { label: "https://linktr.ee/labaladeauxmiroirs", url: "https://linktr.ee/labaladeauxmiroirs" },
+      ],
+    },
+    {
+      photo: "/images/content/Crew/06-Amedee.avif",
+      name: "Amédée",
+      description: "",
+      contacts: [
+        { label: "https://www.instagram.com/amedeeberiot.arts", url: "https://www.instagram.com/amedeeberiot.arts" },
+      ],
+    },
+    {
+      photo: "/images/content/Crew/07-Sarah.avif",
+      name: "Sarah",
+      description: "",
+      contacts: [
+        { label: "https://www.instagram.com/brunonesarah", url: "https://www.instagram.com/brunonesarah" },
+      ],
+    },
+    {
+      photo: "/images/content/Crew/08-Morgane.avif",
+      name: "Morgane",
+      description: "",
+      contacts: [
+        { label: "https://www.instagram.com/lefilroux", url: "https://www.instagram.com/lefilroux" },
+      ],
+    },
+    {
+      photo: "/images/content/Crew/09-Victoria.avif",
+      name: "Victoria",
+      description: "",
+      contacts: [
+        { label: "https://www.instagram.com/victoria___scott", url: "https://www.instagram.com/victoria___scott" },
+      ],
+    },
+    {
+      photo: "/images/content/Crew/10-Antoine.avif",
+      name: "Antoine",
+      description: "",
+      contacts: [
+        { label: "https://linktr.ee/antoinedubos", url: "https://linktr.ee/antoinedubos" },
+      ],
+    },
+    {
+      photo: "/images/content/Crew/11-Evelyne.avif",
+      name: "Evelyne",
+      description: "",
+      contacts: [
+        { label: " https://www.instagram.com/evelyne_pg", url: " https://www.instagram.com/evelyne_pg" },
+      ],
+    },
+    {
+      photo: "/images/content/Crew/13-Coline.avif",
+      name: "Coline",
+      description: "",
+      contacts: [
+        { label: "coline.poisson2@gmail.com", url: "coline.poisson2@gmail.com" },
+      ],
+    },
+    {
+      photo: "/images/content/Crew/14-TomJunior.avif",
+      name: "Tom Junior",
+      description: "",
+      contacts: [
+        { label: "tomyairlinescrew@gmail.com", url: "tomyairlinescrew@gmail.com" },
+      ],
+    },
+    /* Diapo finale “remerciements” — à traiter différemment si besoin */
+    {
+      photo: "/images/content/Crew/15-Remerciements.avif",
+      name: "Remerciements",
+      description: "",
+      contacts: [
+
+      ],
+    },
+  ];
+  
 
   // Précharger les images
   usePreloadImages(playerImages);
@@ -144,7 +264,13 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
     return (
       <DiaporamaPlayer images={images} frameSrc={frameSrc} onClose={onClose} />
     );
-  } else if (type === "game" && src) {
+  } 
+  else if (type === "diaporamaHTML" && images) {
+    return (
+      <DiaporamaHTMLPlayer slides={participants} onClose={onClose} />
+    );
+  } 
+  else if (type === "game" && src) {
     return (
       <PlayerFrame frameSrc={frameSrc} scale={scale}  onClose={onClose} vitre={false}>
         <iframe src={src} className="w-full h-full" title="Game Content" ></iframe>

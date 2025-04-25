@@ -181,7 +181,7 @@ export const items = [
       y: 534,
       width: 102-30,
       playerConfig: {
-        type: "diaporama",
+        type: "diaporamaHTML",
         images: [
           "https://res.cloudinary.com/dh3nxjopm/image/upload/v1740932692/uv9dqer8j4zybxmrlpld.png",
         ],
