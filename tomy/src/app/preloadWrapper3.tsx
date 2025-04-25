@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 
-const PreloadWrapper = ({ children }: { children: React.ReactNode }) => {
+const PreloadWrapper3 = ({ children }: { children: React.ReactNode }) => {
   const [ready, setReady] = useState(false)
 
   const mobileImages = [
@@ -139,4 +139,4 @@ const PreloadWrapper = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default PreloadWrapper
+export default PreloadWrapper3
