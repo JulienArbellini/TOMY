@@ -219,17 +219,45 @@ useEffect(() => {
     return indices;
   };
 
-  const toggleShuffle = () => {
-    setIsShuffled((prev) => {
-      const newState = !prev;
-      if (newState) {
-        setShuffledIndices(generateShuffledIndices(trackList.length));
-      } else {
-        setShuffledIndices([]);
+  // renvoie l'index (dans trackList) du morceau qu'on écoute *réellement*
+const getCurrentRealIndex = () =>
+  isShuffled ? shuffledIndices[currentTrackIndex] : currentTrackIndex;
+
+const toggleShuffle = () => {
+  const realIdx = getCurrentRealIndex();        // piste en cours (0-n)
+
+  setIsShuffled((prev) => {
+    if (prev) {
+      /* --- désactivation du shuffle --- */
+
+      // on reprend l'index linéaire correspondant à realIdx
+      setCurrentTrackIndex(realIdx);
+      setShuffledIndices([]);
+      return false;
+    } else {
+      /* --- activation du shuffle --- */
+
+      // on génère un tableau 0..n SANS realIdx
+      const rest = Array.from({ length: trackList.length }, (_, i) => i)
+                        .filter((i) => i !== realIdx);
+
+      // Fisher-Yates
+      for (let i = rest.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [rest[i], rest[j]] = [rest[j], rest[i]];
       }
-      return newState;
-    });
-  };
+
+      // on place la piste courante en tête
+      const newShuffle = [realIdx, ...rest];
+      setShuffledIndices(newShuffle);
+
+      // l’index courant doit pointer sur la 1ʳᵉ case
+      setCurrentTrackIndex(0);
+
+      return true;
+    }
+  });
+};
 
 
 useEffect(() => {
@@ -351,32 +379,7 @@ useEffect(() => {
   };
 }, [currentTrackIndex]);          // se ré-attache sur chaque nouvelle piste
 
-  useEffect(() => {
-    if (currentTrack.type !== "audio") {
-      // On quitte l'audio → on nettoie la précédente source
-      if (mediaElementSourceRef.current) {
-        mediaElementSourceRef.current.disconnect();
-        mediaElementSourceRef.current = null;
-      }
-      return;
-    }
-  
-    if (!p5Instance || !audioRef.current || !fftRef.current) return;
-  
-    const ctx = p5Instance.getAudioContext();
-    if (ctx.state === "suspended") ctx.resume();
-  
-    // On crée une nouvelle source pour le nouvel <audio>
-    const srcNode = ctx.createMediaElementSource(audioRef.current);
-    srcNode.connect(ctx.destination);       // pour entendre le son
-    fftRef.current.setInput(srcNode);       // pour nourrir le FFT
-    mediaElementSourceRef.current = srcNode;
-  
-    // cleanup si ce composant/untrack est démonté
-    return () => {
-      srcNode.disconnect();
-    };
-  }, [currentTrack.type, currentTrackIndex, p5Instance]);
+
 
   const togglePlayPause = () => {
     console.log("🎬 isVideoActuallyPlaying =", isVideoActuallyPlaying);
@@ -431,21 +434,33 @@ useEffect(() => {
 
 
   useEffect(() => {
-    if (!audioRef.current || !p5Instance) return;
-    if (!fftRef.current) return;               // 👈 1. on attend que le FFT existe
+    if (currentTrack.type !== "audio") return;
+    if (!p5Instance || !audioRef.current || !fftRef.current) return;
   
     const ctx = p5Instance.getAudioContext();
     if (ctx.state === "suspended") ctx.resume();
   
+    /* ----------------------------------
+     * Si la node existait mais qu’elle
+     * n’est plus branchée sur le NOUVEL
+     * élément audio, on la jette.
+     * ---------------------------------- */
+    if (
+      mediaElementSourceRef.current &&
+      mediaElementSourceRef.current.mediaElement !== audioRef.current
+    ) {
+      mediaElementSourceRef.current.disconnect();
+      mediaElementSourceRef.current = null;
+    }
+  
+    /* si on n’en a pas, on la crée */
     if (!mediaElementSourceRef.current) {
       const srcNode = ctx.createMediaElementSource(audioRef.current);
       srcNode.connect(ctx.destination);
-      fftRef.current.setInput(srcNode);        // 👈 2. maintenant c’est sûr
+      fftRef.current.setInput(srcNode);
       mediaElementSourceRef.current = srcNode;
     }
-  }, [p5Instance, currentTrackIndex]);         // se relance quand le sketch existe *et* quand tu changes de piste
-
-
+  }, [p5Instance, currentTrack.type, audioRef.current]); // ⬅ dépend de l’élément !
 
   const togglePaysage = () => {
     setIsTransitioning(true);
@@ -933,6 +948,7 @@ useEffect(() => {
       />
       ) : (
         <audio
+          key={currentTrack.src} 
           ref={audioRef}
           src={currentTrack.src}
           autoPlay
