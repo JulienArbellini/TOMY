@@ -130,7 +130,10 @@ useEffect(() => {
           console.log("✅ YouTube player ready");
           setYoutubeReady(true);
           setIsVideoReady(true);
-          youtubePlayerRef.current?.playVideo();
+        
+          if (isPlaying) { // 👈 On joue la vidéo que si isPlaying est vrai
+            youtubePlayerRef.current?.playVideo();
+          }
         },
         onStateChange: (event: any) => {
           const state = event.data;
@@ -431,7 +434,15 @@ useEffect(() => {
     }
   };
 
-
+  useEffect(() => {
+    if (currentTrack.type === "video" && youtubePlayerRef.current && isPlaying) {
+      try {
+        youtubePlayerRef.current.playVideo();
+      } catch (e) {
+        console.warn("Impossible de jouer la vidéo :", e);
+      }
+    }
+  }, [currentTrackIndex, isPlaying]);
 
   useEffect(() => {
     if (currentTrack.type !== "audio") return;
@@ -489,37 +500,37 @@ useEffect(() => {
   const handleVolumeUpClick = () => {
     if (currentTrack.type === "video") {
       const player = youtubePlayerRef.current;
-      if (player) {
+      if (player && youtubeReady) {
         const newVolume = Math.min(player.getVolume() + 10, 100);
         player.setVolume(newVolume);
       }
     } else {
-      increaseVolume(); // déjà défini
+      increaseVolume();
     }
   };
-
+  
   const handleVolumeDownClick = () => {
     if (currentTrack.type === "video") {
       const player = youtubePlayerRef.current;
-      if (player) {
+      if (player && youtubeReady) {
         const newVolume = Math.max(player.getVolume() - 10, 0);
         player.setVolume(newVolume);
       }
     } else {
-      decreaseVolume(); // déjà défini
+      decreaseVolume();
     }
   };
   
   const handleMuteClick = () => {
     if (currentTrack.type === "video") {
       const player = youtubePlayerRef.current;
-      if (player) {
+      if (player && youtubeReady) {
         const muted = player.isMuted();
         muted ? player.unMute() : player.mute();
         setIsMuted(!muted);
       }
     } else {
-      toggleMute(); // déjà défini
+      toggleMute();
     }
   };
 
@@ -760,7 +771,6 @@ useEffect(() => {
             style={{
               width: "100%",
               height: "400%",
-              pointerEvents: "none",
               zIndex : 4,
             }}
             allow="autoplay; encrypted-media"
