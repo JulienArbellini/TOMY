@@ -623,7 +623,7 @@ useEffect(() => {
             }}
           >
             <div style={{ height: "100%", width: "100%", overflow: "hidden" }}>
-              <div className="bg-black flex justify-center items-center"
+              <div className="bg-black flex justify-center items-center flex-col"
               style={{
                 position: "absolute",
                 top: 0,
@@ -638,6 +638,7 @@ useEffect(() => {
               }}
               >
                 <img className="w-20 h-20"  src="loader.gif" alt="" />
+                <div className="mt-5">Loading ...</div>
               </div>
 
           
