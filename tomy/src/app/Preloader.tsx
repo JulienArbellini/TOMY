@@ -1,10 +1,9 @@
-// app/preload-wrapper.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
 import LoadingScreen from './loading-screen';
 
-export default function PreloadWrapper({
+export default function Preloader({
   children,
 }: {
   children: React.ReactNode;

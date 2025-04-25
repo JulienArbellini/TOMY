@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import ClientImagePreload from "./client-image-preload";
-import PreloadWrapper from './PreloadWrapper';
+import Preloader from './Preloader';
 import { Toaster } from 'react-hot-toast';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/react"
@@ -62,7 +62,7 @@ export default function RootLayout({
       <body className={inter.className}>
       <Toaster position="top-left" reverseOrder={false} />
       {/* <PreloadWrapper> */}
-      <PreloadWrapper>{children}</PreloadWrapper>
+      <Preloader>{children}</Preloader>
         <SpeedInsights/>
         <Analytics/>
         </body>
