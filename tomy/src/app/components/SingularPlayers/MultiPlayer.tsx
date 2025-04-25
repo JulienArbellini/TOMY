@@ -428,6 +428,43 @@ useEffect(() => {
     }
   };
 
+  const handleVolumeUpClick = () => {
+    if (currentTrack.type === "video") {
+      const player = youtubePlayerRef.current;
+      if (player) {
+        const newVolume = Math.min(player.getVolume() + 10, 100);
+        player.setVolume(newVolume);
+      }
+    } else {
+      increaseVolume(); // déjà défini
+    }
+  };
+
+  const handleVolumeDownClick = () => {
+    if (currentTrack.type === "video") {
+      const player = youtubePlayerRef.current;
+      if (player) {
+        const newVolume = Math.max(player.getVolume() - 10, 0);
+        player.setVolume(newVolume);
+      }
+    } else {
+      decreaseVolume(); // déjà défini
+    }
+  };
+  
+  const handleMuteClick = () => {
+    if (currentTrack.type === "video") {
+      const player = youtubePlayerRef.current;
+      if (player) {
+        const muted = player.isMuted();
+        muted ? player.unMute() : player.mute();
+        setIsMuted(!muted);
+      }
+    } else {
+      toggleMute(); // déjà défini
+    }
+  };
+
   const decreaseVolume = () => {
     if (audioRef.current) {
       console.log("decrease");
@@ -458,6 +495,7 @@ useEffect(() => {
     hoverIcon,
     clickedIcon,
     style,
+    overrideIcon,
     onClick,
   }: {
     defaultIcon: string;
@@ -465,6 +503,7 @@ useEffect(() => {
     clickedIcon: string;
     style: CSSProperties;
     onClick: () => void;
+    overrideIcon?: string;
   }) => {
     const [buttonState, setButtonState] = useState<"default" | "hover" | "clicked">("default");
   
@@ -481,11 +520,13 @@ useEffect(() => {
     };
   
     const currentIcon =
-      buttonState === "clicked"
-        ? clickedIcon
-        : buttonState === "hover"
-        ? hoverIcon
-        : defaultIcon;
+    overrideIcon ||
+    (buttonState === "clicked"
+      ? clickedIcon
+      : buttonState === "hover"
+      ? hoverIcon
+      : defaultIcon);
+
   
     return (
       <div
@@ -721,7 +762,7 @@ useEffect(() => {
             defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/VolumeUp.avif"
             clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/VolumeUpClic.avif"
             hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/VolumeUpClic.avif"
-            onClick={increaseVolume}
+            onClick={handleVolumeUpClick}
             style={{
               position: "absolute",
               top: `${scaledValue(415)}px`,
@@ -740,7 +781,7 @@ useEffect(() => {
             defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/VolumeDown.avif"
             hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/VolumeDownHover.avif"
             clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/VolumeDownClic.avif"
-            onClick={toggleMute}
+            onClick={handleVolumeDownClick}
             style={{
               position: "absolute",
               top: `${scaledValue(415)}px`,
@@ -759,7 +800,12 @@ useEffect(() => {
             defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Mute.avif"
             hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Mute.avif"
             clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Mute.avif"
-            onClick={decreaseVolume}
+            overrideIcon={
+              isMuted
+                ? "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/MuteClic.avif"
+                : "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Mute.avif"
+            }
+            onClick={handleMuteClick}
             style={{ 
               position: "absolute",
               top: `${scaledValue(505)}px`,
