@@ -99,8 +99,20 @@ const MultiPlayer: React.FC<MultiPlayerProps> = ({
   const windowHeight = window.innerHeight;
 
   useEffect(() => {
-    setIsPlaying(false); // 🔁 Corrige le bouton pause affiché à tort
-    setHasPlayerStarted(false);
+    // Quand on change de piste → désactive le mute
+    
+    if (currentTrack.type === "video") {
+      const player = youtubePlayerRef.current;
+      if (player && player.isMuted()) {
+        player.unMute();
+      }
+    } else {
+      if (audioRef.current) {
+        audioRef.current.muted = false;
+      }
+    }
+  
+    setIsMuted(false); // 👈 important aussi pour mettre à jour ton bouton d'UI
   }, [currentTrackIndex]);
 
   useEffect(() => {
@@ -227,35 +239,29 @@ const getCurrentRealIndex = () =>
   isShuffled ? shuffledIndices[currentTrackIndex] : currentTrackIndex;
 
 const toggleShuffle = () => {
-  const realIdx = getCurrentRealIndex();        // piste en cours (0-n)
+  const realIdx = getCurrentRealIndex(); // piste en cours (dans trackList)
 
   setIsShuffled((prev) => {
     if (prev) {
-      /* --- désactivation du shuffle --- */
-
-      // on reprend l'index linéaire correspondant à realIdx
-      setCurrentTrackIndex(realIdx);
+      // --- Désactivation du shuffle ---
       setShuffledIndices([]);
+      setCurrentTrackIndex(realIdx); // Revient à l'index linéaire
       return false;
     } else {
-      /* --- activation du shuffle --- */
+      // --- Activation du shuffle ---
 
-      // on génère un tableau 0..n SANS realIdx
       const rest = Array.from({ length: trackList.length }, (_, i) => i)
                         .filter((i) => i !== realIdx);
 
-      // Fisher-Yates
+      // Fisher-Yates shuffle
       for (let i = rest.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [rest[i], rest[j]] = [rest[j], rest[i]];
       }
 
-      // on place la piste courante en tête
-      const newShuffle = [realIdx, ...rest];
+      const newShuffle = [realIdx, ...rest]; // Place la chanson actuelle en premier
       setShuffledIndices(newShuffle);
-
-      // l’index courant doit pointer sur la 1ʳᵉ case
-      setCurrentTrackIndex(0);
+      setCurrentTrackIndex(0); // Car dans le shuffle, la chanson actuelle est en position 0
 
       return true;
     }
@@ -925,9 +931,12 @@ useEffect(() => {
           />
           {/* Shuffle */}
           <AudioControlButton
-            defaultIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Shuffle.avif"
+            defaultIcon={isShuffled 
+              ? "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/ShuffleClic.avif" // <-- Icône spéciale Shuffle actif
+              : "/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/Shuffle.avif"
+            }
             hoverIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/ShuffleHover.avif"
-            clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/ShuffleClic.avif"            
+            clickedIcon="/VERSION_MOBILE/ELEMENTS/Boutons/TOUT/ShuffleClic.avif"
             onClick={toggleShuffle}
             style={{
               position: "absolute",
@@ -936,7 +945,6 @@ useEffect(() => {
               width: `${scaledValue(135)}px`,
               height: `${scaledValue(135)}px`,
               backgroundSize: "contain",
-              background: "contain",
               backgroundRepeat: "no-repeat",
               zIndex: 10,
             }}
