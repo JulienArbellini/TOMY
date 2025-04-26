@@ -155,9 +155,11 @@ useEffect(() => {
             });
             setIsPlaying(true);          // ← ajoute
             setHasPlayerStarted(true);   // ← ajoute
-          } else if (state === window.YT.PlayerState.PAUSED ||
-                     state === window.YT.PlayerState.ENDED) {
+          } else if (state === window.YT.PlayerState.PAUSED) {
             setIsPlaying(false);         // ← ajoute
+          } else if (state === window.YT.PlayerState.ENDED) {
+            setIsPlaying(false);   
+            playNextTrack();
           } else if (state === window.YT.PlayerState.BUFFERING) {
             setOverlayVisible(true);
           }
@@ -772,7 +774,7 @@ useEffect(() => {
           <iframe
             id="yt-player"
             key={currentTrack.src}
-            src={`https://www.youtube.com/embed/${currentTrack.src}?enablejsapi=1&mute=0&loop=1&playlist=${currentTrack.src}&modestbranding=1&controls=0&playsinline=1`}
+            src={`https://www.youtube.com/embed/${currentTrack.src}?enablejsapi=1&mute=0&modestbranding=1&controls=0&playsinline=1`}
             style={{
               width: "100%",
               height: "400%",
