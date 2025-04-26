@@ -484,7 +484,7 @@ useEffect(() => {
     setTimeout(() => {
       setBackgroundIndex((prev) => (prev + 1) % backgrounds.length);
       setIsTransitioning(false);
-    }, 300); // Temps de fade-out
+    }, 5000); // Durée de l'animation = 2 secondes
   };
   
 
@@ -631,30 +631,29 @@ useEffect(() => {
   >
     {/* BACKGROUND BLUR + NETTE superposées */}
     <div className="absolute inset-0 z-0">
-      {/* Image floue de secours */}
-      <div
-        style={{
-          backgroundImage: `url(${currentBackground})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          filter: 'blur(12px)',
-          opacity: loadedImages[currentBackground] ? 0 : 1,
-          transition: 'opacity 0.3s ease-in-out',
-        }}
-        className="absolute inset-0"
-      />
-      {/* Image nette */}
-      <div
-        style={{
-          backgroundImage: `url(${currentBackground})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          opacity: isTransitioning ? 0 : 1,
-          transition: 'opacity 0.6s ease-in-out',
-        }}
-        className="absolute inset-0"
-      />
-    </div>
+  {/* Image actuelle (restera visible) */}
+  <div
+    style={{
+      backgroundImage: `url(${backgrounds[backgroundIndex]})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      transition: 'opacity 0.3s ease-in-out',
+    }}
+    className="absolute inset-0"
+  />
+
+  {/* Image suivante révélée progressivement */}
+  {isTransitioning && (
+    <div
+      className="absolute inset-0 reveal-hachured"
+      style={{
+        backgroundImage: `url(${backgrounds[(backgroundIndex + 1) % backgrounds.length]})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    />
+  )}
+</div>
 
       <div
         className="relative flex flex-col items-center"
