@@ -148,6 +148,19 @@ const initYouTubePlayer = () => {
     player.seekTo(newTime, true);
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (player) {
+        const state = player.getPlayerState?.();
+        if (state === window.YT.PlayerState.PLAYING) {
+          setIsPlaying(true);
+        }
+      }
+    }, 1000); // vérifie toutes les secondes (ajuste si tu veux)
+  
+    return () => clearInterval(interval);
+  }, [player]);
+
   return (
     <div className="relative">
       <div className="relative">
