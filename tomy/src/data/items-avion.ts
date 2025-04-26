@@ -353,7 +353,7 @@ export const items = [
       width:80-30,
       playerConfig: {
         type: "video-automatique",
-        src: "N579vRZfAGs",
+        src: "ailb4CiSrK4",
         frameType: "ultrasimple",
         autoplay: false,
         loop: false,
