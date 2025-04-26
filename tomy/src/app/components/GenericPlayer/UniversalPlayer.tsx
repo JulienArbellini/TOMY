@@ -171,7 +171,7 @@ const UniversalPlayer: React.FC<UniversalPlayerProps> = (props) => {
       name: "Coline",
       description: "",
       contacts: [
-        { label: "coline.poisson2@gmail.com", url: "coline.poisson2@gmail.com" },
+        { label: "coline.poisson2@gmail.com", url: "" },
       ],
     },
     {

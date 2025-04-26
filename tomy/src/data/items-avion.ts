@@ -540,8 +540,8 @@ export const items = [
           "VlG7InE4VvU",
         ],
         media: [
-          { type: "image", src: "/images/content/Shop/CoucherDeSoleil.avif" },
           { type: "video", src: "VlG7InE4VvU" },
+          { type: "image", src: "/images/content/Shop/CoucherDeSoleil.avif" },
           { type: "image", src: "/images/content/Shop/Tomilkshake.avif" },
         ],
         frameType: "edgy",
