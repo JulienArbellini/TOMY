@@ -148,7 +148,7 @@ const MixedDiaporama: React.FC<MixedDiaporamaProps> = ({
             width: `${scaledValue(675)}px`,
           }}
         />
-        {currentItem.src !== "https://res.cloudinary.com/dh3nxjopm/image/upload/v1740937199/mmck4s2rfckv67alfbpq.png" && (
+        {currentItem.src !== "/images/relax/NowRelax.png" && (
           <img
             src="/vectors/ELEMENTS/Cadres/EcranNoir.avif"
             alt="Écran noir lorsque la vidéo est en pause ou terminée"
@@ -171,11 +171,19 @@ const MixedDiaporama: React.FC<MixedDiaporamaProps> = ({
         <InteractiveButton defaultIcon="/vectors/ELEMENTS/BoutonsPlayer/Forward.avif" hoverIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardHover.avif" clickedIcon="/vectors/ELEMENTS/BoutonsPlayer/ForwardClic.avif" onClick={handleNext} style={{ position: "absolute", right: `${scaledValue(35)}px`, bottom: `${scaledValue(50)}px`, width: `${scaledValue(27)}px`, height: `${scaledValue(27)}px`, zIndex: 100 }} />
   
         {/* Conteneur des médias */}
-        <div className="absolute overflow-hidden" style={{ top: `${scaledValue(70)}px`, left: `${scaledValue(50)}px`, height: `${scaledValue(containerHeight)}px`, width: `${scaledValue(containerWidth)}px` }}>
+        <div className="absolute overflow-hidden flex justify-center items-center" style={{ top: `${scaledValue(70)}px`, left: `${scaledValue(50)}px`, height: `${scaledValue(containerHeight)}px`, width: `${scaledValue(containerWidth)}px` }}>
           {/* Vitre transparente */}
           <img src="/vectors/ELEMENTS/Cadres/vitre.avif" alt="Vitre transparente" className="absolute z-10 opacity-[.01]" style={{ height: `${scaledValue(containerHeight)}px`, width: `${scaledValue(containerWidth)}px` }} />
           {currentItem.type === "image" ? (
-            <img src={currentItem.src} alt={`Image ${currentIndex + 1}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <img 
+            src={currentItem.src} 
+            alt={`Image ${currentIndex + 1}`}  
+            style={{ 
+              width: currentItem.src === "/images/relax/NowRelax.png" ? "80%" : "100%",
+              height: currentItem.src === "/images/relax/NowRelax.png" ? "80%" : "100%",
+              objectFit: "contain"
+            }} 
+            />
           ) : (
             <div className="relative" style={{ width: "100%", height: "100%" }}>
               <div className="absolute" style={{ top: 0, left: 0, height: "100%", width: "100%", backgroundColor: "black", opacity: !isPlaying || isVideoEnded ? 1 : 0, zIndex: 20, transition: "opacity 0.3s ease-in-out" }} />
