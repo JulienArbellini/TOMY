@@ -42,7 +42,7 @@ export const items = [
       playerConfig: {
         type: "diaporama",
         images: [
-          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745496462/gzxilsrmdd37acmuqjum.png",
+          "/images/machines/Makingof2.avif",
         ],
         videos:[
           "RS2jNCqCjPs",
@@ -99,36 +99,14 @@ export const items = [
       playerConfig: {
         type: "diaporama",
         images: [
-          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605465/gqp0xqwqzfg7nnxs2q71.jpg",
-          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605467/cyfohv3t03qwpauu8e1b.jpg",
-          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605469/cgj0m6g9eqhrvz1t1mde.jpg",
-          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745604779/d3gi32xjs95hr5abxcka.png",
-          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/y9aklpun1258hjbpfwdo.jpg",
-          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/kub05udvpvjiaxffnkk0.jpg",
-          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/e9tg7v0lx09lxcg6ybdh.jpg",
-          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605467/yck0ncw2mzlw5ukenm2f.jpg",
-          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605467/qlf8umdgzoih5cm1kyz7.jpg",
-          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605465/belfz8yrhgnabezzj4tg.jpg",
-          "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745496619/sihnzvn6frnebzigf0f1.png"
-        ],
-        videos:[
-          "RS2jNCqCjPs",
-        ],
-        media: [
-          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605465/gqp0xqwqzfg7nnxs2q71.jpg" },
-          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605467/cyfohv3t03qwpauu8e1b.jpg" },
-          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605469/cgj0m6g9eqhrvz1t1mde.jpg" },
-          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/wczs6xntnwmgwu0uqmk8.png" },
-          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/y9aklpun1258hjbpfwdo.jpg" },
-          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/kub05udvpvjiaxffnkk0.jpg" },
-          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605468/e9tg7v0lx09lxcg6ybdh.jpg" },
-          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605467/yck0ncw2mzlw5ukenm2f.jpg" },
-          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605467/qlf8umdgzoih5cm1kyz7.jpg" },
-          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745605465/belfz8yrhgnabezzj4tg.jpg" },
-          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745604779/d3gi32xjs95hr5abxcka.png" },
-          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745496619/sihnzvn6frnebzigf0f1.png" },
+          "/images/brace/01.avif",
+          "/images/brace/02.avif",
+          "/images/brace/03.avif",
+          "/images/brace/04.avif",
+          "/images/brace/05.avif",
 
         ],
+  
         frameType: "bois",
         videoAutoplay: true,
         videoControls: false,
@@ -159,7 +137,7 @@ export const items = [
         media: [
           { type: "image", src: "/images/content/Cigarette/Smoking.avif" },
           { type: "video", src: "ZL0xeOWVOcY" },
-          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1745496614/yjjqaey9sjrmrzzhr9ci.png" },
+          { type: "image", src: "/images/smoking/Smoking.avif" },
           { type: "video", src: "v_yCZ442xuk" },
         ],
         images: [
@@ -424,14 +402,6 @@ export const items = [
       playerConfig: {
         type: "audio",
         tracks: [
-          // { src: "https://res.cloudinary.com/dh3nxjopm/video/upload/v1740942605/ph6ik1ruu6l5fiu1vlfd.wav", title: "Pop" },
-          // { src: "https://res.cloudinary.com/dh3nxjopm/video/upload/v1740942601/tr3njyv2lsv330vrl908.wav", title: "Flight Feeling Accoustic" },
-          // { src: "https://res.cloudinary.com/dh3nxjopm/video/upload/v1740942601/jbhzehfwfgl4ekd2csah.wav", title: "Ocean Instrumental" },
-          // { src: "https://res.cloudinary.com/dh3nxjopm/video/upload/v1740942589/g0privhrflijvi3rewzg.wav", title: "Kiss Accoustic" },
-          // { src: "https://res.cloudinary.com/dh3nxjopm/video/upload/v1740942586/bjedgupqwkqgzll169o9.wav", title: "Blue Glass" },
-          // { src: "https://res.cloudinary.com/dh3nxjopm/video/upload/v1740942592/ox2d7ybsdxxnryn03bkb.wav", title: "Une longue plage avec des vagues" },
-          // { src: "https://res.cloudinary.com/dh3nxjopm/video/upload/v1740942596/mqrrl5sgvijb6naaqhog.wav", title: "TomyAirlines Theme" },
-          // { src: "https://res.cloudinary.com/dh3nxjopm/video/upload/v1740942598/rfdnrkzoxjbwkmeh5qmx.wav", title: "Bombay" },
           { src: "/Album/V3/Pop.wav", title: "Pop" },
           { src: "/Album/V3/FlightFeelingAcoustic.wav", title: "Flight Feeling Accoustic" },
           { src: "/Album/V3/OceanInstrumental.wav", title: "Ocean Instrumental" },
@@ -513,7 +483,7 @@ export const items = [
           "PDy9SqFSHq4",
         ],
         media: [
-          { type: "image", src: "https://res.cloudinary.com/dh3nxjopm/image/upload/v1740937199/mmck4s2rfckv67alfbpq.png" },
+          { type: "image", src: "/images/relax/NowRelax.png" },
           { type: "video", src: "O27u1vVE0SQ" },
           { type: "image", src: "/images/content/Relax/Haiku.avif" },
           { type: "video", src: "PDy9SqFSHq4" },
