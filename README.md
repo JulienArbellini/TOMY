@@ -1,8 +1,11 @@
 # TOMY Airlines ✈️  
 _Interface immersive en Next.js — animations, design system, interaction & UX._
 
-![thumbnail](./public/thumbnail.png)
-*(Remplace par une capture du site)*
+![thumbnail](https://res.cloudinary.com/dm0cuvnzt/image/upload/v1764677193/thumbnail0-min_kr0rje.png)
+![thumbnail](https://res.cloudinary.com/dm0cuvnzt/image/upload/v1764676876/thumbnail1-min_nhcvms.png)
+![thumbnail](https://res.cloudinary.com/dm0cuvnzt/image/upload/v1764676986/thumbnail2-min_czyuks.png)
+![thumbnail](https://res.cloudinary.com/dm0cuvnzt/image/upload/v1764676985/thumbnail3-min_lh1hsz.png)
+
 
 ---
 
@@ -24,8 +27,7 @@ Ce projet m’a permis de travailler sur :
 
 ## 🚀 Demo en ligne
 
-👉 https://tomy-arbellini.vercel.app  
-*(Remplace par ton vrai lien)*
+👉 https://www.tomyairlines.com/
 
 ---
 
